@@ -16,11 +16,34 @@
 
         <TextView
             android:id="@+id/main_line_title"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/main_line_button_chat"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="0dp"
+            android:layout_toStartOf="@+id/main_line_button_review" />
+
+        <Button
+            android:id="@+id/main_line_button_chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="154dp"
-            android:text="TextView" />
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="97dp"
+            android:layout_marginEnd="21dp"
+            android:text="Review" />
+
+        <Button
+            android:id="@+id/main_line_button_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/main_line_button_chat"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="35dp"
+            android:text="Chat" />
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
