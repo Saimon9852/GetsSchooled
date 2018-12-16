@@ -21,7 +21,7 @@ import adapters.LineAdapter;
 import objects.Teacher;
 
 public class ViewTutorsActivity extends AppCompatActivity {
-    private ArrayList<Teacher> teachersMail;
+    private ArrayList<Teacher> teachers;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -46,14 +46,17 @@ public class ViewTutorsActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         int size = (int)dataSnapshot.getChildrenCount();
-                        teachersMail = new ArrayList<Teacher>();
+                        teachers = new ArrayList<Teacher>();
                         int indedx = 0;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Teacher teacher = snapshot.getValue(Teacher.class);
-                            if(snapshot.getKey()!= FirebaseAuth.getInstance().getUid())
-                                teachersMail.add(teacher);
+                            if( !snapshot.getKey().contains(FirebaseAuth.getInstance().getUid())){
+                                teachers.add(teacher);
+                                Log.d("check similarity","snap key" + snapshot.getKey()+" my key " + FirebaseAuth.getInstance().getUid());
+                            }
+
                         }
-                        mAdapter = new LineAdapter(teachersMail);
+                        mAdapter = new LineAdapter(teachers);
                         mRecyclerView.setAdapter(mAdapter);
 
 

@@ -3,6 +3,7 @@ package com.example.cyber_lab.getsschooled;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -19,6 +20,7 @@ import objects.ChatMessage;
 
 
 public class ChatActivity extends AppCompatActivity {
+    private FirebaseAuth auth;
     private FirebaseListAdapter<ChatMessage> adapter;
     String toEmail;
     String fromEmail;
@@ -29,20 +31,22 @@ public class ChatActivity extends AppCompatActivity {
                 R.layout.message, FirebaseDatabase.getInstance().getReference("Messages")) {
             @Override
             protected void populateView(View v, ChatMessage model, int position) {
-                if(model.getmessageTo() == )
                 // Get references to the views of message.xml
-                TextView messageText = (TextView)v.findViewById(R.id.message_text);
-                TextView messageUser = (TextView)v.findViewById(R.id.message_user);
-                TextView messageTime = (TextView)v.findViewById(R.id.message_time);
+                Log.d("check messages","to email " + auth.getCurrentUser().getEmail()  + "from email to "+ model.getmessageTo() + "from email from " + model.getmessageFrom()  );
+                if(model.getmessageTo().equals(auth.getCurrentUser().getEmail()) || model.getmessageFrom().equals(auth.getCurrentUser().getEmail()) ) {
+                    TextView messageText = (TextView)v.findViewById(R.id.message_text);
+                    TextView messageUser = (TextView)v.findViewById(R.id.message_user);
+                    TextView messageTime = (TextView)v.findViewById(R.id.message_time);
 
-                // Set their text
-                messageText.setText(model.getMessageText());
-                messageUser.setText(model.getmessageFrom());
+                    // Set their text
+                    messageText.setText(model.getMessageText());
+                    messageUser.setText(model.getmessageFrom());
 
-                // Format the date before showing it
-                long time = model.getMessageTime();
-                Date date = new Date(time);
-                messageTime.setText(DateFormat.getDateInstance().format(date));
+                    // Format the date before showing it
+                    long time = model.getMessageTime();
+                    Date date = new Date(time);
+                    messageTime.setText(DateFormat.getDateInstance().format(date));
+                }
             }
         };
 
@@ -52,7 +56,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
+        auth = FirebaseAuth.getInstance();
         FloatingActionButton fab =
                 (FloatingActionButton)findViewById(R.id.fab);
 

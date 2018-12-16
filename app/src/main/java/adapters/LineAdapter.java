@@ -32,10 +32,10 @@ public class LineAdapter extends RecyclerView.Adapter<LineHolder> {
 
     @Override
     public void onBindViewHolder(LineHolder holder, int position) {
-        holder.title.setText(String.format(Locale.getDefault(), "%s, %s , %s",
-                mTeachers.get(position).getName(),
-                mTeachers.get(position).getEmail(),
-                mTeachers.get(position).getMobilePhoneNumber()
+        holder.title.setText(String.format(Locale.getDefault(), "%s",
+//                mTeachers.get(position).getName(),
+                mTeachers.get(position).getEmail()
+//                mTeachers.get(position).getMobilePhoneNumber()
         ));
     }
 
