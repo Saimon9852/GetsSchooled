@@ -8,34 +8,29 @@
 
     <Button
         android:id="@+id/btn_view_tutors"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
+        android:layout_width="118dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="8dp"
         android:text="View Tutors"
-        app:layout_constraintBottom_toTopOf="@+id/btn_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="512dp" />
 
     <Button
         android:id="@+id/btn_profile"
-        android:layout_width="wrap_content"
+        android:layout_width="98dp"
         android:layout_height="wrap_content"
         android:text="Profile"
-        app:layout_constraintBottom_toTopOf="@+id/btn_logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_view_tutors" />
+        tools:layout_editor_absoluteX="143dp"
+        tools:layout_editor_absoluteY="515dp" />
 
     <Button
         android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:text="Logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_profile" />
+        app:layout_constraintHorizontal_bias="0.978"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

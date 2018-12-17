@@ -1,19 +1,14 @@
 package adapters;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cyber_lab.getsschooled.ChatActivity;
 import com.example.cyber_lab.getsschooled.R;
-import com.example.cyber_lab.getsschooled.ViewTutorsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import adapters.LineHolder;
 import objects.Teacher;
 
 public class LineAdapter extends RecyclerView.Adapter<LineHolder> {

@@ -2,10 +2,9 @@ package objects;
 
 public class Course {
     private String name;
-    private Department department;
-    public Course(String name, Department department){
+
+    public Course(String name){
         this.name = name;
-        this.department = department;
     }
 
     public String getName() {
@@ -16,10 +15,5 @@ public class Course {
         this.name = name;
     }
 
-    public Department getDepartment() {
-        return department;
-    }
-    public void setDepartment(Department department){
-        this.department = department;
-    }
+
 }
