@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "411359911653",
+    "firebase_url": "https://getschooled-bd7fc.firebaseio.com",
+    "project_id": "getschooled-bd7fc",
+    "storage_bucket": "getschooled-bd7fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411359911653:android:a70fc0d3434096d3",
+        "android_client_info": {
+          "package_name": "com.example.cyber_lab.getsschooled"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411359911653-q9hqq4it0c6l8jcmqiu93haq9r1mafus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLMpSxbEYGBvFjFJoXkQxU0DFIHDALBMU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="150dp"
+    android:clickable="true"
+    android:padding="6dip">
+
+    <TextView
+        android:id="@+id/ReviewMessage"
+        android:layout_width="334dp"
+        android:layout_height="46dp"
+        android:layout_below="@+id/ReviewByName"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginRight="31dp"
+
+        android:ellipsize="marquee"
+        android:paddingLeft="5dp"
+        android:singleLine="true"
+        android:text="Description"
+        android:textColor="@color/common_google_signin_btn_text_light_default"
+        android:textSize="12sp" />
+
+
+    <TextView
+        android:id="@+id/ReviewByName"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_toEndOf="@+id/picture"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:paddingBottom="5dp"
+        android:text="Name"
+        android:textColor="@color/common_google_signin_btn_text_light_default"
+        android:textSize="14sp" />
+
+
+</RelativeLayout>
