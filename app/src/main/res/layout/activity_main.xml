@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="com.example.cyber_lab.getsschooled.MainActivity">
 
     <Button
         android:id="@+id/btn_view_tutors"

@@ -19,7 +19,7 @@ public class guessOrTeacherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guess_or_teacher);
+        setContentView(R.layout.activity_guest_or_teacher);
 
         auth = FirebaseAuth.getInstance();
 

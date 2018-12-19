@@ -1,12 +1,25 @@
 package objects;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 public class Teacher extends Person {
 
     private ArrayList<Course> courseArrayList;
     private String price;
-    //private IMAGE img;
+    private String description;
+    private Bitmap img;
+    private String stars;
+    //private ArrayList<Reviews> reviewArrayList;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     private ArrayList<Review> reviews;
 
     public void setPrice(String price) {
@@ -23,7 +36,9 @@ public class Teacher extends Person {
         this.price = price;
         this.reviews = reviews;
     }
-
+    public Teacher(String email, String name, String mobilePhoneNumber) {
+        super(email, name, mobilePhoneNumber);
+    }
     public String getPrice() {
         return price;
     }

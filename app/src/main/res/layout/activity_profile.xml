@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ProfileActivity">
+    tools:context="com.example.cyber_lab.getsschooled.ProfileActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -57,7 +57,6 @@
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
             android:hint="@string/hint_password"
-            android:imeActionId="@+id/login"
             android:imeOptions="actionUnspecified"
             android:inputType="textPassword"
             android:maxLines="1"
@@ -69,7 +68,7 @@
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
             android:hint="@string/new_pass"
-            android:imeActionId="@+id/login"
+
             android:imeOptions="actionUnspecified"
             android:inputType="textPassword"
             android:maxLines="1"

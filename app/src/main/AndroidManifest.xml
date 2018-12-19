@@ -23,7 +23,8 @@
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".ViewTutorsActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".guessOrTeacherActivity"></activity>
+        <activity android:name=".guessOrTeacherActivity" />
+        <activity android:name=".TeacherProfileActivity"></activity>
     </application>
 
 </manifest>

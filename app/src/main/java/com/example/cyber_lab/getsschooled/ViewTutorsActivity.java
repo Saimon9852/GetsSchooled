@@ -1,13 +1,9 @@
 package com.example.cyber_lab.getsschooled;
-
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,9 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import adapters.LineAdapter;
+import adapters.TutorAdapter;
 import objects.Teacher;
 
 public class ViewTutorsActivity extends AppCompatActivity {
@@ -45,21 +39,13 @@ public class ViewTutorsActivity extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        int size = (int)dataSnapshot.getChildrenCount();
-                        teachers = new ArrayList<Teacher>();
-                        int indedx = 0;
+                        teachers = new ArrayList<>();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Teacher teacher = snapshot.getValue(Teacher.class);
-                            if( !snapshot.getKey().contains(FirebaseAuth.getInstance().getUid())){
                                 teachers.add(teacher);
-                                Log.d("check similarity","snap key" + snapshot.getKey()+" my key " + FirebaseAuth.getInstance().getUid());
-                            }
-
                         }
-                        mAdapter = new LineAdapter(teachers);
+                        mAdapter = new TutorAdapter(teachers);
                         mRecyclerView.setAdapter(mAdapter);
-
-
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
