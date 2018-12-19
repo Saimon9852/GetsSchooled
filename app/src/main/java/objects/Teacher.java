@@ -2,6 +2,7 @@ package objects;
 
 import android.graphics.Bitmap;
 
+<<<<<<< HEAD
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ public class Teacher extends Person implements Serializable {
     private String description;
     private Bitmap img;
     private String stars;
-    //private ArrayList<Reviews> reviewArrayList;
+    private ArrayList<Review> reviews;
     public String getDescription() {
         return description;
     }
@@ -20,8 +21,6 @@ public class Teacher extends Person implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    private ArrayList<Review> reviews;
 
     public void setPrice(String price) {
         this.price = price;
@@ -60,9 +59,4 @@ public class Teacher extends Person implements Serializable {
         this.courseArrayList = courseArrayList;
     }
 
-
-    public static class ChildClass implements Serializable {
-
-        public ChildClass() {}
-    }
 }

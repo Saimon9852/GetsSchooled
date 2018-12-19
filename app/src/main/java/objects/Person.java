@@ -1,9 +1,11 @@
 package objects;
 
+<<<<<<< HEAD
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Person implements Serializable {
+
     private String email;
     private String name;
     private String mobilePhoneNumber;

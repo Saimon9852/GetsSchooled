@@ -2,8 +2,6 @@ package adapters;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -41,6 +39,11 @@ public class TutorHolder extends RecyclerView.ViewHolder   {
         textViewName = (TextView) itemView.findViewById(R.id.name);
         btnToProfile = (Button) itemView.findViewById(R.id.btnProfile);
 
+//        textViewEmail = (TextView) itemView.findViewById(R.id.email);
+//        textViewDescription = (TextView) itemView.findViewById(R.id.description);
+//        TextViewPrice = (TextView) itemView.findViewById(R.id.price);
+//        textViewstars = (TextView) itemView.findViewById(R.id.review);
+
         imageViewWhatsapp = (ImageView) itemView.findViewById(R.id.image_view_whatsapp);
         imageViewWhatsapp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,8 +59,6 @@ public class TutorHolder extends RecyclerView.ViewHolder   {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),TeacherProfileActivity.class);
-                //put extra for teacher
-              // Bundle bundle = new Bundle();
                 intent.putExtra("Teacher",teacher);
                 Log.d("Put", "onClick: GOT HERE"+teacher.getEmail());
                 v.getContext().startActivity(intent);
