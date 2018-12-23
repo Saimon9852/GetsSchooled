@@ -1,8 +1,6 @@
 package objects;
 
 import android.graphics.Bitmap;
-
-<<<<<<< HEAD
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -14,6 +12,7 @@ public class Teacher extends Person implements Serializable {
     private Bitmap img;
     private String stars;
     private ArrayList<Review> reviews;
+    private String photo = "";
     public String getDescription() {
         return description;
     }
@@ -21,6 +20,11 @@ public class Teacher extends Person implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getMedium_cover_image(){
+         return  this.photo;
+    }
+
 
     public void setPrice(String price) {
         this.price = price;
@@ -36,6 +40,15 @@ public class Teacher extends Person implements Serializable {
         this.price = price;
         this.reviews = reviews;
     }
+
+    //Added to merge with search tutor activity,Need to be fixed
+    public Teacher(String email, String name, String mobilePhoneNumber, ArrayList<Course> courseArrayList, String price,String photo) {
+        super(email, name, mobilePhoneNumber);
+        this.courseArrayList = courseArrayList;
+        this.price = price;
+        this.photo = photo;
+    }
+
     public Teacher(String email, String name, String mobilePhoneNumber) {
         super(email, name, mobilePhoneNumber);
     }

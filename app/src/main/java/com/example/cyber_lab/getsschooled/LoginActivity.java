@@ -17,12 +17,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
-    private Button btnSignup, btnLogin, btnReset,btnViewTutors;
+    private Button btnSignup, btnLogin, btnReset,btnViewTutors,btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,16 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
         btnViewTutors = (Button)findViewById(R.id.btn_view_tutors_login);
+        btn = (Button)findViewById(R.id.btestt);
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, TeacherProfileActivity.class));
+            }
+        });
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,4 +126,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 }

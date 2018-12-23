@@ -26,8 +26,10 @@ public class TeacherProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("dudeD","MQNNNNN");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_profile);
+        Log.d("dudeD","hello222");
         Teacher teacher = (Teacher)getIntent().getSerializableExtra("Teacher");
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_profile);
         textViewEmail = (TextView)findViewById(R.id.txtViewTeacherMail);
@@ -35,12 +37,13 @@ public class TeacherProfileActivity extends AppCompatActivity {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-        textViewEmail.setText(teacher.getEmail());
+       textViewEmail.setText(teacher.getEmail());
         textViewName.setText(teacher.getName());
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new ProfileAdapter(teacher);
         mRecyclerView.setAdapter(mAdapter);
+        Log.d("dudeD","hello");
     }
 }

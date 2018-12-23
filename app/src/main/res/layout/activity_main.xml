@@ -8,8 +8,8 @@
 
     <Button
         android:id="@+id/btn_view_tutors"
-        android:layout_width="118dp"
-        android:layout_height="47dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="View Tutors"
         app:layout_constraintStart_toStartOf="parent"

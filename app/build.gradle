@@ -38,5 +38,13 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:4.3.0'
     implementation 'com.android.support:gridlayout-v7:28.0.0'
 
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    implementation project(':fabulousfilter')
+    implementation('com.google.android:flexbox:0.3.2') {
+        exclude group: 'com.android.support'
+    }
+
 
 }

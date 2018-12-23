@@ -32,7 +32,8 @@
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
 
-
+    <string name="app_label">TeacherSearch</string>
+    <string name="search_hint">search</string>
     <string name="action_settings">Settings</string>
     <string name="toolbar_profile">Profile</string>
     <string name="posts">POSTS</string>

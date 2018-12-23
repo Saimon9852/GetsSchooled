@@ -24,7 +24,11 @@
         <activity android:name=".ViewTutorsActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".guessOrTeacherActivity" />
-        <activity android:name=".TeacherProfileActivity"></activity>
+        <activity android:name=".TeacherProfileActivity" />
+
+        <meta-data
+            android:name="android.arch.lifecycle.VERSION"
+            android:value="27.0.0-SNAPSHOT" />
     </application>
 
 </manifest>
