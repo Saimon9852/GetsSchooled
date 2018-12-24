@@ -21,7 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import Database.Util;
+
 import objects.Course;
 import objects.TeacherData;
 import adapters.TeachersAdapter;
@@ -31,6 +31,7 @@ import objects.Teacher;
 
 public class ViewTutorsActivity extends AppCompatActivity implements AAH_FabulousFragment.Callbacks, AAH_FabulousFragment.AnimationListener {
     private List<Teacher> teachers;
+    private List<Course> courses;
     FloatingActionButton fab2;
     RecyclerView recyclerView;
     TeacherData mData;
@@ -41,7 +42,8 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     List<Course>  cList = new ArrayList<>();
     private ArrayMap<String, List<String>> applied_filters = new ArrayMap<>();
     MyFabFragment dialogFrag;
-    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Teachers");
+    DatabaseReference mDatabaseTeachers = FirebaseDatabase.getInstance().getReference("Teachers");
+    DatabaseReference mDatabaseCourses = FirebaseDatabase.getInstance().getReference("Courses");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,27 +53,37 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         ll = (LinearLayout) findViewById(R.id.ll);
 
-        mData = Util.getTeacherData();
+       // mData = Util.getTeacherData();
         p = Picasso.with(this);
-        mList.addAll(mData.getAllTeachers());
+        mData = new TeacherData();
         cList.addAll(mData.getAllCourses());
-        mAdapter = new TeachersAdapter(mList, p, ViewTutorsActivity.this);
+        Log.d("Course:", " " +cList.size());
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
 
 
-        mDatabase
+        mDatabaseTeachers
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         teachers= new ArrayList<>();
+                        boolean b = true;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Teacher teacher = snapshot.getValue(Teacher.class);
+                            try {
+                                teacher.getCourseArrayList().size();
                                 teachers.add(teacher);
+                            }
+                            catch (Exception e){
+                                b = false;
+                                break;
+                            }
                         }
-                        mData.setmList(teachers);
+                        if(b == true)
+                            mData.setmList(teachers);
+                        mAdapter = new TeachersAdapter(mList, p, ViewTutorsActivity.this);
+                        recyclerView.setAdapter(mAdapter);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -79,6 +91,33 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                 });
 
 
+
+        mDatabaseCourses
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        courses= new ArrayList<Course>();
+                        boolean correctData = true;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Course course = snapshot.getValue(Course.class);
+                            try {
+                                courses.size();
+                                Log.d("Course:", course.getName());
+                                courses.add(course);
+                            }
+                            catch (Exception e){
+                                correctData = false;
+                                break;
+                            }
+                        }
+                        if(correctData == true)
+                            mData.setCourses(courses);
+                            cList.addAll(mData.getAllCourses());
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
 
         dialogFrag = MyFabFragment.newInstance();
         dialogFrag.setDepartments(getAllDepartments(cList));

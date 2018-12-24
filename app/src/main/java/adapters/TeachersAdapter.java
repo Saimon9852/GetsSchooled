@@ -24,6 +24,9 @@ import com.example.cyber_lab.getsschooled.R;
 
 import objects.Teacher;
 
+
+////Class adapter to single teacher in recycleView
+
 public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.TeacherViewHolder> {
 
     List<Teacher> mList = new ArrayList<>();
@@ -44,6 +47,8 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
         return new TeacherViewHolder(itemView);
     }
 
+
+    //setting single_teacher.xml values from each teacher for mList, position present each one in list
     @Override
     public void onBindViewHolder(TeacherViewHolder holder, final int position) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -60,7 +65,6 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
         holder.tv_rating.setText("Rating: " + mList.get(position).getPrice());
         holder.tv_year.setText("Year: " + mList.get(position).getDescription());
         holder.tv_quality.setText("Quality: " +mList.get(position).getMobilePhoneNumber());
-
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +83,8 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
         return mList != null ? mList.size() : 0;
     }
 
+
+    //creating connection with single_teacher.xml (setting Id's to class)
     public class TeacherViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv_cover;
         private TextView tv_title;

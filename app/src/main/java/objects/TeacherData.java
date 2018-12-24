@@ -28,6 +28,12 @@ public class TeacherData {
 
     }
 
+    public TeacherData(){
+        courseList = new ArrayList<>();
+        courseList.add(new Course("test1-test2"));
+
+    }
+
     public List<Teacher> getAllTeachers() {
         return mList;
     }
@@ -65,6 +71,7 @@ public class TeacherData {
         List<String> ratings = new ArrayList<>();
         for (Course course : courseList) {
             String[] split = course.getName().split("-");
+            Log.d("justcheck",split[1]);
             if(split[0].equals(department)){
                 ratings.add(split[1]);
             }

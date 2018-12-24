@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 import com.example.cyber_lab.getsschooled.R;
 
+
+//MyFabFragment is an object to setting up the filter menu, Class build the dialog structure and values for departments and courses for each
 public class MyFabFragment extends AAH_FabulousFragment {
 
 
@@ -54,18 +56,10 @@ public class MyFabFragment extends AAH_FabulousFragment {
         applied_filters = ((ViewTutorsActivity) getActivity()).getApplied_filters();
         metrics = this.getResources().getDisplayMetrics();
 
-        for (Map.Entry<String, List<String>> entry : applied_filters.entrySet()) {
-            Log.d("k9res", "from activity: " + entry.getKey());
-            for (String s : entry.getValue()) {
-                Log.d("k9res", "from activity val: " + s);
-
-            }
-        }
-        Log.d("dude", "from activity val: ");
     }
 
     @Override
-
+    //setup dialog bulid structrue, including fragment layout buttuns and tabs type for each fragemnt
     public void setupDialog(Dialog dialog, int style) {
         View contentView = View.inflate(getContext(), R.layout.filter_view, null);
 
@@ -136,7 +130,7 @@ public class MyFabFragment extends AAH_FabulousFragment {
 
         @Override
         public int getCount() {
-            return 4;
+            return departments.size();
         }
 
         @Override
@@ -151,6 +145,9 @@ public class MyFabFragment extends AAH_FabulousFragment {
 
     }
 
+
+
+    //Setting dialog fregments titels, getting Unique keys to show in the dialog
     private void inflateLayoutWithFilters(final String filter_category, FlexboxLayout fbl) {
         List<String> keys = new ArrayList<>();
         keys = ((ViewTutorsActivity) getActivity()).getmData().getUniqueKeys(filter_category);

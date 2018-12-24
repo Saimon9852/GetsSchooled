@@ -1,7 +1,12 @@
 package objects;
 
-public class Course {
+import java.io.Serializable;
+
+public class Course implements Serializable {
     private String name;
+
+    public Course(){}
+
 
     public Course(String name){
         this.name = name;
@@ -14,6 +19,5 @@ public class Course {
     public void setName(String name) {
         this.name = name;
     }
-
 
 }

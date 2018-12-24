@@ -6,17 +6,22 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
+import java.io.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import objects.Course;
+import objects.Teacher;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -24,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
-    private Button btnSignup, btnLogin, btnReset,btnViewTutors,btn;
+    private Button btnSignup, btnLogin, btnReset,btnViewTutors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
         btnViewTutors = (Button)findViewById(R.id.btn_view_tutors_login);
-        btn = (Button)findViewById(R.id.btestt);
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, TeacherProfileActivity.class));
-            }
-        });
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override

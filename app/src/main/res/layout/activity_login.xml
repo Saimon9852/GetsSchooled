@@ -93,12 +93,6 @@
             android:layout_height="wrap_content"
             android:text="View Tutors" />
 
-        <Button
-            android:id="@+id/btestt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="View" />
-
     </LinearLayout>
 
     <ProgressBar
