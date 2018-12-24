@@ -89,7 +89,7 @@ public class MyFabFragment extends AAH_FabulousFragment {
         });
 
         mAdapter = new SectionsPagerAdapter();
-        vp_types.setOffscreenPageLimit(4);
+        vp_types.setOffscreenPageLimit(1000);
         vp_types.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         tabs_types.setupWithViewPager(vp_types);
@@ -151,7 +151,6 @@ public class MyFabFragment extends AAH_FabulousFragment {
     private void inflateLayoutWithFilters(final String filter_category, FlexboxLayout fbl) {
         List<String> keys = new ArrayList<>();
         keys = ((ViewTutorsActivity) getActivity()).getmData().getUniqueKeys(filter_category);
-
         for (int i = 0; i < keys.size(); i++) {
             View subchild = getActivity().getLayoutInflater().inflate(R.layout.single_chip, null);
             final TextView tv = ((TextView) subchild.findViewById(R.id.txt_title));

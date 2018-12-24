@@ -29,9 +29,6 @@ public class TeacherData {
     }
 
     public TeacherData(){
-        courseList = new ArrayList<>();
-        courseList.add(new Course("test1-test2"));
-
     }
 
     public List<Teacher> getAllTeachers() {
@@ -70,8 +67,8 @@ public class TeacherData {
     public List<String> getUniqueKeys(String department) {
         List<String> ratings = new ArrayList<>();
         for (Course course : courseList) {
+            Log.d("PLOP"," " + course.getName());
             String[] split = course.getName().split("-");
-            Log.d("justcheck",split[1]);
             if(split[0].equals(department)){
                 ratings.add(split[1]);
             }

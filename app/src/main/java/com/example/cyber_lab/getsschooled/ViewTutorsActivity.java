@@ -96,13 +96,12 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        courses= new ArrayList<Course>();
+                        courses= new ArrayList<>();
                         boolean correctData = true;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Course course = snapshot.getValue(Course.class);
                             try {
                                 courses.size();
-                                Log.d("Course:", course.getName());
                                 courses.add(course);
                             }
                             catch (Exception e){
@@ -113,22 +112,19 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                         if(correctData == true)
                             mData.setCourses(courses);
                             cList.addAll(mData.getAllCourses());
+                            dialogFrag = MyFabFragment.newInstance();
+                            dialogFrag.setDepartments(getAllDepartments(cList));
+                            dialogFrag.setParentFab(fab2);
+                            fab2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialogFrag.show(getSupportFragmentManager(), dialogFrag.getTag());
+                            }});
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-
-        dialogFrag = MyFabFragment.newInstance();
-        dialogFrag.setDepartments(getAllDepartments(cList));
-        dialogFrag.setParentFab(fab2);
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogFrag.show(getSupportFragmentManager(), dialogFrag.getTag());
-            }
-        });
-
 
     }
 
