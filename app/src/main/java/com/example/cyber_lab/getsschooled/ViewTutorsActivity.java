@@ -138,7 +138,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                     }
                     Log.d("k9res", "new size: " + filteredList.size());
                     mList.clear();
-                    mList.addAll(mData.getAllTeachers());
+                    mList.addAll(teacherList);
                     mAdapter.notifyDataSetChanged();
 
 

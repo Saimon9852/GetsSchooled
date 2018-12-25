@@ -34,6 +34,10 @@ public class Teacher extends Person implements Serializable {
         this.price = price;
     }
 
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     public void setReviews(ArrayList<Review> reviews) {
         this.reviews = reviews;
     }
