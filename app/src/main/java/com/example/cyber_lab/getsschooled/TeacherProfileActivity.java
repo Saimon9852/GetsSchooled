@@ -26,10 +26,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("dudeD","MQNNNNN");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_profile);
-        Log.d("dudeD","hello222");
         Teacher teacher = (Teacher)getIntent().getSerializableExtra("Teacher");
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_profile);
         textViewEmail = (TextView)findViewById(R.id.txtViewTeacherMail);
@@ -42,8 +41,8 @@ public class TeacherProfileActivity extends AppCompatActivity {
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ProfileAdapter(teacher);
+        mAdapter = new ProfileAdapter(teacher.getReviews());
         mRecyclerView.setAdapter(mAdapter);
-        Log.d("dudeD","hello");
+
     }
 }
