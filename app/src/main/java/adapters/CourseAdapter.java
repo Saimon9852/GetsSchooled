@@ -7,9 +7,13 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.MultiAutoCompleteTextView;
 
+import com.example.cyber_lab.getsschooled.ManageCourses;
 import com.example.cyber_lab.getsschooled.R;
 
 import java.util.ArrayList;
@@ -19,24 +23,28 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     Context context;
     ArrayList<String> steps;
     String hint;
-    String[] Courses={"Computer Science-Infi 1" ,
-            "Computer Science-Introduction To Programming" ,
-            "Computer Science-Logic And Group Theory" ,
-            "Computer Science-Algorthmic Number Theory" ,
-            "Computer Science-Numerical Systems" ,
-            "Computer Science-Discrete Mathemathics" ,
-            "Computer Science-Linear Algebra 1" ,
-            "Computer Science-Infi 2"};
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageButton plus, minus;
-        EditText step;
-
+        AutoCompleteTextView step;
+        String[] courses={"Computer Science-Infi 1" ,
+                "Computer Science-Introduction To Programming" ,
+                "Computer Science-Logic And Group Theory" ,
+                "Computer Science-Algorthmic Number Theory" ,
+                "Computer Science-Numerical Systems" ,
+                "Computer Science-Discrete Mathemathics" ,
+                "Computer Science-Linear Algebra 1" ,
+                "Computer Science-Infi 2"};
         public ViewHolder(View itemView) {
             super(itemView);
             plus = (ImageButton) itemView.findViewById(R.id.plus);
             minus = (ImageButton) itemView.findViewById(R.id.minus);
-            step = (EditText) itemView.findViewById(R.id.step);
+            step = (AutoCompleteTextView) itemView.findViewById(R.id.step);
+            ArrayAdapter adapter = new
+                    ArrayAdapter(itemView.getContext(),android.R.layout.simple_list_item_1,courses);
+
+            step.setAdapter(adapter);
+            step.setThreshold(1);
 
             minus.setOnClickListener(new View.OnClickListener() {
                 @Override

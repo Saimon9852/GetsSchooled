@@ -57,33 +57,28 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         p = Picasso.with(this);
         mData = new TeacherData();
         cList.addAll(mData.getAllCourses());
-        Log.d("Course:", " " +cList.size());
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
+        mData.setmList(teachers);
+        mAdapter = new TeachersAdapter(mList, p, ViewTutorsActivity.this);
+        recyclerView.setAdapter(mAdapter);
 
         mDatabaseTeachers
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         teachers= new ArrayList<>();
-                        boolean b = true;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Teacher teacher = snapshot.getValue(Teacher.class);
-                            try {
-                                teacher.getCourseArrayList().size();
+                            if(teacher.getCourseArrayList()!= null && teacher.getCourseArrayList().size() > 0 ){
                                 teachers.add(teacher);
                             }
-                            catch (Exception e){
-                                b = false;
-                                break;
-                            }
                         }
-                        if(b == true)
-                            mData.setmList(teachers);
-                        mAdapter = new TeachersAdapter(mList, p, ViewTutorsActivity.this);
-                        recyclerView.setAdapter(mAdapter);
+                        mData.setmList(teachers);
+                        mList.addAll(teachers);
+                        Log.d("teachers",Integer.toString(mList.size()));
+                        mAdapter.notifyDataSetChanged();
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -100,16 +95,9 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                         boolean correctData = true;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Course course = snapshot.getValue(Course.class);
-                            try {
-                                courses.size();
                                 courses.add(course);
-                            }
-                            catch (Exception e){
-                                correctData = false;
-                                break;
-                            }
+
                         }
-                        if(correctData == true)
                             mData.setCourses(courses);
                             cList.addAll(mData.getAllCourses());
                             dialogFrag = MyFabFragment.newInstance();
@@ -146,7 +134,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                     }
                     Log.d("k9res", "new size: " + filteredList.size());
                     mList.clear();
-                    mList.addAll(teacherList);
+                    mList.addAll(mData.getAllTeachers());
                     mAdapter.notifyDataSetChanged();
 
 

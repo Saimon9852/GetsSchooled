@@ -18,7 +18,7 @@
         android:orientation="horizontal"
         android:weightSum="10">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/step"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -28,7 +28,9 @@
             android:background="@null"
             android:hint="Next Step"
             android:padding="9dp"
-            android:textSize="16sp" />
+            android:textSize="16sp" >
+            <requestFocus />
+        </AutoCompleteTextView>
 
         <ImageButton
             android:id="@+id/plus"

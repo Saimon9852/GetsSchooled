@@ -60,18 +60,16 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
         holder.card_view.setLayoutParams(layoutParams);
 
         picasso.load(mList.get(position).getMedium_cover_image()).placeholder(android.R.color.darker_gray).config(Bitmap.Config.RGB_565).into(holder.iv_cover);
-        holder.tv_title.setText(mList.get(position).getName());
+//        holder.tv_title.setText(mList.get(position).getName());
         holder.tv_genre.setText("Genre: " +mList.get(position).getEmail());
-        holder.tv_rating.setText("Rating: " + mList.get(position).getPrice());
-        holder.tv_year.setText("Year: " + mList.get(position).getDescription());
-        holder.tv_quality.setText("Quality: " +mList.get(position).getMobilePhoneNumber());
+//        holder.tv_rating.setText("Rating: " + mList.get(position).getPrice());
+//        holder.tv_year.setText("Year: " + mList.get(position).getDescription());
+//        holder.tv_quality.setText("Quality: " +mList.get(position).getMobilePhoneNumber());
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),TeacherProfileActivity.class);
-                Log.d("dudeD", mList.get(position).getName());
                 intent.putExtra("Teacher",mList.get(position));
-                Log.d("dudeD","mytest");
                 v.getContext().startActivity(intent);
             }
         });

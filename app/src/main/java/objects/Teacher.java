@@ -1,8 +1,12 @@
 package objects;
 
 import android.graphics.Bitmap;
+import android.widget.ArrayAdapter;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import javax.crypto.Cipher;
 
 public class Teacher extends Person implements Serializable {
 
@@ -12,7 +16,7 @@ public class Teacher extends Person implements Serializable {
     private Bitmap img;
     private String stars;
     private ArrayList<Review> reviews;
-    private String photo = "";
+    private String photo = "https://yts.ag/assets/images/movies/smurfs_the_lost_village_2017/medium-cover.jpg";
     public String getDescription() {
         return description;
     }
@@ -70,6 +74,20 @@ public class Teacher extends Person implements Serializable {
 
     public void setCourseArrayList(ArrayList<Course> courseArrayList) {
         this.courseArrayList = courseArrayList;
+    }
+    public ArrayList<String> courseToStringArray(){
+        ArrayList<String> courses = new ArrayList<String>();
+        for (Course course : courseArrayList){
+            courses.add(course.getName());
+        }
+        return  courses;
+    }
+    public void setCourseArrayListFromStringArrayList(ArrayList<String> courseArrayList) {
+        ArrayList<Course> courses = new ArrayList<Course>();
+        for (String course : courseArrayList) {
+            courses.add(new Course(course));
+        }
+        this.courseArrayList = courses;
     }
 
 }
