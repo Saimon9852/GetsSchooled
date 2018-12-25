@@ -15,6 +15,9 @@ public class ProfileAdapter  extends RecyclerView.Adapter<ProfileHolder> {
 
     private final List<Review> mReviews;
 
+    public ProfileAdapter(List<Review> reviews) {
+        mReviews = reviews;
+    }
     public ProfileAdapter(Teacher teacher) {
         mReviews = teacher.getReviews();
     }

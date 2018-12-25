@@ -1,25 +1,12 @@
 package Database;
 
-import android.app.Activity;
-import android.content.ReceiverCallNotAllowedException;
-import android.support.v7.widget.RecyclerView;
-
-import com.example.cyber_lab.getsschooled.ViewTutorsActivity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
-
-import java.io.PipedInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import objects.Course;
 
 import objects.Teacher;
-import objects.TeacherData;
+import objects.DataManipulation;
 
 /**
  * Created by krupenghetiya on 27/06/17.
@@ -28,7 +15,7 @@ import objects.TeacherData;
 public class Util {
 
 
-    public static TeacherData getTeacherData(){
+    public static DataManipulation getTeacherData(){
 
         List<Teacher>  mList = new ArrayList<>();
         ArrayList<Course>  co = new ArrayList<>();
@@ -88,7 +75,7 @@ public class Util {
         cl.add(c11);
         cl.add(c12);
 
-        return new TeacherData(mList,cl);
+        return new DataManipulation(mList,cl);
 
     }
 }

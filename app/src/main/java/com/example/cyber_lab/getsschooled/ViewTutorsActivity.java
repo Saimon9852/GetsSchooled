@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import objects.Course;
-import objects.TeacherData;
+import objects.DataManipulation;
 import adapters.TeachersAdapter;
 import objects.MyFabFragment;
 import objects.Teacher;
@@ -34,7 +34,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     private List<Course> courses;
     FloatingActionButton fab2;
     RecyclerView recyclerView;
-    TeacherData mData;
+    DataManipulation mData;
     TeachersAdapter mAdapter;
     Picasso p;
     LinearLayout ll;
@@ -55,7 +55,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
 
        // mData = Util.getTeacherData();
         p = Picasso.with(this);
-        mData = new TeacherData();
+        mData = new DataManipulation();
         cList.addAll(mData.getAllCourses());
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -74,11 +74,13 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                             if(teacher.getCourseArrayList()!= null && teacher.getCourseArrayList().size() > 0 ){
                                 teachers.add(teacher);
                             }
+
                         }
                         mData.setmList(teachers);
                         mList.addAll(teachers);
                         Log.d("teachers",Integer.toString(mList.size()));
                         mAdapter.notifyDataSetChanged();
+
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -116,6 +118,8 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
 
     }
 
+    //Function is activated once the approve button is pressed in the filter dialog fragment
+    //function takes all applied filters by the user and create new teacher list based on these filters
     @Override
     public void onResult(Object result) {
         Log.d("k9res", "onResult: " + result.toString());
@@ -152,7 +156,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         return applied_filters;
     }
 
-    public TeacherData getmData() {
+    public DataManipulation getmData() {
         return mData;
     }
 
@@ -189,6 +193,8 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
 
     }
 
+
+    //Get List of courses and take all existing departments without repeat
     private List<String> getAllDepartments(List<Course> cList) {
         List<String> depars = new ArrayList<>();
         String[] split;
@@ -200,6 +206,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         return depars;
     }
 
+    //merge two different list of teachers without repeat
     private void mergeFilter(List<Teacher> mainList,List<Teacher> filterList){
         for (Teacher teacher: filterList){
             if(!mainList.contains(teacher))

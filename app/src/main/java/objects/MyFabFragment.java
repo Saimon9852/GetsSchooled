@@ -34,7 +34,7 @@ public class MyFabFragment extends AAH_FabulousFragment {
     List<TextView> textviews = new ArrayList<>();
     List<String> departments = new ArrayList<>();
     TabLayout tabs_types;
-
+    int coursesAmount = 0;
     ImageButton imgbtn_refresh, imgbtn_apply;
     SectionsPagerAdapter mAdapter;
     private DisplayMetrics metrics;
@@ -52,17 +52,17 @@ public class MyFabFragment extends AAH_FabulousFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("dude", "from activity val:qweeeeeeeeeeeeeeeeee ");
         applied_filters = ((ViewTutorsActivity) getActivity()).getApplied_filters();
         metrics = this.getResources().getDisplayMetrics();
 
     }
 
     @Override
-    //setup dialog bulid structrue, including fragment layout buttuns and tabs type for each fragemnt
+    //setup dialog build structure, including fragment layout buttons and tabs type for each fragment
     public void setupDialog(Dialog dialog, int style) {
         View contentView = View.inflate(getContext(), R.layout.filter_view, null);
 
+        //Setting dialog attributes of dialog layout
         RelativeLayout rl_content = (RelativeLayout) contentView.findViewById(R.id.rl_content);
         LinearLayout ll_buttons = (LinearLayout) contentView.findViewById(R.id.ll_buttons);
         imgbtn_refresh = (ImageButton) contentView.findViewById(R.id.imgbtn_refresh);
@@ -70,12 +70,15 @@ public class MyFabFragment extends AAH_FabulousFragment {
         ViewPager vp_types = (ViewPager) contentView.findViewById(R.id.vp_types);
         tabs_types = (TabLayout) contentView.findViewById(R.id.tabs_types);
 
+        //setting approve button for filters
         imgbtn_apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeFilter(applied_filters);
             }
         });
+
+        //setting refresh applied filters selected
         imgbtn_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +153,10 @@ public class MyFabFragment extends AAH_FabulousFragment {
     //Setting dialog fregments titels, getting Unique keys to show in the dialog
     private void inflateLayoutWithFilters(final String filter_category, FlexboxLayout fbl) {
         List<String> keys = new ArrayList<>();
+        //getting the courses name in department(filter_category)
         keys = ((ViewTutorsActivity) getActivity()).getmData().getUniqueKeys(filter_category);
+
+        //for each string course name setting up in dialog view
         for (int i = 0; i < keys.size(); i++) {
             View subchild = getActivity().getLayoutInflater().inflate(R.layout.single_chip, null);
             final TextView tv = ((TextView) subchild.findViewById(R.id.txt_title));
@@ -197,6 +203,7 @@ public class MyFabFragment extends AAH_FabulousFragment {
 
     }
 
+    //add filters to applied filters list
     private void addToSelectedMap(String key, String value) {
         if (applied_filters.get(key) != null && !applied_filters.get(key).contains(value)) {
             applied_filters.get(key).add(value);
@@ -207,6 +214,7 @@ public class MyFabFragment extends AAH_FabulousFragment {
         }
     }
 
+    //remove filters to applied filters list
     private void removeFromSelectedMap(String key, String value) {
         if (applied_filters.get(key).size() == 1) {
             applied_filters.remove(key);
