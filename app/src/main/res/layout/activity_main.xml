@@ -6,31 +6,48 @@
     android:layout_height="match_parent"
     tools:context="com.example.cyber_lab.getsschooled.MainActivity">
 
-    <Button
-        android:id="@+id/btn_view_tutors"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="View Tutors"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="512dp" />
-
-    <Button
-        android:id="@+id/btn_profile"
-        android:layout_width="98dp"
-        android:layout_height="wrap_content"
-        android:text="Profile"
-        tools:layout_editor_absoluteX="143dp"
-        tools:layout_editor_absoluteY="515dp" />
-
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:text="Logout"
+        android:layout_marginTop="500dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.978"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Logout"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="503dp" />
+
+        <Button
+            android:id="@+id/btn_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Profile"
+            tools:layout_editor_absoluteX="252dp"
+            tools:layout_editor_absoluteY="503dp" />
+
+        <Button
+            android:id="@+id/button_manage_courses"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="ManageCourses" />
+
+        <Button
+            android:id="@+id/btn_view_tutors"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="View Tutors"
+            tools:layout_editor_absoluteX="126dp"
+            tools:layout_editor_absoluteY="503dp" />
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

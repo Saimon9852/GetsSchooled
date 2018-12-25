@@ -10,10 +10,18 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+
+import objects.Course;
+
 public class MainActivity extends AppCompatActivity {
-    private Button btnLogOut,btnProfile,btnViewTutors;
+    private Button btnLogOut,btnProfile,btnViewTutors,btnManageCourses;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
+    final int LIST_REQUEST = 1;
+    final int LIST_RESULT = 100;
+    Button button;
+    ArrayList<String> list;
     public void signOut() {
         auth.signOut();
     }
@@ -44,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogOut = (Button) findViewById(R.id.btn_logout);
         btnProfile = (Button) findViewById(R.id.btn_profile);
         btnViewTutors = (Button) findViewById(R.id.btn_view_tutors);
+        btnManageCourses = (Button) findViewById(R.id.button_manage_courses);
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +73,24 @@ public class MainActivity extends AppCompatActivity {
                 v.getContext().startActivity(intent);
             }
         });
-
+        btnManageCourses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, ManageCourses.class);
+                if(list == null) {
+                    list = new ArrayList<>();
+                }
+                i.putStringArrayListExtra("list", list);
+                startActivityForResult(i, LIST_REQUEST);
+            }
+        });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == LIST_REQUEST && resultCode == LIST_RESULT)
+            list = data.getStringArrayListExtra("list");
+    }
 }
+
+
