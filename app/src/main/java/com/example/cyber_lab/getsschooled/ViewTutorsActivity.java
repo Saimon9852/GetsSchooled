@@ -53,7 +53,6 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         ll = (LinearLayout) findViewById(R.id.ll);
 
-       // mData = Util.getTeacherData();
         p = Picasso.with(this);
         mData = new DataManipulation();
         cList.addAll(mData.getAllCourses());

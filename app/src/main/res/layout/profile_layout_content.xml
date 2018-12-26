@@ -66,7 +66,7 @@
                     <TextView
                         android:id="@+id/txtViewTeacherName"
                         android:layout_width="102dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/dimen_8dp"
                         android:fontFamily="sans-serif"
@@ -77,8 +77,8 @@
 
                     <TextView
                         android:id="@+id/txtViewTeacherDescp"
-                        android:layout_width="102dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="sans-serif"
                         android:letterSpacing="0.1"

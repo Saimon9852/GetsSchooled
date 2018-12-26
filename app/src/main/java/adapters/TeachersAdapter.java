@@ -75,7 +75,7 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
                     // Pass it to Picasso to download, show in ImageView and caching
-                    Picasso.with(holder.card_view.getContext()).load(uri.toString()).into(holder.iv_cover);
+                    Picasso.with(holder.card_view.getContext()).load(uri.toString()).into(holder.teacherPicture);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -85,7 +85,7 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
             });
         }
 //        holder.tv_title.setText(mList.get(position).getName());
-        holder.tv_genre.setText("Name: " +mList.get(position).getName());
+        holder.teacherName.setText("Name: " +mList.get(position).getName());
 //        holder.tv_rating.setText("Rating: " + mList.get(position).getPrice());
 //        holder.tv_year.setText("Courses\n: " + mList.get(position).getCourseArrayList);
 //        holder.tv_quality.setText("Quality: " +mList.get(position).getMobilePhoneNumber());
@@ -108,22 +108,22 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
 
     //creating connection with single_teacher.xml (setting Id's to class)
     public class TeacherViewHolder extends RecyclerView.ViewHolder {
-        private ImageView iv_cover;
-        private TextView tv_title;
-        private TextView tv_genre;
-        private TextView tv_rating;
-        private TextView tv_year;
-        private TextView tv_quality;
+        private ImageView teacherPicture;
+        private TextView teacherName;
+        private TextView teacherRating;
+        private TextView teacherCourses;
+        private TextView teacherPrice;
+        private TextView teacherTest;
         private CardView card_view;
 
         public TeacherViewHolder(View x) {
             super(x);
-            iv_cover = (ImageView) x.findViewById(R.id.teacher_picture);
-            tv_title = (TextView) x.findViewById(R.id.tv_title);
-            tv_genre = (TextView) x.findViewById(R.id.tv_genre);
-            tv_rating = (TextView) x.findViewById(R.id.tv_rating);
-            tv_year = (TextView) x.findViewById(R.id.tv_year);
-            tv_quality = (TextView) x.findViewById(R.id.tv_quality);
+            teacherPicture = (ImageView) x.findViewById(R.id.teacher_picture);
+            teacherName = (TextView) x.findViewById(R.id.teacher_name);
+            teacherRating = (TextView) x.findViewById(R.id.teacher_rating);
+            teacherCourses = (TextView) x.findViewById(R.id.teacher_courses);
+            teacherPrice = (TextView) x.findViewById(R.id.teacher_price);
+            teacherTest = (TextView) x.findViewById(R.id.teacher_test);
             card_view = (CardView) x.findViewById(R.id.card_view);
         }
 

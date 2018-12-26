@@ -73,7 +73,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_teacher_profile);
         teacher = (Teacher)getIntent().getSerializableExtra("Teacher");
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_profile);
-        textViewEmail = (TextView)findViewById(R.id.txtViewTeacherDescp);
+        txtDecription = (TextView)findViewById(R.id.txtViewTeacherDescp);
         textViewName = (TextView)findViewById(R.id.txtViewTeacherName);
         imgProfile = (ImageView)findViewById(R.id.profile_image);
         btnSaveChanges = (Button)findViewById(R.id.buttonSaveChanges);
@@ -93,6 +93,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
         textViewPrice.setText("100");
         textViewCourses.setText("0");
         textViewRating.setText("5");
+        txtDecription.setText(teacher.getBeutifulCoursesString());
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
