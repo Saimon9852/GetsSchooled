@@ -8,8 +8,14 @@ public class Review implements Serializable {
     private String name;
     private int stars;
     public Review(String name,String msg, int stars){
-        message = msg;
+        this.message = msg;
         this.stars = stars;
+        this.name = name;
+    }
+    public Review(){
+        this.message = "";
+        this.stars = 0;
+        this.name = "";
     }
 
     public String getName() {

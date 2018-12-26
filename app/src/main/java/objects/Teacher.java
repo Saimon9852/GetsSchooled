@@ -11,12 +11,20 @@ import javax.crypto.Cipher;
 public class Teacher extends Person implements Serializable {
 
     private ArrayList<Course> courseArrayList;
+    private String UID;
     private String price;
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
+
     private String description;
-    private Bitmap img;
-    private String stars;
     private ArrayList<Review> reviews;
-    private String photo = "https://yts.ag/assets/images/movies/smurfs_the_lost_village_2017/medium-cover.jpg";
+    private String photo;
     public String getDescription() {
         return description;
     }
@@ -25,7 +33,7 @@ public class Teacher extends Person implements Serializable {
         this.description = description;
     }
 
-    public String getMedium_cover_image(){
+    public String getPhoto(){
          return  this.photo;
     }
 

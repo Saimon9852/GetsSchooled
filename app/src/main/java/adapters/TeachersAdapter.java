@@ -3,6 +3,8 @@ package adapters;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +17,10 @@ import android.widget.TextView;
 
 import com.example.cyber_lab.getsschooled.TeacherProfileActivity;
 import com.example.cyber_lab.getsschooled.ViewTutorsActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -50,7 +56,7 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
 
     //setting single_teacher.xml values from each teacher for mList, position present each one in list
     @Override
-    public void onBindViewHolder(TeacherViewHolder holder, final int position) {
+    public void onBindViewHolder(final TeacherViewHolder holder, final int position) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if (position == 0){
             layoutParams.setMargins((int) _activity.getResources().getDimension(R.dimen.card_margin),(int) _activity.getResources().getDimension(R.dimen.card_margin),(int) _activity.getResources().getDimension(R.dimen.card_margin),(int) _activity.getResources().getDimension(R.dimen.card_margin));
@@ -59,11 +65,29 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
         }
         holder.card_view.setLayoutParams(layoutParams);
 
-        picasso.load(mList.get(position).getMedium_cover_image()).placeholder(android.R.color.darker_gray).config(Bitmap.Config.RGB_565).into(holder.iv_cover);
+
+        if(mList.get(position).getPhoto()!= null){
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageReference = storage.getReference();
+            StorageReference load = storageReference.child("images/" + mList.get(position).getEmail() + "/profile");
+            load.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    // Got the download URL for 'users/me/profile.png'
+                    // Pass it to Picasso to download, show in ImageView and caching
+                    Picasso.with(holder.card_view.getContext()).load(uri.toString()).into(holder.iv_cover);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
 //        holder.tv_title.setText(mList.get(position).getName());
-        holder.tv_genre.setText("Genre: " +mList.get(position).getEmail());
+        holder.tv_genre.setText("Name: " +mList.get(position).getName());
 //        holder.tv_rating.setText("Rating: " + mList.get(position).getPrice());
-//        holder.tv_year.setText("Year: " + mList.get(position).getDescription());
+//        holder.tv_year.setText("Courses\n: " + mList.get(position).getCourseArrayList);
 //        holder.tv_quality.setText("Quality: " +mList.get(position).getMobilePhoneNumber());
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +118,7 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
 
         public TeacherViewHolder(View x) {
             super(x);
-            iv_cover = (ImageView) x.findViewById(R.id.iv_cover);
+            iv_cover = (ImageView) x.findViewById(R.id.teacher_picture);
             tv_title = (TextView) x.findViewById(R.id.tv_title);
             tv_genre = (TextView) x.findViewById(R.id.tv_genre);
             tv_rating = (TextView) x.findViewById(R.id.tv_rating);

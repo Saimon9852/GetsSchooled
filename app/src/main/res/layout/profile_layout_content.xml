@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -23,12 +24,13 @@
             tools:showIn="@layout/activity_teacher_profile">
 
             <LinearLayout
+                android:id="@+id/layout_teacher_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/activity_margin"
-                android:paddingTop="@dimen/activity_margin">
+                android:paddingTop="@dimen/activity_margin"
+                android:paddingBottom="@dimen/activity_margin">
 
                 <RelativeLayout
                     android:layout_width="@dimen/profile_image"
@@ -37,35 +39,71 @@
 
                     <ImageView
                         android:id="@+id/profile_image"
-                        android:layout_width="@dimen/profile_image"
-                        android:layout_height="@dimen/profile_image"
-                        android:layout_centerHorizontal="true">
-                    </ImageView>
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="0dp"
+                        tools:srcCompat="@tools:sample/avatars"></ImageView>
+
+                    <ImageView
+                        android:id="@+id/image_view_camera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        app:srcCompat="@android:drawable/ic_menu_camera" />
 
                 </RelativeLayout>
 
 
-                <TextView
-                    android:id="@+id/txtViewTeacherName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dimen_8dp"
-                    android:fontFamily="sans-serif"
-                    android:letterSpacing="0.1"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/profile_name"
-                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/txtViewTeacherMail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="sans-serif"
-                    android:letterSpacing="0.1"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/profile_about" />
+                    <TextView
+                        android:id="@+id/txtViewTeacherName"
+                        android:layout_width="102dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dimen_8dp"
+                        android:fontFamily="sans-serif"
+                        android:letterSpacing="0.1"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/profile_name"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtViewTeacherDescp"
+                        android:layout_width="102dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="sans-serif"
+                        android:letterSpacing="0.1"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/profile_about" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/image_view_edit"
+                            android:layout_width="176dp"
+                            android:layout_height="match_parent"
+                            app:srcCompat="@android:drawable/ic_menu_edit" />
+
+                        <ImageView
+                            android:id="@+id/image_view_whatsapp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:srcCompat="@drawable/whatsapp" />
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -86,6 +124,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/textViewRating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-condensed"
@@ -96,7 +135,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/posts"
+                        android:text="Rating"
                         android:textSize="@dimen/profile_meta_label" />
 
                 </LinearLayout>
@@ -109,6 +148,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/textViewPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-condensed"
@@ -118,7 +158,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/followers"
+                        android:text="Price"
                         android:textSize="@dimen/profile_meta_label" />
 
                 </LinearLayout>
@@ -131,6 +171,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/textViewCourses"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-condensed"
@@ -140,7 +181,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/following"
+                        android:text="Courses"
                         android:textSize="@dimen/profile_meta_label" />
 
                 </LinearLayout>

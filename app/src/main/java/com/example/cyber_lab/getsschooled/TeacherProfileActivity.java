@@ -2,52 +2,68 @@ package com.example.cyber_lab.getsschooled;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 
+import adapters.CourseAdapter;
 import adapters.ProfileAdapter;
+import adapters.ReviewAdapter;
+import objects.Course;
+import objects.Review;
 import objects.Teacher;
 
 public class TeacherProfileActivity extends AppCompatActivity {
-
+    private boolean changedProfileImage = false;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Intent intent;
-    private TextView textViewName;
-    private TextView textViewEmail;
-    private ImageView imgProfile;
-    private TextView txtDecription;
+    private TextView textViewName,textViewEmail,txtDecription,textViewPrice,textViewCourses,textViewRating;
     private Button btnSaveChanges;
-    private boolean changedProfileImage = false;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private ImageView imgCamera,imgEdit,getImgCamera,imgWhatsapp,imgProfile;
+    private ArrayList<Review> list;
     private DatabaseReference reference;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private FirebaseAuth auth;
+    private ReviewAdapter reviewAdapter;
+    DatabaseReference mDatabaseTeachers;
+
     //need to add statistics
     private Teacher teacher;
     @Override
@@ -57,33 +73,79 @@ public class TeacherProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_teacher_profile);
         teacher = (Teacher)getIntent().getSerializableExtra("Teacher");
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_profile);
-        textViewEmail = (TextView)findViewById(R.id.txtViewTeacherMail);
+        textViewEmail = (TextView)findViewById(R.id.txtViewTeacherDescp);
         textViewName = (TextView)findViewById(R.id.txtViewTeacherName);
         imgProfile = (ImageView)findViewById(R.id.profile_image);
         btnSaveChanges = (Button)findViewById(R.id.buttonSaveChanges);
+        imgWhatsapp = (ImageView)findViewById(R.id.image_view_whatsapp);
+        imgEdit = (ImageView)findViewById(R.id.image_view_edit);
+        imgCamera = (ImageView)findViewById(R.id.image_view_camera);
+        textViewPrice = (TextView)findViewById(R.id.textViewPrice);
+        textViewCourses = (TextView)findViewById(R.id.textViewCourses);
+        textViewRating = (TextView)findViewById(R.id.textViewRating);
+
+
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-       textViewEmail.setText(teacher.getEmail());
+//        textViewEmail.setText(teacher.getEmail());
         textViewName.setText(teacher.getName());
-
-        imgProfile.setImageBitmap(imageBitmap);
-
+        textViewPrice.setText("100");
+        textViewCourses.setText("0");
+        textViewRating.setText("5");
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new ProfileAdapter(teacher.getReviews());
         mRecyclerView.setAdapter(mAdapter);
-        imgProfile.setOnClickListener(new View.OnClickListener() {
+
+        pullPhoto();
+
+        imgCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent();
 
             }
         });
+
+        list = (ArrayList<Review>)getIntent().getSerializableExtra("list");
+        //To show at least one row
+        if(list ==null || list.size() == 0)
+            list = new ArrayList<Review>();
+        list.add(new Review());
+
+
+        reviewAdapter = new ReviewAdapter(list, this,"");
+        //Setting the adapter
+        mRecyclerView.setAdapter(reviewAdapter);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        //for now this works , will have to push uid to user as well..
+        mDatabaseTeachers = FirebaseDatabase.getInstance().getReference("Teachers").child(teacher.getUID());
+        mDatabaseTeachers.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                teacher = dataSnapshot.getValue(Teacher.class);
+                if(teacher.getReviews()!= null)
+                    list = teacher.getReviews();
+                reviewAdapter = new ReviewAdapter(list, mRecyclerView.getContext(),"");
+                mRecyclerView.setAdapter(reviewAdapter);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
         btnSaveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent();
+                list = reviewAdapter.getStepList();
+                teacher.setReviews(list);
+                mDatabaseTeachers.setValue(teacher);
+                i.putExtra("list", list);
+                setResult(100, i);
                 if (changedProfileImage) {
                     uploadImage();
                 }
@@ -135,14 +197,34 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Teachers");
                 final Uri Furi = uri;
                 teacher.setPhoto(Furi.toString());
-                reference.child("vEVqLmnDm5TIaqVNt6rsxQSP2LI3").setValue(Furi.toString());
-                Log.e("update pictrue Uri", "5");
+                reference.child(teacher.getUID()).setValue(teacher);
+                Log.e("WTF", "5");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure( Exception exception) {
-                Log.e("downloadImage", "failed");
+                Log.e("WTF", "failed");
             }
         });
     }
+    public void pullPhoto(){
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        StorageReference load = storageReference.child("images/" + teacher.getEmail() + "/profile");
+
+        load.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                // Got the download URL for 'users/me/profile.png'
+                // Pass it to Picasso to download, show in ImageView and caching
+                Picasso.with(imgProfile.getContext()).load(uri.toString()).into(imgProfile);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+    }
+
 }

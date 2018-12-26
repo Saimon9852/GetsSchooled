@@ -110,6 +110,7 @@ public class SignupActivity extends AppCompatActivity {
                                     teacher.setEmail(email);
                                     teacher.setName(name);
                                     teacher.setMobilePhoneNumber(mobilePhone);
+                                    teacher.setUID(auth.getCurrentUser().getUid());
                                     mDatabase.child(auth.getCurrentUser().getUid()).setValue(teacher);
                                     startActivity(new Intent(SignupActivity.this, ProfileActivity.class));
                                     finish();
