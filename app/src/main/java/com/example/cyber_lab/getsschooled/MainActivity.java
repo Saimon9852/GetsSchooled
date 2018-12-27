@@ -12,6 +12,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
+import objects.Course;
+
 public class MainActivity extends AppCompatActivity {
     private Button btnLogOut,btnProfile,btnViewTutors,btnManageCourses;
     private FirebaseAuth.AuthStateListener authListener;

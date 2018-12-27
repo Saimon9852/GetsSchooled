@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,10 +32,13 @@ import com.google.firebase.storage.StorageReference;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-import com.example.cyber_lab.getsschooled.adapters.ProfileAdapter;
-import com.example.cyber_lab.getsschooled.adapters.ReviewAdapter;
-import com.example.cyber_lab.getsschooled.objects.Review;
-import com.example.cyber_lab.getsschooled.objects.Teacher;
+
+
+import adapters.ProfileAdapter;
+import adapters.ReviewAdapter;
+import objects.Course;
+import objects.Review;
+import objects.Teacher;
 
 public class TeacherProfileActivity extends AppCompatActivity {
     private boolean changedProfileImage = false;
@@ -208,6 +213,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 // Got the download URL for 'users/me/profile.png'
                 // Pass it to Picasso to download, show in ImageView and caching
                 Glide.with(imgProfile).load(uri).into(imgProfile);
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

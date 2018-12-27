@@ -4,6 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+<<<<<<< HEAD
+=======
+import android.widget.TextView;
+>>>>>>> e037af6f08e06d14b04a655480c01067dc3dd0d1
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -14,9 +18,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.cyber_lab.getsschooled.adapters.ProfileAdapter;
-import com.example.cyber_lab.getsschooled.objects.Review;
-import com.example.cyber_lab.getsschooled.objects.Teacher;
+import adapters.ProfileAdapter;
+import adapters.TeachersAdapter;
+import objects.Review;
+import objects.Teacher;
 
 public class AdminReviewsActivity extends AppCompatActivity {
 
