@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signOut();
+                Intent intent = new Intent(btnLogOut.getContext(),LoginActivity.class);
+                btnLogOut.getContext().startActivity(intent);
             }
         });
         btnViewTutors.setOnClickListener(new View.OnClickListener() {

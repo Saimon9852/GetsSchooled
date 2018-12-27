@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, ViewTutorsActivity.class));
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
 
@@ -57,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup = (Button) findViewById(R.id.btn_signup);
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnReset = (Button) findViewById(R.id.btn_reset_password);
-        btnViewTutors = (Button)findViewById(R.id.btn_view_tutors_login);
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 
@@ -118,12 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                         });
             }
         });
-        btnViewTutors.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, ViewTutorsActivity.class));
-            }
-        });
+
     }
 
 }

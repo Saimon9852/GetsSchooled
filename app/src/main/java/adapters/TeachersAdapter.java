@@ -15,13 +15,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.cyber_lab.getsschooled.TeacherProfileActivity;
 import com.example.cyber_lab.getsschooled.ViewTutorsActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +36,10 @@ import objects.Teacher;
 public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.TeacherViewHolder> {
 
     List<Teacher> mList = new ArrayList<>();
-    Picasso picasso;
     Activity _activity;
 
-    public TeachersAdapter(List<Teacher> list_urls, Picasso p,Activity a) {
+    public TeachersAdapter(List<Teacher> list_urls,Activity a) {
         this.mList = list_urls;
-        this.picasso = p;
         this._activity = a;
     }
 
@@ -75,7 +73,7 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
                     // Pass it to Picasso to download, show in ImageView and caching
-                    Picasso.with(holder.card_view.getContext()).load(uri.toString()).into(holder.teacherPicture);
+                    Glide.with(holder.card_view.getContext()).load(uri.toString()).into(holder.teacherPicture);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

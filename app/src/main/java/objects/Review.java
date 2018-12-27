@@ -42,4 +42,7 @@ public class Review implements Serializable {
     public void setStars(int stars) {
         this.stars = stars;
     }
+    public Boolean isNull(){
+        return this.name.isEmpty() && this.message.isEmpty();
+    }
 }

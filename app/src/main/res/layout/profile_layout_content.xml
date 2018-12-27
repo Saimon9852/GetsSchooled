@@ -7,130 +7,6 @@
     android:layout_height="match_parent"
     tools:context="com.example.cyber_lab.getsschooled.TeacherProfileActivity">
 
-<<<<<<< HEAD
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical"
-        tools:context="com.example.cyber_lab.getsschooled.TeacherProfileActivity"
-        tools:showIn="@layout/activity_teacher_profile">
-
-        <LinearLayout
-            android:id="@+id/layout_teacher_profile"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/activity_margin"
-            android:paddingBottom="@dimen/activity_margin">
-
-            <RelativeLayout
-                android:layout_width="@dimen/profile_image"
-                android:layout_height="@dimen/profile_image"
-                android:layout_gravity="center_horizontal">
-
-                <ImageView
-                    android:id="@+id/profile_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="0dp"
-                    tools:srcCompat="@tools:sample/avatars"></ImageView>
-
-                <ImageView
-                    android:id="@+id/image_view_camera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    app:srcCompat="@android:drawable/ic_menu_camera" />
-
-            </RelativeLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txtViewTeacherName"
-                    android:layout_width="102dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dimen_8dp"
-                    android:fontFamily="sans-serif"
-                    android:letterSpacing="0.1"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/profile_name"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txtViewTeacherDescp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="sans-serif"
-                    android:letterSpacing="0.1"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/profile_about" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/image_view_edit"
-                        android:layout_width="176dp"
-                        android:layout_height="match_parent"
-                        app:srcCompat="@android:drawable/ic_menu_edit" />
-
-                    <ImageView
-                        android:id="@+id/image_view_whatsapp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:srcCompat="@drawable/whatsapp" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_margin"
-            android:layout_marginTop="@dimen/fab_margin"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textViewRating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textColor="@color/profile_meta"
-                    android:textSize="24dp"
-                    android:textStyle="normal" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rating"
-                    android:textSize="@dimen/profile_meta_label" />
-=======
 
     <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -228,65 +104,10 @@
                     </LinearLayout>
 
                 </LinearLayout>
->>>>>>> e037af6f08e06d14b04a655480c01067dc3dd0d1
 
             </LinearLayout>
 
             <LinearLayout
-<<<<<<< HEAD
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textViewPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textColor="@color/profile_meta"
-                    android:textSize="24dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Price"
-                    android:textSize="@dimen/profile_meta_label" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textViewCourses"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textColor="@color/profile_meta"
-                    android:textSize="@dimen/profile_meta" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Courses"
-                    android:textSize="@dimen/profile_meta_label" />
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_profile"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-
-=======
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_margin"
@@ -373,6 +194,4 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
->>>>>>> e037af6f08e06d14b04a655480c01067dc3dd0d1
 </RelativeLayout>
-

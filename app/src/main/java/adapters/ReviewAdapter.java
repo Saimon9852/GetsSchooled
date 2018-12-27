@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.cyber_lab.getsschooled.R;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import objects.Review;
 
@@ -40,10 +41,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    try {
-                        reviews.add(position + 1, new Review());
-                        notifyItemInserted(position + 1);
-                    }catch (ArrayIndexOutOfBoundsException e){e.printStackTrace();}
+                    Iterator<Review> iterator = reviews.iterator();
+                    if(position == reviews.size()-1 && !(reviews.get(position).isNull()))
+                        try {
+                            reviews.add(position + 1, new Review());
+                            notifyItemInserted(position + 1);
+                        }catch (ArrayIndexOutOfBoundsException e){e.printStackTrace();}
                 }
             });
 

@@ -27,11 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.example.cyber_lab.getsschooled.adapters.TeachersAdapter;
-import com.example.cyber_lab.getsschooled.objects.Course;
-import com.example.cyber_lab.getsschooled.objects.DataManipulation;
-import com.example.cyber_lab.getsschooled.objects.MyFabFragment;
-import com.example.cyber_lab.getsschooled.objects.Teacher;
+import adapters.TeachersAdapter;
+import objects.Course;
+import objects.DataManipulation;
+import objects.MyFabFragment;
+import objects.Teacher;
 
 
 

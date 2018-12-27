@@ -31,7 +31,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-
+import java.util.Iterator;
 
 
 import adapters.ProfileAdapter;
@@ -72,14 +72,16 @@ public class TeacherProfileActivity extends AppCompatActivity {
         imgProfile = (ImageView)findViewById(R.id.profile_image);
         btnSaveChanges = (Button)findViewById(R.id.buttonSaveChanges);
         imgWhatsapp = (ImageView)findViewById(R.id.image_view_whatsapp);
-        imgEdit = (ImageView)findViewById(R.id.image_view_edit);
-        imgCamera = (ImageView)findViewById(R.id.image_view_camera);
+        imgCamera = (ImageView)findViewById(R.id.image_view_edit);
         textViewPrice = (TextView)findViewById(R.id.textViewPrice);
         textViewCourses = (TextView)findViewById(R.id.textViewCourses);
         textViewRating = (TextView)findViewById(R.id.textViewRating);
+        auth = FirebaseAuth.getInstance();
+        if(! (teacher.getUID().equals(auth.getUid())) ){
+            imgCamera.setVisibility(View.INVISIBLE);
+        }
 
-
-        // use this setting to improve performance if you know that changes
+            // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 //        textViewEmail.setText(teacher.getEmail());
@@ -94,12 +96,14 @@ public class TeacherProfileActivity extends AppCompatActivity {
         mAdapter = new ProfileAdapter(teacher.getReviews());
         mRecyclerView.setAdapter(mAdapter);
 
+
         pullPhoto();
 
         imgCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dispatchTakePictureIntent();
+                if(teacher.getUID().equals(auth.getUid()))
+                    dispatchTakePictureIntent();
 
             }
         });
@@ -184,7 +188,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
     public  void updateUserPictureUri() {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        auth = FirebaseAuth.getInstance();
         StorageReference ref = storageReference.child("images/" + teacher.getEmail() + "/profile");
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
