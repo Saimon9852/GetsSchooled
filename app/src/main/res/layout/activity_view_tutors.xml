@@ -39,6 +39,23 @@
         app:backgroundTint="@color/white"
         app:elevation="0dp" />
 
+    <Button
+        android:id="@+id/viewTutorSignOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/recyclerView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="289dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/black"
+        android:contentDescription="Sign out"
+        android:text="Sign out"
+        android:textColor="@android:color/white"
+        android:textColorLink="@color/bg_main" />
 
 
 </RelativeLayout>

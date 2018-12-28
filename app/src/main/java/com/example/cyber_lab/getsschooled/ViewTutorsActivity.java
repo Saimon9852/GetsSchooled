@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
@@ -42,6 +43,7 @@ import objects.Teacher;
 public class ViewTutorsActivity extends AppCompatActivity implements AAH_FabulousFragment.Callbacks, AAH_FabulousFragment.AnimationListener {
     private List<Teacher> teachers;
     private List<Course> courses;
+    private Button btnLogOut;
     private ValueEventListener mDatabaseTeachersListener;
     private ValueEventListener mDatabaseCoursesListener;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -61,9 +63,9 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_tutors);
-        Log.d("ploptest","hi ");
         //filter libary stuff
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        btnLogOut = (Button) findViewById(R.id.viewTutorSignOut);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         ll = (LinearLayout) findViewById(R.id.ll);
         //recycled view stuff
@@ -76,11 +78,20 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         mAdapter = new TeachersAdapter(mList,  ViewTutorsActivity.this);
         recyclerView.setAdapter(mAdapter);
 
+        auth = FirebaseAuth.getInstance();
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+                Intent intent = new Intent(ViewTutorsActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mDatabaseTeachersListener = mDatabaseTeachers
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Log.d("ploptest","TESTTETS1");
                         teachers= new ArrayList<>();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Teacher teacher = snapshot.getValue(Teacher.class);
@@ -192,6 +203,11 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     public DataManipulation getmData() {
         return mData;
     }
+
+    public void signOut() {
+        auth.signOut();
+    }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
