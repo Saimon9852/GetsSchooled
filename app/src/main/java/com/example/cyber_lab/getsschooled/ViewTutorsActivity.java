@@ -1,7 +1,9 @@
 package com.example.cyber_lab.getsschooled;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,8 @@ import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +42,10 @@ import objects.Teacher;
 public class ViewTutorsActivity extends AppCompatActivity implements AAH_FabulousFragment.Callbacks, AAH_FabulousFragment.AnimationListener {
     private List<Teacher> teachers;
     private List<Course> courses;
+    private ValueEventListener mDatabaseTeachersListener;
+    private ValueEventListener mDatabaseCoursesListener;
+    private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseAuth auth;
     FloatingActionButton fab2;
     RecyclerView recyclerView;
     DataManipulation mData;
@@ -53,11 +61,11 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_tutors);
-
+        //filter libary stuff
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         ll = (LinearLayout) findViewById(R.id.ll);
-
+        //recycled view stuff
         mData = new DataManipulation();
         cList.addAll(mData.getAllCourses());
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
@@ -67,8 +75,19 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         mAdapter = new TeachersAdapter(mList,  ViewTutorsActivity.this);
         recyclerView.setAdapter(mAdapter);
 
-        mDatabaseTeachers
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (auth.getCurrentUser()  == null) {
+                    // user auth state is changed - user is null
+                    // launch login activity
+                    startActivity(new Intent(ViewTutorsActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        };
+        mDatabaseTeachersListener = mDatabaseTeachers
+                .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         teachers= new ArrayList<>();
@@ -92,8 +111,8 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
 
 
 
-        mDatabaseCourses
-                .addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseCoursesListener = mDatabaseCourses
+                .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         courses= new ArrayList<>();
@@ -155,6 +174,25 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(authStateListener);
+        mDatabaseCourses.addValueEventListener(mDatabaseCoursesListener);
+        mDatabaseTeachers.addValueEventListener(mDatabaseTeachersListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (auth != null)
+            auth.removeAuthStateListener(authStateListener);
+        if(mDatabaseTeachers != null)
+            mDatabaseTeachers.removeEventListener(mDatabaseTeachersListener);
+        if(mDatabaseCourses != null)
+            mDatabaseCourses.removeEventListener(mDatabaseCoursesListener);
+
+    }
     public ArrayMap<String, List<String>> getApplied_filters() {
         return applied_filters;
     }

@@ -28,6 +28,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView plus, minus;
         AutoCompleteTextView step;
+        /**
+         * courses for auto complete, will add more before production!
+         */
         String[] courses={"Computer Science-Infi 1" ,
                 "Computer Science-Introduction To Programming" ,
                 "Computer Science-Logic And Group Theory" ,
@@ -43,10 +46,12 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             step = (AutoCompleteTextView) itemView.findViewById(R.id.step);
             ArrayAdapter adapter = new
                     ArrayAdapter(itemView.getContext(),android.R.layout.simple_list_item_1,courses);
-
             step.setAdapter(adapter);
+            //for auto complete
             step.setThreshold(1);
-
+            /**
+             * delete course if minus pressed.
+             */
             minus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -57,7 +62,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                     }catch (ArrayIndexOutOfBoundsException e){e.printStackTrace();}
                 }
             });
-
+            /**
+             * add item for holding course when plus clicked
+             */
             plus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -68,7 +75,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                     }catch (ArrayIndexOutOfBoundsException e){e.printStackTrace();}
                 }
             });
-
+            //loads text to the list.
             step.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -106,7 +113,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     @Override
     public void onBindViewHolder(CourseAdapter.ViewHolder holder, final int i) {
         int x = holder.getLayoutPosition();
-
+        //if Course is non empty.
         if(steps.get(x).length() > 0) {
             holder.step.setText(steps.get(x));
         }

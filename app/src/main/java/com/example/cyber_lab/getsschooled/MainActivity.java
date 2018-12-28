@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     final int LIST_REQUEST = 1;
     final int LIST_RESULT = 100;
-    Button button;
     ArrayList<String> list;
     public void signOut() {
         auth.signOut();
@@ -34,11 +32,17 @@ public class MainActivity extends AppCompatActivity {
 
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
-        if(auth.getUid() == null){
-            Intent intent = new Intent(this.getApplicationContext(),LoginActivity.class);
-            this.getApplicationContext().startActivity(intent);
-            finish();
-        }
+        authListener =  new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(auth.getCurrentUser() == null){
+                    Intent intent = new Intent(imageLogout.getContext(),LoginActivity.class);
+                    imageLogout.getContext().startActivity(intent);
+                    finish();
+                }
+
+            }
+        };
 
         //get current user
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -48,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//                    // user auth state is changed - user is null
+//                    // launch login activity
+//                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                 }
             }
@@ -98,6 +102,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == LIST_REQUEST && resultCode == LIST_RESULT)
             list = data.getStringArrayListExtra("list");
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(authListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (auth != null) {
+            auth.removeAuthStateListener(authListener);
+        }
     }
 }
 

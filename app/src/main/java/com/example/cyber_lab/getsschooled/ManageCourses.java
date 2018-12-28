@@ -2,6 +2,7 @@ package com.example.cyber_lab.getsschooled;
 
 import android.content.Intent;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,29 +42,35 @@ public class ManageCourses extends AppCompatActivity {
     LinearLayoutManager llm;
     Button submitButton;
     DatabaseReference mDatabaseTeachers;
+    ValueEventListener mDatabaseValueEventListener;
     FirebaseAuth auth;
+    FirebaseAuth.AuthStateListener authStateListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_courses);
-        auth = FirebaseAuth.getInstance();
-        mDatabaseTeachers = FirebaseDatabase.getInstance().getReference("Teachers").child(auth.getUid());
-        list = getIntent().getStringArrayListExtra("list");
-        //To show at least one row
-        if(list ==null || list.size() == 0)
-            list = new ArrayList<String>();
-        list.add("");
-
 
         submitButton = (Button) findViewById(R.id.submit_button);
         recyclerView = (RecyclerView) findViewById(R.id.rv);
+
+        auth = FirebaseAuth.getInstance();
+        mDatabaseTeachers = FirebaseDatabase.getInstance().getReference("Teachers").child(auth.getUid());
+        list = getIntent().getStringArrayListExtra("list");
+
+        //To show at least one row
+        if(list ==null || list.size() == 0)
+        {
+            list = new ArrayList<String>();
+            list.add("");
+        }
+
+
         courseAdapter = new CourseAdapter(list, this,"");
         llm = new LinearLayoutManager(this);
-
         //Setting the adapter
         recyclerView.setAdapter(courseAdapter);
         recyclerView.setLayoutManager(llm);
-        mDatabaseTeachers.addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseValueEventListener = mDatabaseTeachers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 teacher = dataSnapshot.getValue(Teacher.class);
@@ -75,8 +82,17 @@ public class ManageCourses extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
-
+        authStateListener  =  new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (auth.getCurrentUser()  == null) {
+//                     user auth state is changed - user is null
+//                     launch login activity
+                    startActivity(new Intent(ManageCourses.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        };
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,10 +109,31 @@ public class ManageCourses extends AppCompatActivity {
 
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+    {
         super.onDestroy();
+        if(mDatabaseTeachers != null)
+            mDatabaseTeachers.removeEventListener(mDatabaseValueEventListener);
+        if(auth != null)
+            auth.removeAuthStateListener(authStateListener);
     }
 
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        if(mDatabaseTeachers != null)
+            mDatabaseTeachers.removeEventListener(mDatabaseValueEventListener);
+        if(auth != null)
+            auth.removeAuthStateListener(authStateListener);
+    }
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        mDatabaseTeachers.addValueEventListener(mDatabaseValueEventListener);
+
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

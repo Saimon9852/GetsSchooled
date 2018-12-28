@@ -93,7 +93,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(teacher == null)
                     UID = firebaseAuth.getUid();
-                if (UID == null) {
+                if (auth.getCurrentUser()  == null) {
                     // user auth state is changed - user is null
                     // launch login activity
                     startActivity(new Intent(TeacherProfileActivity.this, LoginActivity.class));
@@ -189,10 +189,10 @@ public class TeacherProfileActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
-        if (auth != null) {
+        if (auth != null)
             auth.removeAuthStateListener(authListener);
+        if (mDatabaseTeachers != null)
             mDatabaseTeachers.removeEventListener(mDatabaseTeachersListener);
-        }
     }
 
     /**
