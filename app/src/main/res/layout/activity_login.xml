@@ -55,6 +55,14 @@
 
         <!-- Login Button -->
 
+        <CheckBox
+            android:id="@+id/isTeacherCheckBox"
+            android:layout_marginTop="20dip"
+            android:textColor="@android:color/black"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Log as teacher" />
+
         <Button
             android:id="@+id/btn_login"
             android:layout_width="fill_parent"

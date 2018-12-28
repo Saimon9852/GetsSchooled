@@ -30,7 +30,7 @@
         <include
             android:id="@+id/content"
             layout="@layout/profile_layout_content"
-            android:layout_height="match_parent"></include>
+          ></include>
 
     </android.support.design.widget.CoordinatorLayout>
 

@@ -1,6 +1,7 @@
 package com.example.cyber_lab.getsschooled;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ import objects.Teacher;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword;
+    private CheckBox isTeacher;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset,btnViewTutors;
@@ -41,7 +44,14 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            SharedPreferences sp1=this.getSharedPreferences("is_teacher", MODE_PRIVATE);
+            boolean unm=sp1.getBoolean("logAsTeacher", false);
+
+            if(unm)
+                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            else
+                startActivity(new Intent(LoginActivity.this, ViewTutorsActivity.class));
+
             finish();
         }
 
@@ -52,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         inputEmail = (EditText) findViewById(R.id.email);
+        isTeacher = (CheckBox) findViewById(R.id.isTeacherCheckBox);
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnSignup = (Button) findViewById(R.id.btn_signup);
@@ -90,6 +101,16 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
+                SharedPreferences sp=getSharedPreferences("is_teacher", MODE_PRIVATE);
+                SharedPreferences.Editor Ed=sp.edit();
+                if(isTeacher.isChecked())
+                    Ed.putBoolean("logAsTeacher",true);
+
+                else {
+                    Ed.putBoolean("logAsTeacher", false);
+                }
+                Ed.commit();
+
                 progressBar.setVisibility(View.VISIBLE);
 
                 //authenticate user
@@ -109,7 +130,11 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                     }
                                 } else {
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    Intent intent;
+                                    if(isTeacher.isChecked())
+                                         intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    else
+                                        intent = new Intent(LoginActivity.this, ViewTutorsActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }

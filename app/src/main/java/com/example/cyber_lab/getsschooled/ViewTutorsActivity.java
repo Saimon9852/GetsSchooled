@@ -61,6 +61,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_tutors);
+        Log.d("ploptest","hi ");
         //filter libary stuff
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -75,21 +76,11 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         mAdapter = new TeachersAdapter(mList,  ViewTutorsActivity.this);
         recyclerView.setAdapter(mAdapter);
 
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (auth.getCurrentUser()  == null) {
-                    // user auth state is changed - user is null
-                    // launch login activity
-                    startActivity(new Intent(ViewTutorsActivity.this, LoginActivity.class));
-                    finish();
-                }
-            }
-        };
         mDatabaseTeachersListener = mDatabaseTeachers
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d("ploptest","TESTTETS1");
                         teachers= new ArrayList<>();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Teacher teacher = snapshot.getValue(Teacher.class);
@@ -99,6 +90,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
 
                         }
                         mData.setmList(teachers);
+                        mList.clear();
                         mList.addAll(teachers);
                         Log.d("teachers",Integer.toString(mList.size()));
                         mAdapter.notifyDataSetChanged();
@@ -113,8 +105,10 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
 
         mDatabaseCoursesListener = mDatabaseCourses
                 .addValueEventListener(new ValueEventListener() {
+
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
                         courses= new ArrayList<>();
                         boolean correctData = true;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -137,6 +131,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
+
 
     }
 
@@ -177,7 +172,6 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     @Override
     public void onStart() {
         super.onStart();
-        auth.addAuthStateListener(authStateListener);
         mDatabaseCourses.addValueEventListener(mDatabaseCoursesListener);
         mDatabaseTeachers.addValueEventListener(mDatabaseTeachersListener);
     }
@@ -185,8 +179,6 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     @Override
     public void onStop() {
         super.onStop();
-        if (auth != null)
-            auth.removeAuthStateListener(authStateListener);
         if(mDatabaseTeachers != null)
             mDatabaseTeachers.removeEventListener(mDatabaseTeachersListener);
         if(mDatabaseCourses != null)
