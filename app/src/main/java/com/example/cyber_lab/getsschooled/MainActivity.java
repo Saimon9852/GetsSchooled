@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import objects.Course;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnLogOut,btnProfile,btnViewTutors,btnManageCourses;
+    private ImageView imageLogout,imageProfile,imageCourses,imageSetting;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     final int LIST_REQUEST = 1;
@@ -54,33 +55,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-        btnLogOut = (Button) findViewById(R.id.btn_logout);
-        btnProfile = (Button) findViewById(R.id.btn_profile);
-        btnViewTutors = (Button) findViewById(R.id.btn_view_tutors);
-        btnManageCourses = (Button) findViewById(R.id.button_manage_courses);
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
+        imageLogout = (ImageView) findViewById(R.id.main_image_logout);
+        imageProfile = (ImageView) findViewById(R.id.main_image_profile);
+        imageCourses = (ImageView) findViewById(R.id.main_image_courses);
+        imageSetting = (ImageView) findViewById(R.id.main_image_setting);
+        imageLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signOut();
-                Intent intent = new Intent(btnLogOut.getContext(),LoginActivity.class);
-                btnLogOut.getContext().startActivity(intent);
+                Intent intent = new Intent(imageLogout.getContext(),LoginActivity.class);
+                imageLogout.getContext().startActivity(intent);
             }
         });
-        btnViewTutors.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),ViewTutorsActivity.class);
-                v.getContext().startActivity(intent);
-            }
-        });
-        btnProfile.setOnClickListener(new View.OnClickListener() {
+        imageSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),ProfileActivity.class);
                 v.getContext().startActivity(intent);
             }
         });
-        btnManageCourses.setOnClickListener(new View.OnClickListener() {
+        imageProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),TeacherProfileActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
+        imageCourses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, ManageCourses.class);

@@ -56,6 +56,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private FirebaseAuth auth;
     private ReviewAdapter reviewAdapter;
+    private boolean reviewed;
     DatabaseReference mDatabaseTeachers;
 
     //need to add statistics
@@ -66,6 +67,12 @@ public class TeacherProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_profile);
         teacher = (Teacher)getIntent().getSerializableExtra("Teacher");
+        auth = FirebaseAuth.getInstance();
+        if(teacher == null){
+            teacher = new Teacher();
+            teacher.setUID( auth.getUid());
+        }
+        teacher.updateRating();
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_profile);
         txtDecription = (TextView)findViewById(R.id.txtViewTeacherDescp);
         textViewName = (TextView)findViewById(R.id.txtViewTeacherName);
@@ -76,20 +83,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
         textViewCourses = (TextView)findViewById(R.id.textViewCourses);
         textViewRating = (TextView)findViewById(R.id.textViewRating);
         imgCamera = (ImageView)findViewById(R.id.image_view_camera);
-        auth = FirebaseAuth.getInstance();
         if(! (teacher.getUID().equals(auth.getUid())) ){
             imgCamera.setVisibility(View.INVISIBLE);
         }
-
-            // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-//        textViewEmail.setText(teacher.getEmail());
-        textViewName.setText(teacher.getName());
-        textViewPrice.setText(teacher.getPrice());
-        textViewCourses.setText(teacher.getCourseArrayList().size());
-        textViewRating.setText(Float.toString(teacher.getRating()));
-        txtDecription.setText(teacher.getBeutifulCoursesString());
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -115,7 +111,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
         list.add(new Review());
 
 
-        reviewAdapter = new ReviewAdapter(list, this);
+        reviewAdapter = new ReviewAdapter(list, this,reviewed,auth.getUid());
         //Setting the adapter
         mRecyclerView.setAdapter(reviewAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -125,9 +121,11 @@ public class TeacherProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 teacher = dataSnapshot.getValue(Teacher.class);
+                updatedView();
                 if(teacher.getReviews()!= null)
                     list = teacher.getReviews();
-                reviewAdapter = new ReviewAdapter(list, mRecyclerView.getContext());
+                isReviwed();
+                reviewAdapter = new ReviewAdapter(list, mRecyclerView.getContext(),reviewed,auth.getUid());
                 mRecyclerView.setAdapter(reviewAdapter);
             }
             @Override
@@ -239,6 +237,25 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 list.add(new Review());
             }
         }
+    }
+    public void isReviwed() {
+        if (teacher.isReviewedBy(auth.getUid()) || teacher.getUID().equals(auth.getUid())) {
+            reviewed = true;
+        } else {
+            reviewed = false;
+        }
+
+    }
+    public void updatedView(){
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+//        textViewEmail.setText(teacher.getEmail());
+        textViewName.setText(teacher.getName());
+        textViewPrice.setText(teacher.getPrice());
+        textViewCourses.setText(Integer.toString(teacher.getCourseArrayListSize()));
+        textViewRating.setText(Float.toString(teacher.getRating()));
+        txtDecription.setText(teacher.getBeutifulCoursesString());
     }
 
 }

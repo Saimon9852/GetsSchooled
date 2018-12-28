@@ -92,7 +92,7 @@ public class Teacher extends Person implements Serializable {
     }
 
     public ArrayList<Course> getCourseArrayList() {
-        return courseArrayList;
+            return courseArrayList;
     }
 
     public void setCourseArrayList(ArrayList<Course> courseArrayList) {
@@ -140,6 +140,18 @@ public class Teacher extends Person implements Serializable {
         }
         this.rating = rate/reviews.size();
     }
-
+    public int getCourseArrayListSize(){
+        if(courseArrayList == null){
+            return  0;
+        }
+        return courseArrayList.size();
+    }
+    public boolean isReviewedBy(String uid){
+        for(Review review : reviews){
+            if(review.getReviewerUID().equals(uid))
+                return true;
+        }
+        return false;
+    }
 
 }

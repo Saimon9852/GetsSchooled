@@ -82,6 +82,7 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
                 }
             });
         }
+        mList.get(position).updateRating();
         holder.teacherName.setText("Name: " + mList.get(position).getName());
         holder.teacherPrice.setText("Price: " + mList.get(position).getPrice());
         holder.teacherCourses.setText("Courses: " + mList.get(position).getReviews().size());

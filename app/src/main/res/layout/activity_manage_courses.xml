@@ -18,8 +18,8 @@
         android:layout_height="50dp"
         android:id="@+id/submit_button"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
+        android:background="@color/input_login_hint"
         android:text="Submit"
-        android:textColor="#fff"/>
+        android:textColor="@color/black"/>
 
 </RelativeLayout>

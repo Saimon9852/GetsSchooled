@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgnew">
+    android:background="@color/input_login_hint">
 
     <LinearLayout
         android:gravity="center"
@@ -31,12 +31,12 @@
         android:layout_marginTop="-24dp"
         android:layout_marginRight="16dp"
         android:layout_alignParentRight="true"
-        android:tint="@color/filters_chips"
+        android:tint="@color/black"
         android:id="@+id/fab2"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:src="@drawable/ic_filter"
-        app:backgroundTint="@color/filtersfab"
+        app:backgroundTint="@color/white"
         app:elevation="0dp" />
 
 

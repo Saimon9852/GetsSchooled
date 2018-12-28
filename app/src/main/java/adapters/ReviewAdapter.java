@@ -26,7 +26,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     Context context;
     ArrayList<Review> reviews;
-
+    boolean reviewed;
+    String uid;
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView addComment;
         EditText reviewReview,reviewName;
@@ -59,6 +60,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     reviews.get(getAdapterPosition()).setMessage(s.toString());
+                    reviews.get(getAdapterPosition()).setReviewerUID(uid);
                 }
 
                 @Override
@@ -73,6 +75,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     reviews.get(getAdapterPosition()).setName(s.toString());
+                    reviews.get(getAdapterPosition()).setReviewerUID(uid);
                 }
 
                 @Override
@@ -83,14 +86,16 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
                 @Override
                 public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                     reviews.get(getAdapterPosition()).setStars((int)rating);
+                    reviews.get(getAdapterPosition()).setReviewerUID(uid);
                 }
             });
         }
     }
 
-    public ReviewAdapter(ArrayList<Review> reviews, Context context){
+    public ReviewAdapter(ArrayList<Review> reviews, Context context, boolean reviewed, String uid){
         this.reviews = reviews;
         this.context = context;
+        this.reviewed = reviewed;
     }
 
     @Override
@@ -113,7 +118,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ReviewAdapter.ViewHolder holder, final int i) {
         int x = holder.getLayoutPosition();
-        if(reviews.get(x).getMessage().length() > 0) {
+        if(reviews.get(x).getMessage().length() > 0 || reviewed) {
             holder.reviewReview.setText(reviews.get(x).getMessage());
             holder.reviewName.setText(reviews.get(x).getName());
             holder.reviewRatingBar.setRating(reviews.get(x).getStars());
@@ -124,6 +129,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             holder.addComment.setVisibility(View.GONE);
         }
         else{
+
             holder.reviewName.setHint("Name");
             holder.reviewReview.setHint("Review");
             holder.reviewReview.requestFocus();

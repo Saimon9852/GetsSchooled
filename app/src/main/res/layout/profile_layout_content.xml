@@ -27,7 +27,7 @@
                 android:id="@+id/layout_teacher_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
+                android:background="@color/input_login_hint"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/activity_margin"
                 android:paddingBottom="@dimen/activity_margin">
@@ -71,7 +71,7 @@
                         android:layout_marginTop="@dimen/dimen_8dp"
                         android:fontFamily="sans-serif"
                         android:letterSpacing="0.1"
-                        android:textColor="@android:color/white"
+                        android:textColor="@android:color/black"
                         android:textSize="@dimen/profile_name"
                         android:textStyle="bold" />
 
@@ -82,7 +82,7 @@
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="sans-serif"
                         android:letterSpacing="0.1"
-                        android:textColor="@android:color/white"
+                        android:textColor="@android:color/black"
                         android:textSize="@dimen/profile_about" />
 
                     <LinearLayout
