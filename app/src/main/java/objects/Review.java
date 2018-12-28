@@ -6,16 +6,25 @@ public class Review implements Serializable {
 
     private String message;
     private String name;
-    private int stars;
-    public Review(String name,String msg, int stars){
-        this.message = msg;
-        this.stars = stars;
-        this.name = name;
-    }
+    private float stars;
+    private String reviewerUID;
+
     public Review(){
         this.message = "";
         this.stars = 0;
         this.name = "";
+    }
+    public Review(String message, String name, int stars){
+        this.message = message;
+        this.name = name;
+        this.stars = stars;
+    }
+    public String getReviewerUID() {
+        return reviewerUID;
+    }
+
+    public void setReviewerUID(String reviewerUID) {
+        this.reviewerUID = reviewerUID;
     }
 
     public String getName() {
@@ -35,7 +44,7 @@ public class Review implements Serializable {
         this.message = message;
     }
 
-    public int getStars() {
+    public float getStars() {
         return stars;
     }
 

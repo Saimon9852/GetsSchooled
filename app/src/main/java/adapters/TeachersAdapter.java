@@ -82,11 +82,10 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
                 }
             });
         }
-//        holder.tv_title.setText(mList.get(position).getName());
-        holder.teacherName.setText("Name: " +mList.get(position).getName());
-//        holder.tv_rating.setText("Rating: " + mList.get(position).getPrice());
-//        holder.tv_year.setText("Courses\n: " + mList.get(position).getCourseArrayList);
-//        holder.tv_quality.setText("Quality: " +mList.get(position).getMobilePhoneNumber());
+        holder.teacherName.setText("Name: " + mList.get(position).getName());
+        holder.teacherPrice.setText("Price: " + mList.get(position).getPrice());
+        holder.teacherCourses.setText("Courses: " + mList.get(position).getReviews().size());
+        holder.teacherRating.setText("Rating: " + Float.toString(mList.get(position).getRating()));
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +110,6 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
         private TextView teacherRating;
         private TextView teacherCourses;
         private TextView teacherPrice;
-        private TextView teacherTest;
         private CardView card_view;
 
         public TeacherViewHolder(View x) {
@@ -121,7 +119,6 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
             teacherRating = (TextView) x.findViewById(R.id.teacher_rating);
             teacherCourses = (TextView) x.findViewById(R.id.teacher_courses);
             teacherPrice = (TextView) x.findViewById(R.id.teacher_price);
-            teacherTest = (TextView) x.findViewById(R.id.teacher_test);
             card_view = (CardView) x.findViewById(R.id.card_view);
         }
 

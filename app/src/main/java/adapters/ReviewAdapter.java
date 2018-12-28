@@ -26,7 +26,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     Context context;
     ArrayList<Review> reviews;
-    String hint;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView addComment;
@@ -107,24 +106,31 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     /**
      * Binds data to holder, Only last empty review have the add button.
+     * only last empty review can be edited.
      * @param holder
      * @param i
      */
     @Override
     public void onBindViewHolder(ReviewAdapter.ViewHolder holder, final int i) {
         int x = holder.getLayoutPosition();
-        if( x < (reviews.size() -1)){
-            holder.addComment.setVisibility(View.GONE);
-        }
         if(reviews.get(x).getMessage().length() > 0) {
             holder.reviewReview.setText(reviews.get(x).getMessage());
             holder.reviewName.setText(reviews.get(x).getName());
             holder.reviewRatingBar.setRating(reviews.get(x).getStars());
+
+            holder.reviewRatingBar.setEnabled(false);
+            holder.reviewReview.setEnabled(false);
+            holder.reviewName.setEnabled(false);
+            holder.addComment.setVisibility(View.GONE);
         }
         else{
             holder.reviewName.setHint("Name");
             holder.reviewReview.setHint("Review");
             holder.reviewReview.requestFocus();
+            holder.reviewRatingBar.setEnabled(true);
+            holder.reviewName.setEnabled(true);
+            holder.reviewReview.setEnabled(true);
+            holder.addComment.setVisibility(View.VISIBLE);
         }
     }
 
@@ -132,4 +138,16 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         return reviews;
     }
 
+    /**
+     * checks if the user already reviewed the teacher.
+     * @param UID
+     * @return
+     */
+    public boolean isUIDin(String UID){
+        for (Review review: reviews){
+            if (review.getReviewerUID().equals(UID))
+                return true;
+        }
+        return false;
+    }
 }

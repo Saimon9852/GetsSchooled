@@ -2,6 +2,7 @@ package com.example.cyber_lab.getsschooled;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -48,8 +49,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private Intent intent;
     private TextView textViewName,textViewEmail,txtDecription,textViewPrice,textViewCourses,textViewRating;
-    private Button btnSaveChanges;
-    private ImageView imgCamera,imgEdit,getImgCamera,imgWhatsapp,imgProfile;
+    private ImageView imgCamera,getImgCamera,imgWhatsapp,imgProfile,SaveChanges;
     private ArrayList<Review> list;
     private DatabaseReference reference;
     private FirebaseStorage storage;
@@ -70,12 +70,12 @@ public class TeacherProfileActivity extends AppCompatActivity {
         txtDecription = (TextView)findViewById(R.id.txtViewTeacherDescp);
         textViewName = (TextView)findViewById(R.id.txtViewTeacherName);
         imgProfile = (ImageView)findViewById(R.id.profile_image);
-        btnSaveChanges = (Button)findViewById(R.id.buttonSaveChanges);
+        SaveChanges = (ImageView)findViewById(R.id.profile_save_changes);
         imgWhatsapp = (ImageView)findViewById(R.id.image_view_whatsapp);
-        imgCamera = (ImageView)findViewById(R.id.image_view_edit);
         textViewPrice = (TextView)findViewById(R.id.textViewPrice);
         textViewCourses = (TextView)findViewById(R.id.textViewCourses);
         textViewRating = (TextView)findViewById(R.id.textViewRating);
+        imgCamera = (ImageView)findViewById(R.id.image_view_camera);
         auth = FirebaseAuth.getInstance();
         if(! (teacher.getUID().equals(auth.getUid())) ){
             imgCamera.setVisibility(View.INVISIBLE);
@@ -86,9 +86,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 //        textViewEmail.setText(teacher.getEmail());
         textViewName.setText(teacher.getName());
-        textViewPrice.setText("100");
-        textViewCourses.setText("0");
-        textViewRating.setText("5");
+        textViewPrice.setText(teacher.getPrice());
+        textViewCourses.setText(teacher.getCourseArrayList().size());
+        textViewRating.setText(Float.toString(teacher.getRating()));
         txtDecription.setText(teacher.getBeutifulCoursesString());
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
@@ -115,7 +115,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
         list.add(new Review());
 
 
-        reviewAdapter = new ReviewAdapter(list, this,"");
+        reviewAdapter = new ReviewAdapter(list, this);
         //Setting the adapter
         mRecyclerView.setAdapter(reviewAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -127,7 +127,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 teacher = dataSnapshot.getValue(Teacher.class);
                 if(teacher.getReviews()!= null)
                     list = teacher.getReviews();
-                reviewAdapter = new ReviewAdapter(list, mRecyclerView.getContext(),"");
+                reviewAdapter = new ReviewAdapter(list, mRecyclerView.getContext());
                 mRecyclerView.setAdapter(reviewAdapter);
             }
             @Override
@@ -135,13 +135,18 @@ public class TeacherProfileActivity extends AppCompatActivity {
             }
         });
 
-
-        btnSaveChanges.setOnClickListener(new View.OnClickListener() {
+        /**
+         * on change will add empty comment if necessary,
+         * will write changed teacher to data base,
+         * and will update the teacher's rating.
+         */
+        SaveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
                 list = reviewAdapter.getStepList();
                 teacher.setReviews(list);
+                addComment(list);
                 mDatabaseTeachers.setValue(teacher);
                 i.putExtra("list", list);
                 setResult(100, i);
@@ -224,6 +229,16 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 // Handle any errors
             }
         });
+    }
+    public void addComment(ArrayList<Review> list){
+        int size = list.size();
+        if(size > 0){
+            if(list.get(size-1).isNull()){
+
+            }else{
+                list.add(new Review());
+            }
+        }
     }
 
 }

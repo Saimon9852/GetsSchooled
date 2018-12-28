@@ -19,6 +19,15 @@ public class Teacher extends Person implements Serializable {
     private String description;
     private ArrayList<Review> reviews;
     private String photo;
+    private float rating;
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
 
     public String getDescription() {
         return description;
@@ -124,5 +133,13 @@ public class Teacher extends Person implements Serializable {
         }
         return  beutiful;
     }
+    public void updateRating(){
+        float rate = 0;
+        for(Review review : reviews){
+            rate += review.getStars();
+        }
+        this.rating = rate/reviews.size();
+    }
+
 
 }

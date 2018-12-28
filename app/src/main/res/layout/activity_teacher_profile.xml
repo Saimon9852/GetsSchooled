@@ -29,15 +29,8 @@
 
         <include
             android:id="@+id/content"
-            layout="@layout/profile_layout_content"></include>
-
-        <Button
-            android:id="@+id/buttonSaveChanges"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Save Changes"
-            app:layout_anchor="@+id/content"
-            app:layout_anchorGravity="bottom|center" />
+            layout="@layout/profile_layout_content"
+            android:layout_height="match_parent"></include>
 
     </android.support.design.widget.CoordinatorLayout>
 

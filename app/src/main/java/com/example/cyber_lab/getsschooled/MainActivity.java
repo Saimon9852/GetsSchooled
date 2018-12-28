@@ -33,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
 
         //get firebase auth instance
         auth = FirebaseAuth.getInstance();
+        if(auth.getUid() == null){
+            Intent intent = new Intent(this.getApplicationContext(),LoginActivity.class);
+            this.getApplicationContext().startActivity(intent);
+
+        }
 
         //get current user
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

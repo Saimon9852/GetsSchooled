@@ -91,10 +91,10 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:id="@+id/image_view_edit"
+                            android:id="@+id/profile_save_changes"
                             android:layout_width="176dp"
                             android:layout_height="match_parent"
-                            app:srcCompat="@android:drawable/ic_menu_edit" />
+                            app:srcCompat="@drawable/baseline_save_black_36dp" />
 
                         <ImageView
                             android:id="@+id/image_view_whatsapp"
@@ -190,7 +190,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_profile"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

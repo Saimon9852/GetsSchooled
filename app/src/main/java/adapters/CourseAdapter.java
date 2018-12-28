@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 
 import com.example.cyber_lab.getsschooled.ManageCourses;
@@ -25,7 +26,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     String hint;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageButton plus, minus;
+        ImageView plus, minus;
         AutoCompleteTextView step;
         String[] courses={"Computer Science-Infi 1" ,
                 "Computer Science-Introduction To Programming" ,
@@ -37,8 +38,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 "Computer Science-Infi 2"};
         public ViewHolder(View itemView) {
             super(itemView);
-            plus = (ImageButton) itemView.findViewById(R.id.plus);
-            minus = (ImageButton) itemView.findViewById(R.id.minus);
+            plus = (ImageView) itemView.findViewById(R.id.course_list_add);
+            minus = (ImageView) itemView.findViewById(R.id.course_list_remove);
             step = (AutoCompleteTextView) itemView.findViewById(R.id.step);
             ArrayAdapter adapter = new
                     ArrayAdapter(itemView.getContext(),android.R.layout.simple_list_item_1,courses);
