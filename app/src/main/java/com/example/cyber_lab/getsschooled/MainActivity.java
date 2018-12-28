@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         if(auth.getUid() == null){
             Intent intent = new Intent(this.getApplicationContext(),LoginActivity.class);
             this.getApplicationContext().startActivity(intent);
-
+            finish();
         }
 
         //get current user

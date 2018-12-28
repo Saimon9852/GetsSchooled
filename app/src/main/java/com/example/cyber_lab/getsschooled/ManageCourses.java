@@ -26,6 +26,8 @@ import java.util.ArrayList;
 
 import adapters.CourseAdapter;
 import adapters.TeachersAdapter;
+import objects.Course;
+import objects.Review;
 import objects.Teacher;
 
 public class ManageCourses extends AppCompatActivity {
@@ -65,10 +67,9 @@ public class ManageCourses extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 teacher = dataSnapshot.getValue(Teacher.class);
-                    if(teacher.getCourseArrayList()!= null)
-                        list = teacher.courseToStringArray();
-                        courseAdapter = new CourseAdapter(list, recyclerView.getContext(),"");
-                        recyclerView.setAdapter(courseAdapter);
+                list = teacher.courseToStringArray();
+                courseAdapter = new CourseAdapter(list, recyclerView.getContext(),"");
+                recyclerView.setAdapter(courseAdapter);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

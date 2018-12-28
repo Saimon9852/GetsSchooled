@@ -17,6 +17,10 @@ package com.example.cyber_lab.getsschooled;
         import com.google.firebase.database.DatabaseReference;
         import com.google.firebase.database.FirebaseDatabase;
 
+        import java.util.ArrayList;
+
+        import objects.Course;
+        import objects.Review;
         import objects.Teacher;
 
 public class SignupActivity extends AppCompatActivity {

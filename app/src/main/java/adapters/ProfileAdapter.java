@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import objects.Review;
@@ -19,7 +18,7 @@ public class ProfileAdapter  extends RecyclerView.Adapter<ProfileHolder> {
         mReviews = reviews;
     }
     public ProfileAdapter(Teacher teacher) {
-        mReviews = teacher.getReviews();
+        mReviews = teacher.getReviewArrayList();
     }
 
     @Override

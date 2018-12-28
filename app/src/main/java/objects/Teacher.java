@@ -1,15 +1,9 @@
 package objects;
 
-import android.graphics.Bitmap;
-import android.se.omapi.SEService;
-import android.widget.ArrayAdapter;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
-
-import javax.crypto.Cipher;
 
 public class Teacher extends Person implements Serializable {
 
@@ -17,10 +11,15 @@ public class Teacher extends Person implements Serializable {
     private String UID;
     private String price;
     private String description;
-    private ArrayList<Review> reviews;
+    private ArrayList<Review> reviewArrayList;
     private String photo;
     private float rating;
-
+    public Teacher(){
+        this.reviewArrayList = new ArrayList<>();
+        this.courseArrayList = new ArrayList<>();
+        reviewArrayList.add(new Review());
+        courseArrayList.add(new Course());
+    }
     public float getRating() {
         return rating;
     }
@@ -57,42 +56,24 @@ public class Teacher extends Person implements Serializable {
         this.photo = photo;
     }
 
-    public void setReviews(ArrayList<Review> reviews) {
-        this.reviews = reviews;
+    public void setReviewArrayList(ArrayList<Review> reviewArrayList) {
+        this.reviewArrayList = reviewArrayList;
     }
 
-    public Teacher(String email, String name, String mobilePhoneNumber, ArrayList<Course> courseArrayList, String price, ArrayList<Review> reviews) {
-        super(email, name, mobilePhoneNumber);
-        this.courseArrayList = courseArrayList;
-        this.price = price;
-        this.reviews = reviews;
-    }
 
-    //Added to merge with search tutor activity,Need to be fixed
-    public Teacher(String email, String name, String mobilePhoneNumber, ArrayList<Course> courseArrayList, String price,String photo) {
-        super(email, name, mobilePhoneNumber);
-        this.courseArrayList = courseArrayList;
-        this.price = price;
-        this.photo = photo;
-    }
-
-    public Teacher(String email, String name, String mobilePhoneNumber) {
-        super(email, name, mobilePhoneNumber);
-    }
     public String getPrice() {
         return price;
     }
 
-    public ArrayList<Review> getReviews() {
-        return reviews;
-    }
-
-    public Teacher(){
-
+    public ArrayList<Review> getReviewArrayList() {
+        return reviewArrayList;
     }
 
     public ArrayList<Course> getCourseArrayList() {
+        if(courseArrayList !=null)
             return courseArrayList;
+        courseArrayList = new ArrayList<>();
+        return  courseArrayList;
     }
 
     public void setCourseArrayList(ArrayList<Course> courseArrayList) {
@@ -112,43 +93,20 @@ public class Teacher extends Person implements Serializable {
         }
         this.courseArrayList = courses;
     }
-    public String getBeutifulCoursesString(){
-        String beutiful ="";
-        HashMap<String, ArrayList> dictMap = new HashMap<String, ArrayList>();
-        for(Course course : courseArrayList){
-            String currCourseDepartment = course.getName().split("-")[0];
-            if(dictMap.get(currCourseDepartment) == null){
-                ArrayList<String> courses = new ArrayList<String>();
-                courses.add(course.getName().split("-")[1]);
-                dictMap.put(currCourseDepartment,courses);
-            }else{
-                ArrayList<String> tempArrayList = dictMap.get(currCourseDepartment);
-                tempArrayList.add(course.getName().split("-")[1]);
-                dictMap.put(currCourseDepartment,tempArrayList);
-            }
-        }
-        Set <String> keyset = dictMap.keySet();
-        for(String key :keyset){
-            beutiful += key +":\n" + dictMap.get(key).toString().replace(",","\n");
-        }
-        return  beutiful;
-    }
+
     public void updateRating(){
         float rate = 0;
-        for(Review review : reviews){
+        for(Review review : reviewArrayList){
             rate += review.getStars();
         }
-        this.rating = rate/reviews.size();
+        this.rating = rate/ reviewArrayList.size();
     }
     public int getCourseArrayListSize(){
-        if(courseArrayList == null){
-            return  0;
-        }
         return courseArrayList.size();
     }
     public boolean isReviewedBy(String uid){
-        for(Review review : reviews){
-            if(review.getReviewerUID().equals(uid))
+        for(Review review : reviewArrayList){
+            if(!review.isNull() && review.getReviewerUID().equals(uid))
                 return true;
         }
         return false;

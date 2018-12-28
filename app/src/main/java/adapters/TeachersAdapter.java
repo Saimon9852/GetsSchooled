@@ -2,12 +2,10 @@ package adapters;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.cyber_lab.getsschooled.TeacherProfileActivity;
-import com.example.cyber_lab.getsschooled.ViewTutorsActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -85,7 +82,7 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
         mList.get(position).updateRating();
         holder.teacherName.setText("Name: " + mList.get(position).getName());
         holder.teacherPrice.setText("Price: " + mList.get(position).getPrice());
-        holder.teacherCourses.setText("Courses: " + mList.get(position).getReviews().size());
+        holder.teacherCourses.setText("Courses: " + mList.get(position).getReviewArrayList().size());
         holder.teacherRating.setText("Rating: " + Float.toString(mList.get(position).getRating()));
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
