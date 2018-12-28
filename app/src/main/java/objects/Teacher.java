@@ -80,7 +80,7 @@ public class Teacher extends Person implements Serializable {
         this.courseArrayList = courseArrayList;
     }
     public ArrayList<String> courseToStringArray(){
-        ArrayList<String> courses = new ArrayList<String>();
+        ArrayList<String> courses = new ArrayList<>();
         for (Course course : courseArrayList){
             courses.add(course.getName());
         }
