@@ -1,6 +1,7 @@
 package adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.media.Rating;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -27,17 +29,17 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     String hint;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageButton plus;
-        EditText reviewReview;
-        EditText reviewName;
+        ImageView addComment;
+        EditText reviewReview,reviewName;
         RatingBar reviewRatingBar;
         public ViewHolder(View itemView) {
             super(itemView);
-            plus = (ImageButton) itemView.findViewById(R.id.review_plus);
             reviewReview = (EditText) itemView.findViewById(R.id.review_Review);
             reviewName = (EditText) itemView.findViewById(R.id.review_name);
             reviewRatingBar = (RatingBar) itemView.findViewById(R.id.reviewRatingBar);
-            plus.setOnClickListener(new View.OnClickListener() {
+            addComment = (ImageView) itemView.findViewById(R.id.review_list_add_comment);
+
+            addComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
@@ -87,9 +89,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         }
     }
 
-    public ReviewAdapter(ArrayList<Review> reviews, Context context, String hint){
+    public ReviewAdapter(ArrayList<Review> reviews, Context context){
         this.reviews = reviews;
-        this.hint = "";
         this.context = context;
     }
 
@@ -104,17 +105,24 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         return new ViewHolder(v);
     }
 
+    /**
+     * Binds data to holder, Only last empty review have the add button.
+     * @param holder
+     * @param i
+     */
     @Override
     public void onBindViewHolder(ReviewAdapter.ViewHolder holder, final int i) {
         int x = holder.getLayoutPosition();
-
+        if( x < (reviews.size() -1)){
+            holder.addComment.setVisibility(View.GONE);
+        }
         if(reviews.get(x).getMessage().length() > 0) {
             holder.reviewReview.setText(reviews.get(x).getMessage());
             holder.reviewName.setText(reviews.get(x).getName());
             holder.reviewRatingBar.setRating(reviews.get(x).getStars());
         }
         else{
-            holder.reviewReview.setText("");
+            holder.reviewName.setHint("Name");
             holder.reviewReview.setHint("Review");
             holder.reviewReview.requestFocus();
         }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -14,26 +15,30 @@
     <LinearLayout
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:weightSum="10">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/review_name"
-                android:layout_width="314dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:background="@android:color/holo_blue_dark"
+                android:background="common_google_signin_btn_text_dark_pressed"
                 android:hint="Name"
                 android:padding="9dp"
+                android:textColorHighlight="@color/black"
+                android:textColorHint="@color/black"
+                android:textColorLink="@color/black"
+                android:textCursorDrawable="@color/black"
                 android:textSize="16sp">
 
                 <requestFocus />
@@ -41,35 +46,48 @@
 
             <EditText
                 android:id="@+id/review_Review"
-                android:layout_width="314dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:background="@color/bg_main"
+                android:background="@color/common_google_signin_btn_text_dark_pressed"
                 android:hint="Review"
                 android:padding="9dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/black"
+                android:textColorHint="@color/black"
+                android:textColorLink="@color/black"
+                android:textCursorDrawable="@color/black"
                 android:textSize="16sp">
 
                 <requestFocus />
             </EditText>
 
-            <RatingBar
-                android:id="@+id/reviewRatingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:numStars="5" />
+                android:orientation="horizontal">
+
+                <RatingBar
+                    android:id="@+id/reviewRatingBar"
+                    android:layout_width="478dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_weight="1"
+                    android:numStars="5" />
+
+                <ImageView
+                    android:id="@+id/review_list_add_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/baseline_add_comment_black_48dp" />
+            </LinearLayout>
 
         </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/review_plus"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:src="@drawable/add" />
 
     </LinearLayout>
 
