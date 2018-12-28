@@ -46,7 +46,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private TextView textViewName, textDescription,textViewPrice,textViewCourses,textViewRating;
-    private ImageView imgCamera,imgWhatsapp,imgProfile,SaveChanges;
+    private ImageView imgCamera,imgWhatsapp,imgProfile, saveChanges;
     private ArrayList<Review> list;
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -59,7 +59,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authListener;
     private ValueEventListener mDatabaseTeachersListener;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_profile);
 
@@ -67,7 +67,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
         textDescription = (TextView)findViewById(R.id.txtViewTeacherDescp);
         textViewName = (TextView)findViewById(R.id.txtViewTeacherName);
         imgProfile = (ImageView)findViewById(R.id.profile_image);
-        SaveChanges = (ImageView)findViewById(R.id.profile_save_changes);
+        saveChanges = (ImageView)findViewById(R.id.profile_save_changes);
         imgWhatsapp = (ImageView)findViewById(R.id.image_view_whatsapp);
         textViewPrice = (TextView)findViewById(R.id.textViewPrice);
         textViewCourses = (TextView)findViewById(R.id.textViewCourses);
@@ -79,13 +79,20 @@ public class TeacherProfileActivity extends AppCompatActivity {
 
         teacher = (Teacher)getIntent().getSerializableExtra("Teacher");
         auth = FirebaseAuth.getInstance();
-        UID = auth.getUid();
+        /**
+         * if we came from viewTutors teacher aint null, so we will use it.
+         * otherwise we came from profile therefore we will use the user's uid.
+         */
+        if(teacher == null)
+            UID = auth.getUid();
+        else
+            UID = teacher.getUID();
         mDatabaseTeachers = FirebaseDatabase.getInstance().getReference("Teachers").child(UID);
-
         authListener =  new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                UID = firebaseAuth.getUid();
+                if(teacher == null)
+                    UID = firebaseAuth.getUid();
                 if (UID == null) {
                     // user auth state is changed - user is null
                     // launch login activity
@@ -94,6 +101,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 }
             }
         };
+        /**
+         * listens for changes on our teachers object, if there where changes we update the views.
+         */
         mDatabaseTeachersListener = mDatabaseTeachers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -113,6 +123,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
 
             }
         });
+        /**
+         * if other user watches profile we disable the camere imageView for changing photo.
+         */
         imgCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +133,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
                     dispatchTakePictureIntent();
             }
         });
-
+        /**
+         * creates a new whatsapp activity via whatsapp link.
+         */
         imgWhatsapp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +145,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
+        /**
+         * get changes from the recycledview
+         */
         list = (ArrayList<Review>)getIntent().getSerializableExtra("list");
         //To show at least one row
         if(list == null || list.size() == 0){
@@ -144,10 +161,11 @@ public class TeacherProfileActivity extends AppCompatActivity {
          * will write changed teacher to data base,
          * and will update the teacher's rating.
          */
-        SaveChanges.setOnClickListener(new View.OnClickListener() {
+        saveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
+                reviewAdapter = new ReviewAdapter(list, saveChanges.getContext(),reviewed,auth.getUid());
                 list = reviewAdapter.getStepList();
                 teacher.setReviewArrayList(list);
                 addComment(list);
@@ -176,6 +194,13 @@ public class TeacherProfileActivity extends AppCompatActivity {
             mDatabaseTeachers.removeEventListener(mDatabaseTeachersListener);
         }
     }
+
+    /**
+     * get Picture from camera activity, change profile image and push to DB if changed
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -187,12 +212,20 @@ public class TeacherProfileActivity extends AppCompatActivity {
             changedProfileImage = true;
         }
     }
+
+    /**
+     * create a camera activity
+     */
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
+
+    /**
+     * upload image to DB
+     */
     private void uploadImage() {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -208,6 +241,10 @@ public class TeacherProfileActivity extends AppCompatActivity {
         updateUserPictureUri();
 
     }
+
+    /**
+     * pull picture from DB and set URL to teachers object and then update DB
+     */
     public  void updateUserPictureUri() {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -228,6 +265,10 @@ public class TeacherProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * pull photo from DB and display into imageProfile
+     */
     public void pullPhoto(){
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -248,6 +289,11 @@ public class TeacherProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * we can add a review only if the last review is commited (non empty).
+     * @param list
+     */
     public void addComment(ArrayList<Review> list){
         int size = list.size();
         if(size > 0){
@@ -258,6 +304,11 @@ public class TeacherProfileActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * returns true if the user (UID) reviewed the Tutor, or its the Tutor himself.
+     * false otherwise.
+     */
     public void isReviwed() {
         if (teacher.isReviewedBy(UID) || teacher.getUID().equals(UID)) {
             reviewed = true;
@@ -266,6 +317,10 @@ public class TeacherProfileActivity extends AppCompatActivity {
         }
 
     }
+
+    /**
+     * updateds the view components
+     */
     public void updatedView(){
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -277,6 +332,11 @@ public class TeacherProfileActivity extends AppCompatActivity {
         textViewRating.setText(Float.toString(teacher.getRating()));
         textDescription.setText(getBeutifulCoursesString());
     }
+
+    /**
+     * turn an ArrayList of Review to a nice String to present.
+     * @return string representation of ArrayList<Course>
+     */
     public String getBeutifulCoursesString(){
         String beautiful = "";
         String currCourseDepartment = "";
