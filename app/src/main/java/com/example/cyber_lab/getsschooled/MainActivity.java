@@ -8,11 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-
-import objects.Course;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView imageLogout,imageProfile,imageCourses,imageSetting;
@@ -44,21 +41,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        //get current user
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
-//                    // user auth state is changed - user is null
-//                    // launch login activity
-//                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    finish();
-                }
-            }
-        };
         imageLogout = (ImageView) findViewById(R.id.main_image_logout);
         imageProfile = (ImageView) findViewById(R.id.main_image_profile);
         imageCourses = (ImageView) findViewById(R.id.main_image_courses);
@@ -74,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         imageSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),ProfileActivity.class);
+                Intent intent = new Intent(v.getContext(),SettingActivity.class);
                 v.getContext().startActivity(intent);
             }
         });

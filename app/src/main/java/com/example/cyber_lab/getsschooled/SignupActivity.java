@@ -17,10 +17,6 @@ package com.example.cyber_lab.getsschooled;
         import com.google.firebase.database.DatabaseReference;
         import com.google.firebase.database.FirebaseDatabase;
 
-        import java.util.ArrayList;
-
-        import objects.Course;
-        import objects.Review;
         import objects.Teacher;
 
 public class SignupActivity extends AppCompatActivity {
@@ -116,7 +112,7 @@ public class SignupActivity extends AppCompatActivity {
                                     teacher.setMobilePhoneNumber(mobilePhone);
                                     teacher.setUID(auth.getCurrentUser().getUid());
                                     mDatabase.child(auth.getCurrentUser().getUid()).setValue(teacher);
-                                    startActivity(new Intent(SignupActivity.this, ProfileActivity.class));
+                                    startActivity(new Intent(SignupActivity.this, SettingActivity.class));
                                     finish();
                                 }
                             }

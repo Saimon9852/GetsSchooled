@@ -58,7 +58,9 @@ public class ManageCourses extends AppCompatActivity {
         mDatabaseTeachers = FirebaseDatabase.getInstance().getReference("Teachers").child(auth.getUid());
         list = getIntent().getStringArrayListExtra("list");
         cameFromTutor = getIntent().getBooleanExtra("cameFromTutor",false);
-
+        /**
+         * disallow data change from student flow
+         */
         if(!cameFromTutor) {
             submitButton.setEnabled(false);
             submitButton.setVisibility(View.GONE);
