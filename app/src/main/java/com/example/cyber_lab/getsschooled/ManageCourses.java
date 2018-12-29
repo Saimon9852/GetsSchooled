@@ -76,7 +76,7 @@ public class ManageCourses extends AppCompatActivity {
                 teacher = dataSnapshot.getValue(Teacher.class);
                 list = teacher.courseToStringArray();
                 courseAdapter = new CourseAdapter(list, recyclerView.getContext(),"");
-                recyclerView.setAdapter(courseAdapter);
+                 recyclerView.setAdapter(courseAdapter);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

@@ -110,10 +110,10 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 UID = auth.getUid();
                 teacher = dataSnapshot.getValue(Teacher.class);
                 teacher.updateRating();
-                pullPhoto();
                 updatedView();
                 isReviwed();
                 HideCameraOnNotSameUser();
+                pullPhoto();
                 mAdapter = new ProfileAdapter(teacher.getReviewArrayList());
                 mRecyclerView.setAdapter(mAdapter);
                 mRecyclerView.setLayoutManager(mLayoutManager);
@@ -172,9 +172,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 mDatabaseTeachers.setValue(teacher);
                 i.putExtra("list", list);
                 setResult(100, i);
-                if (changedProfileImage) {
-                    uploadImage();
-                }
                 finish();
             }
         });
@@ -208,8 +205,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imgProfile = (ImageView) findViewById(R.id.profile_image);
             imgProfile.setImageBitmap(imageBitmap);
-
             changedProfileImage = true;
+            uploadImage();
+
         }
     }
 
@@ -279,7 +277,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
             public void onSuccess(Uri uri) {
                 // Got the download URL for 'users/me/profile.png'
                 // Pass it to Picasso to download, show in ImageView and caching
-                Glide.with(imgProfile).load(uri).into(imgProfile);
+                Glide.with(getApplicationContext()).load(uri).into(imgProfile);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
