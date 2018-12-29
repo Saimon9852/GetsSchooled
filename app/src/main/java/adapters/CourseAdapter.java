@@ -23,7 +23,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     Context context;
     ArrayList<String> steps;
-    String hint;
+    Boolean viewerIsForegein;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView plus, minus;
@@ -44,6 +44,12 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             plus = (ImageView) itemView.findViewById(R.id.course_list_add);
             minus = (ImageView) itemView.findViewById(R.id.course_list_remove);
             step = (AutoCompleteTextView) itemView.findViewById(R.id.step);
+            if(viewerIsForegein){
+                plus.setEnabled(false);
+                plus.setVisibility(View.GONE);
+                minus.setEnabled(false);
+                minus.setVisibility(View.GONE);
+            }
             ArrayAdapter adapter = new
                     ArrayAdapter(itemView.getContext(),android.R.layout.simple_list_item_1,courses);
             step.setAdapter(adapter);
@@ -93,9 +99,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         }
     }
 
-    public CourseAdapter(ArrayList<String> steps, Context context, String hint){
+    public CourseAdapter(ArrayList<String> steps, Context context, boolean viewerIsForegein){
         this.steps = steps;
-        this.hint = "Next " + hint;
+        this.viewerIsForegein = viewerIsForegein;
         this.context = context;
     }
 
@@ -119,7 +125,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         }
         else{
             holder.step.setText(null);
-            holder.step.setHint(hint);
+            holder.step.setHint("");
             holder.step.requestFocus();
         }
     }

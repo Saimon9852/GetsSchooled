@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                     list = new ArrayList<>();
                 }
                 i.putStringArrayListExtra("list", list);
+                i.putExtra("uid", auth.getUid());
                 startActivityForResult(i, LIST_REQUEST);
             }
         });
