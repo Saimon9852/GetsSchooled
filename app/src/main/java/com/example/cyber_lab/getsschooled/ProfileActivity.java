@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -24,7 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Button btnChangeEmail, btnChangePassword, btnSendResetEmail, btnRemoveUser,
             changeEmail, changePassword, sendEmail, remove, signOut;
 
-    private EditText oldEmail, newEmail, password, newPassword;
+    private EditText oldEmail, newEmail, password, newPassword,txtPhone;
     private ProgressBar progressBar;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -64,6 +65,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         btnChangeEmail = (Button) findViewById(R.id.change_email_button);
+
         btnChangePassword = (Button) findViewById(R.id.change_password_button);
         btnSendResetEmail = (Button) findViewById(R.id.sending_pass_reset_button);
         btnRemoveUser = (Button) findViewById(R.id.remove_user_button);
@@ -92,6 +94,8 @@ public class ProfileActivity extends AppCompatActivity {
         if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
         }
+
+
 
         btnChangeEmail.setOnClickListener(new View.OnClickListener() {
             @Override

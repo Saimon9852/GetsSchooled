@@ -33,6 +33,17 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <Button
+            android:id="@+id/changeEmail"
+            style="?android:textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/input_login_hint"
+            android:text="@string/btn_change"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/old_email"
             android:layout_width="match_parent"
@@ -50,6 +61,17 @@
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:singleLine="true" />
+
+        <Button
+            android:id="@+id/changePass"
+            style="?android:textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/input_login_hint"
+            android:text="@string/btn_change"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/password"
@@ -75,9 +97,9 @@
             android:singleLine="true" />
 
         <Button
-            android:id="@+id/changeEmail"
+            android:id="@+id/changeNumber"
             style="?android:textAppearanceSmall"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@color/input_login_hint"
@@ -85,16 +107,16 @@
             android:textColor="@android:color/black"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/changePass"
-            style="?android:textAppearanceSmall"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/txtPhoneChange"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/input_login_hint"
-            android:text="@string/btn_change"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
+            android:focusableInTouchMode="true"
+            android:hint="@string/hint_password"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:singleLine="true" />
 
         <Button
             android:id="@+id/send"
