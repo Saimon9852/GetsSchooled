@@ -33,6 +33,48 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
+        <Button
+            android:id="@+id/changemmPrice"
+            style="?android:textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/input_login_hint"
+            android:text="@string/btn_change"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/new_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+
+        <Button
+            android:id="@+id/changePhone"
+            style="?android:textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/input_login_hint"
+            android:text="@string/btn_change"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/old_phone"
+            android:layout_width="match_parent"
+            android:hint="@string/hint_new_phone"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+
+
+
         <Button
             android:id="@+id/changeEmail"
             style="?android:textAppearanceSmall"
@@ -177,6 +219,29 @@
             android:textColor="@android:color/black"
             android:background="@color/input_login_hint"
             android:text="@string/btn_sign_out"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/OnChangePhone"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/input_login_hint"
+            android:text="CHANGE PHONE NUMBER"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+
+        <Button
+            android:id="@+id/OnChangePrice"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/input_login_hint"
+            android:text="CHANGE PRICE"
+            android:textColor="@android:color/black"
             android:textStyle="bold" />
 
     </LinearLayout>
