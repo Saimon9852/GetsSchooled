@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -174,6 +175,19 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 i.putExtra("list", list);
                 setResult(100, i);
                 finish();
+            }
+        });
+        textViewCourses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(TeacherProfileActivity.this, ManageCourses.class);
+                ArrayList <String> list = teacher.courseToStringArray();
+                if(list == null) {
+                    list = new ArrayList<>();
+                }
+                i.putStringArrayListExtra("list", list);
+                i.putExtra("cameFromTutor", false);
+                startActivity(i);
             }
         });
     }

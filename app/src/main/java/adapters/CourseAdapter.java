@@ -23,7 +23,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
     Context context;
     ArrayList<String> steps;
-    Boolean viewerIsForegein;
+    Boolean cameFromTutor;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView plus, minus;
@@ -44,17 +44,20 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             plus = (ImageView) itemView.findViewById(R.id.course_list_add);
             minus = (ImageView) itemView.findViewById(R.id.course_list_remove);
             step = (AutoCompleteTextView) itemView.findViewById(R.id.step);
-            if(viewerIsForegein){
+            if(!cameFromTutor){
                 plus.setEnabled(false);
                 plus.setVisibility(View.GONE);
                 minus.setEnabled(false);
                 minus.setVisibility(View.GONE);
+                step.setEnabled(false);
+            }else{
+                ArrayAdapter adapter = new
+                        ArrayAdapter(itemView.getContext(),android.R.layout.simple_list_item_1,courses);
+                step.setAdapter(adapter);
+                //for auto complete
+                step.setThreshold(1);
             }
-            ArrayAdapter adapter = new
-                    ArrayAdapter(itemView.getContext(),android.R.layout.simple_list_item_1,courses);
-            step.setAdapter(adapter);
-            //for auto complete
-            step.setThreshold(1);
+
             /**
              * delete course if minus pressed.
              */
@@ -99,9 +102,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         }
     }
 
-    public CourseAdapter(ArrayList<String> steps, Context context, boolean viewerIsForegein){
+    public CourseAdapter(ArrayList<String> steps, Context context, boolean cameFromTutor){
         this.steps = steps;
-        this.viewerIsForegein = viewerIsForegein;
+        this.cameFromTutor = cameFromTutor;
         this.context = context;
     }
 
