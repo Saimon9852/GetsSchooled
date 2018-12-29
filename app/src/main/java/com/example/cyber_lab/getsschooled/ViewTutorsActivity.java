@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
@@ -43,7 +44,7 @@ import objects.Teacher;
 public class ViewTutorsActivity extends AppCompatActivity implements AAH_FabulousFragment.Callbacks, AAH_FabulousFragment.AnimationListener {
     private List<Teacher> teachers;
     private List<Course> courses;
-    private Button btnLogOut;
+    private ImageView btnLogOut;
     private ValueEventListener mDatabaseTeachersListener;
     private ValueEventListener mDatabaseCoursesListener;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -65,7 +66,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         setContentView(R.layout.activity_view_tutors);
         //filter libary stuff
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
-        btnLogOut = (Button) findViewById(R.id.viewTutorSignOut);
+        btnLogOut = (ImageView) findViewById(R.id.viewTutorSignOut);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         ll = (LinearLayout) findViewById(R.id.ll);
         //recycled view stuff
