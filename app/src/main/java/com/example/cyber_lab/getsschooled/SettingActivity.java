@@ -140,7 +140,7 @@ public class SettingActivity extends AppCompatActivity {
                     FirebaseDatabase.getInstance().getReference()
                             .child("Teachers")
                             .child(key)
-                            .child("Price")
+                            .child("price")
                             .setValue(txtPrice.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
