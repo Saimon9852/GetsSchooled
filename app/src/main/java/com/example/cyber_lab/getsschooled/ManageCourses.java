@@ -56,7 +56,7 @@ public class ManageCourses extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         mDatabaseTeachers = FirebaseDatabase.getInstance().getReference("Teachers").child(auth.getUid());
-        list = getIntent().getStringArrayListExtra("list");
+        list = getIntent().getStringArrayListExtra("courseToStringArray");
         cameFromTutor = getIntent().getBooleanExtra("cameFromTutor",false);
         /**
          * disallow data change from student flow
@@ -108,7 +108,7 @@ public class ManageCourses extends AppCompatActivity {
                 list = courseAdapter.getStepList();
                 teacher.setCourseArrayListFromStringArrayList(list);
                 mDatabaseTeachers.setValue(teacher);
-                i.putStringArrayListExtra("list", list);
+                i.putStringArrayListExtra("courseToStringArray", list);
                 setResult(LIST_RESULT, i);
                 finish();
             }

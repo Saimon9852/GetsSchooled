@@ -47,8 +47,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private ReviewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private TextView textViewName, textDescription,textViewPrice,textViewCourses,textViewRating;
-    private ImageView imgCamera,imgWhatsapp,imgProfile, saveChanges;
-    private ArrayList<Review> list;
+    private ImageView imgCamera,imgWhatsapp,imgProfile, saveChanges,imgSetting,imgLogout;
+    private ArrayList<Review> reviewArrayList;
+    private ArrayList<String> courseArrayList;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private FirebaseAuth auth;
@@ -58,6 +59,11 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private String UID;
     private FirebaseAuth.AuthStateListener authListener;
     private ValueEventListener mDatabaseTeachersListener;
+    final int LIST_REQUEST = 1;
+    final int LIST_RESULT = 100;
+    public void signOut() {
+        auth.signOut();
+    }
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,10 +79,10 @@ public class TeacherProfileActivity extends AppCompatActivity {
         textViewCourses = (TextView)findViewById(R.id.textViewCourses);
         textViewRating = (TextView)findViewById(R.id.textViewRating);
         imgCamera = (ImageView)findViewById(R.id.image_view_camera);
-
+        imgLogout = (ImageView)findViewById(R.id.profile_image_logout);
+        imgSetting = (ImageView)findViewById(R.id.profile_image_setting);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
         teacher = (Teacher)getIntent().getSerializableExtra("Teacher");
         auth = FirebaseAuth.getInstance();
         /**
@@ -148,11 +154,11 @@ public class TeacherProfileActivity extends AppCompatActivity {
         /**
          * get changes from the recycledview
          */
-        list = (ArrayList<Review>)getIntent().getSerializableExtra("list");
+        reviewArrayList = (ArrayList<Review>)getIntent().getSerializableExtra("reviewArrayList");
         //To show at least one row
-        if(list == null || list.size() == 0){
-            list = new ArrayList<>();
-            list.add(new Review());
+        if(reviewArrayList == null || reviewArrayList.size() == 0){
+            reviewArrayList = new ArrayList<>();
+            reviewArrayList.add(new Review());
         }
 
 
@@ -165,14 +171,14 @@ public class TeacherProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
-                list = mAdapter.getStepList();
-                teacher.setReviewArrayList(list);
-                for(Review rev : list){
+                reviewArrayList = mAdapter.getStepList();
+                teacher.setReviewArrayList(reviewArrayList);
+                for(Review rev : reviewArrayList){
                     Log.d("Ehud", rev.getMessage() + "MSG");
                 }
-                addComment(list);
+                addComment(reviewArrayList);
                 mDatabaseTeachers.setValue(teacher);
-                i.putExtra("list", list);
+                i.putExtra("reviewArrayList", reviewArrayList);
                 setResult(100, i);
                 finish();
             }
@@ -181,16 +187,36 @@ public class TeacherProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(TeacherProfileActivity.this, ManageCourses.class);
-                ArrayList <String> list = teacher.courseToStringArray();
-                if(list == null) {
-                    list = new ArrayList<>();
-                }
-                i.putStringArrayListExtra("list", list);
-                i.putExtra("cameFromTutor", false);
-                startActivity(i);
+                ArrayList <String> courseToStringArray = teacher.courseToStringArray();
+//                if(courseArrayList == null) {
+//                    courseToStringArray = new ArrayList<>();
+//                }
+                Log.d("Ehud","WTF" + teacher.courseToStringArray().toString());
+                i.putStringArrayListExtra("courseToStringArray", courseToStringArray);
+                i.putExtra("cameFromTutor", teacher.getUID().equals(auth.getUid()));
+                if(teacher.getUID().equals(auth.getUid()))
+                    startActivityForResult(i, LIST_REQUEST);
+                else
+                    startActivity(i);
+
+            }
+        });
+        imgLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+                finish();
+            }
+        });
+        imgSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), SettingActivity.class);
+                v.getContext().startActivity(intent);
             }
         });
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -222,9 +248,11 @@ public class TeacherProfileActivity extends AppCompatActivity {
             imgProfile.setImageBitmap(imageBitmap);
             changedProfileImage = true;
             uploadImage();
-
         }
+        if(requestCode == LIST_REQUEST && resultCode == LIST_RESULT)
+            teacher.setCourseArrayListFromStringArrayList(data.getStringArrayListExtra("courseToStringArray"));
     }
+
 
     /**
      * create a camera activity
@@ -305,15 +333,15 @@ public class TeacherProfileActivity extends AppCompatActivity {
 
     /**
      * we can add a review only if the last review is commited (non empty).
-     * @param list
+     * @param reviewArrayList
      */
-    public void addComment(ArrayList<Review> list){
-        int size = list.size();
+    public void addComment(ArrayList<Review> reviewArrayList){
+        int size = reviewArrayList.size();
         if(size > 0){
-            if(list.get(size-1).isNull()){
+            if(reviewArrayList.get(size-1).isNull()){
 
             }else{
-                list.add(new Review());
+                reviewArrayList.add(new Review());
             }
         }
     }
@@ -381,6 +409,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
     public void HideCameraOnNotSameUser(){
         if(! (teacher.getUID().equals(UID)) ){
             imgCamera.setVisibility(View.INVISIBLE);
+            imgSetting.setVisibility(View.GONE);
+            imgLogout.setVisibility(View.GONE);
+
         }
     }
 }
