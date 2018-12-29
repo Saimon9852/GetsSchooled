@@ -27,7 +27,7 @@
                 android:id="@+id/layout_teacher_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/input_login_hint"
+                android:background="@color/fabred"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/activity_margin"
                 android:paddingBottom="@dimen/activity_margin">
