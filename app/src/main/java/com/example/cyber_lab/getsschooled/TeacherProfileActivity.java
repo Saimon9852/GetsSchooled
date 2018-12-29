@@ -43,7 +43,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private boolean changedProfileImage = false;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ReviewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private TextView textViewName, textDescription,textViewPrice,textViewCourses,textViewRating;
     private ImageView imgCamera,imgWhatsapp,imgProfile, saveChanges;
@@ -51,7 +51,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private FirebaseAuth auth;
-    private ReviewAdapter reviewAdapter;
     private boolean reviewed;
     private DatabaseReference mDatabaseTeachers;
     private Teacher teacher;
@@ -165,9 +164,11 @@ public class TeacherProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
-                reviewAdapter = new ReviewAdapter(list, saveChanges.getContext(),reviewed,auth.getUid());
-                list = reviewAdapter.getStepList();
+                list = mAdapter.getStepList();
                 teacher.setReviewArrayList(list);
+                for(Review rev : list){
+                    Log.d("Ehud", rev.getMessage() + "MSG");
+                }
                 addComment(list);
                 mDatabaseTeachers.setValue(teacher);
                 i.putExtra("list", list);

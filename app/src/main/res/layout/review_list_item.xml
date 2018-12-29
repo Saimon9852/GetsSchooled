@@ -63,31 +63,18 @@
                 <requestFocus />
             </EditText>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <RatingBar
+                android:id="@+id/review_rating_bar"
+                android:layout_width="245dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <RatingBar
-                    android:id="@+id/reviewRatingBar"
-                    android:layout_width="470dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_weight="1"
-                    android:isIndicator="true"
-                    android:numStars="5"
-                    android:visibility="visible" />
-
-                <ImageView
-                    android:id="@+id/review_list_add_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:visibility="visible"
-                    app:srcCompat="@drawable/baseline_add_comment_black_48dp" />
-            </LinearLayout>
+                android:isIndicator="false"
+                android:numStars="5"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:stepSize="1" />
 
         </LinearLayout>
 
