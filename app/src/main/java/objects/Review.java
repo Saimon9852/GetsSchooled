@@ -13,6 +13,7 @@ public class Review implements Serializable {
         this.message = "";
         this.stars = 0;
         this.name = "";
+        this.reviewerUID = "";
     }
     public Review(String message, String name, int stars){
         this.message = message;

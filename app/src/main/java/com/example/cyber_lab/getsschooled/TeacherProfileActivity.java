@@ -64,7 +64,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_teacher_profile);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_profile);
-        textDescription = (TextView)findViewById(R.id.txtViewTeacherDescp);
+//        textDescription = (TextView)findViewById(R.id.txtViewTeacherDescp);
         textViewName = (TextView)findViewById(R.id.txtViewTeacherName);
         imgProfile = (ImageView)findViewById(R.id.profile_image);
         saveChanges = (ImageView)findViewById(R.id.profile_save_changes);
@@ -114,7 +114,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 isReviwed();
                 HideCameraOnNotSameUser();
                 pullPhoto();
-                mAdapter = new ProfileAdapter(teacher.getReviewArrayList());
+                mAdapter = new ReviewAdapter(teacher.getReviewArrayList(),getApplicationContext(),reviewed,UID);
                 mRecyclerView.setAdapter(mAdapter);
                 mRecyclerView.setLayoutManager(mLayoutManager);
             }
@@ -328,7 +328,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
         textViewPrice.setText(teacher.getPrice());
         textViewCourses.setText(Integer.toString(teacher.getCourseArrayList().size()));
         textViewRating.setText(Float.toString(teacher.getRating()));
-        textDescription.setText(getBeutifulCoursesString());
+//        textDescription.setText(getBeutifulCoursesString());
     }
 
     /**

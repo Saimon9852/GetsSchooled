@@ -126,7 +126,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             holder.reviewRatingBar.setEnabled(false);
             holder.reviewReview.setEnabled(false);
             holder.reviewName.setEnabled(false);
-            holder.addComment.setVisibility(View.GONE);
+            holder.addComment.setVisibility(View.INVISIBLE);
+            holder.addComment.setEnabled(false);
         }
         else{
 
@@ -137,6 +138,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             holder.reviewName.setEnabled(true);
             holder.reviewReview.setEnabled(true);
             holder.addComment.setVisibility(View.VISIBLE);
+            holder.addComment.setEnabled(true);
+
         }
     }
 
