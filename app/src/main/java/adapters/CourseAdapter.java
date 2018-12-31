@@ -12,12 +12,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.MultiAutoCompleteTextView;
 
 import com.example.cyber_lab.getsschooled.ManageCourses;
 import com.example.cyber_lab.getsschooled.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
@@ -136,5 +139,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public ArrayList<String> getStepList(){
         return steps;
     }
+
 
 }

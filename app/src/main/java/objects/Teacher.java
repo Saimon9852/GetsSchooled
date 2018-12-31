@@ -2,11 +2,19 @@ package objects;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 
 public class Teacher extends Person implements Serializable {
-
+    final static String[] staticCourses={"Computer Science-Infi 1" ,
+                "Computer Science-Introduction To Programming" ,
+                        "Computer Science-Logic And Group Theory" ,
+                        "Computer Science-Algorthmic Number Theory" ,
+                        "Computer Science-Numerical Systems" ,
+                        "Computer Science-Discrete Mathemathics" ,
+                        "Computer Science-Linear Algebra 1" ,
+                        "Computer Science-Infi 2"};
     private ArrayList<Course> courseArrayList;
     private String UID;
     private String price;
@@ -19,7 +27,7 @@ public class Teacher extends Person implements Serializable {
         this.courseArrayList = new ArrayList<>();
         reviewArrayList.add(new Review());
         courseArrayList.add(new Course());
-    }
+        }
     public float getRating() {
         return rating;
     }
@@ -89,7 +97,8 @@ public class Teacher extends Person implements Serializable {
     public void setCourseArrayListFromStringArrayList(ArrayList<String> courseArrayList) {
         ArrayList<Course> courses = new ArrayList<Course>();
         for (String course : courseArrayList) {
-            courses.add(new Course(course));
+            if(!course.isEmpty() && findInSteps(course))
+                courses.add(new Course(course));
         }
         this.courseArrayList = courses;
     }
@@ -118,5 +127,12 @@ public class Teacher extends Person implements Serializable {
         }
         return false;
     }
+        public boolean findInSteps(String course){
+            for(String rCourse : staticCourses){
+                if(rCourse.equals(course))
+                    return  true;
+            }
+            return false;
+        }
 
 }
