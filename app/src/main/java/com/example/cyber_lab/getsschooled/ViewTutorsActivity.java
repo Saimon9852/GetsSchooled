@@ -47,7 +47,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     private ImageView btnLogOut;
     private ValueEventListener mDatabaseTeachersListener;
     private ValueEventListener mDatabaseCoursesListener;
-    private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     FloatingActionButton fab2;
     RecyclerView recyclerView;
@@ -76,10 +76,21 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         mData.setmList(teachers);
-        mAdapter = new TeachersAdapter(mList,  ViewTutorsActivity.this);
+        mAdapter = new TeachersAdapter(mList,  ViewTutorsActivity.this,getApplicationContext());
         recyclerView.setAdapter(mAdapter);
 
         auth = FirebaseAuth.getInstance();
+        authListener =  new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (auth.getCurrentUser()  == null) {
+                    // user auth state is changed - user is null
+                    // launch login activity
+                    startActivity(new Intent(ViewTutorsActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        };
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,6 +197,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         super.onStart();
         mDatabaseCourses.addValueEventListener(mDatabaseCoursesListener);
         mDatabaseTeachers.addValueEventListener(mDatabaseTeachersListener);
+        auth.addAuthStateListener(authListener);
     }
 
     @Override
@@ -195,6 +207,8 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
             mDatabaseTeachers.removeEventListener(mDatabaseTeachersListener);
         if(mDatabaseCourses != null)
             mDatabaseCourses.removeEventListener(mDatabaseCoursesListener);
+        if(auth != null)
+            auth.removeAuthStateListener(authListener);
 
     }
     public ArrayMap<String, List<String>> getApplied_filters() {
