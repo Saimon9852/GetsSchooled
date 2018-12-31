@@ -96,10 +96,17 @@ public class Teacher extends Person implements Serializable {
 
     public void updateRating(){
         float rate = 0;
+        int realSize = 0;
         for(Review review : reviewArrayList){
-            rate += review.getStars();
+            if( ! review.isNull()){
+                realSize++;
+                rate += review.getStars();
+            }
         }
-        this.rating = rate/ reviewArrayList.size();
+        if(realSize != 0)
+            this.rating = rate/ realSize;
+        else
+            this.rating = 0;
     }
     public int getCourseArrayListSize(){
         return courseArrayList.size();

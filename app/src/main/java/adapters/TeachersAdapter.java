@@ -73,7 +73,7 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
                     // Pass it to Picasso to download, show in ImageView and caching
-                    Glide.with(holder.card_view.getContext()).load(uri.toString()).into(holder.teacherPicture);
+                    Glide.with(applicationContext).load(uri.toString()).into(holder.teacherPicture);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

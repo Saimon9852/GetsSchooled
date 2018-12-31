@@ -180,7 +180,8 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 mDatabaseTeachers.setValue(teacher);
                 i.putExtra("reviewArrayList", reviewArrayList);
                 setResult(100, i);
-                finish();
+                if(! teacher.getUID().equals(auth.getUid()))
+                    finish();
             }
         });
         textViewCourses.setOnClickListener(new View.OnClickListener() {
