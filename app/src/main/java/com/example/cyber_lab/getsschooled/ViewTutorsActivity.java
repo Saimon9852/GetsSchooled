@@ -107,7 +107,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                         teachers= new ArrayList<>();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Teacher teacher = snapshot.getValue(Teacher.class);
-                            if(teacher.getCourseArrayList()!= null && teacher.getCourseArrayList().size() > 0 ){
+                            if(teacher.getCourseArrayList()!= null && teacher.hasCourses() ){
                                 teachers.add(teacher);
                             }
 

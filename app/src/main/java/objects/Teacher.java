@@ -2,9 +2,6 @@ package objects;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Set;
 
 public class Teacher extends Person implements Serializable {
     final static String[] staticCourses={"Computer Science-Infi 1" ,
@@ -97,7 +94,7 @@ public class Teacher extends Person implements Serializable {
     public void setCourseArrayListFromStringArrayList(ArrayList<String> courseArrayList) {
         ArrayList<Course> courses = new ArrayList<Course>();
         for (String course : courseArrayList) {
-            if(!course.isEmpty() && findInSteps(course))
+            if(!course.isEmpty() && isLegalCourse(course))
                 courses.add(new Course(course));
         }
         this.courseArrayList = courses;
@@ -127,12 +124,20 @@ public class Teacher extends Person implements Serializable {
         }
         return false;
     }
-        public boolean findInSteps(String course){
+        public boolean isLegalCourse(String course){
             for(String rCourse : staticCourses){
                 if(rCourse.equals(course))
                     return  true;
             }
             return false;
         }
+    public boolean hasCourses() {
+        for (Course course : courseArrayList) {
+            if (!course.getName().isEmpty())
+                return true;
+        }
+        return false;
+
+    }
 
 }
