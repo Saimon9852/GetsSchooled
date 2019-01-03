@@ -27,7 +27,7 @@
     <color name="filters_buttons">#ff4081</color>
     <color name="filters_buttons_selected">#c2185b</color>
     <color name="filters_chips">#ffffff</color>
-
+    <color name="recycle_profile">#bfd2d2d2</color>
     <color name="orange">#ff5722</color>
     <color name="brown">#795548</color>
 
