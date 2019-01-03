@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 
 import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -112,6 +113,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                             }
 
                         }
+                        Collections.sort(teachers);
                         mData.setmList(teachers);
                         mList.clear();
                         mList.addAll(teachers);

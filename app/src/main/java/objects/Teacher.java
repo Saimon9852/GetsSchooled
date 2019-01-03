@@ -3,7 +3,7 @@ package objects;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Teacher extends Person implements Serializable {
+public class Teacher extends Person implements Serializable,Comparable<Teacher> {
     final static String[] staticCourses={"Computer Science-Infi 1" ,
                 "Computer Science-Introduction To Programming" ,
                         "Computer Science-Logic And Group Theory" ,
@@ -139,5 +139,21 @@ public class Teacher extends Person implements Serializable {
         return false;
 
     }
+
+    @Override
+    public int compareTo(Teacher teacher) {
+
+        if (this.rating > teacher.getRating()) {
+            return 1;
+        }
+        else if (this.rating <  teacher.getRating()) {
+            return -1;
+        }
+        else {
+            return 0;
+        }
+
+    }
+
 
 }
