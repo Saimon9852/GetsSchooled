@@ -2,10 +2,18 @@ package com.example.cyber_lab.getsschooled;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.transition.Visibility;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -70,7 +78,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_teacher_profile);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_profile);
-//        textDescription = (TextView)findViewById(R.id.txtViewTeacherDescp);
+        textDescription = (TextView)findViewById(R.id.txtViewTeacherDescp);
         textViewName = (TextView)findViewById(R.id.txtViewTeacherName);
         imgProfile = (ImageView)findViewById(R.id.profile_image);
         saveChanges = (ImageView)findViewById(R.id.profile_save_changes);
@@ -259,6 +267,9 @@ public class TeacherProfileActivity extends AppCompatActivity {
         if(requestCode == LIST_REQUEST && resultCode == LIST_RESULT)
             teacher.setCourseArrayListFromStringArrayList(data.getStringArrayListExtra("courseToStringArray"));
     }
+
+
+
 
 
     /**

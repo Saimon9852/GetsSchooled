@@ -64,7 +64,7 @@
                 <RatingBar
                     android:id="@+id/review_rating_bar"
                     android:layout_width="245dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="43dp"
                     android:layout_marginLeft="70dp"
                     android:layout_marginRight="70dp"
                     android:layout_weight="1"
