@@ -114,6 +114,9 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
 
                         }
                         Collections.sort(teachers);
+                        for(Teacher t : teachers){
+                             Log.d("saimon",t.getName());
+                        }
                         mData.setmList(teachers);
                         mList.clear();
                         mList.addAll(teachers);
@@ -180,6 +183,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                     }
                     Log.d("k9res", "new size: " + filteredList.size());
                     mList.clear();
+                    Collections.sort(teacherList);
                     mList.addAll(teacherList);
                     mAdapter.notifyDataSetChanged();
 

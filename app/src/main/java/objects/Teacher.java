@@ -1,5 +1,7 @@
 package objects;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -142,14 +144,16 @@ public class Teacher extends Person implements Serializable,Comparable<Teacher> 
 
     @Override
     public int compareTo(Teacher teacher) {
-
         if (this.rating > teacher.getRating()) {
-            return 1;
+            return -1;
+
         }
         else if (this.rating <  teacher.getRating()) {
-            return -1;
+            Log.d("saimon","-1");
+            return 1;
         }
         else {
+            Log.d("saimon","0");
             return 0;
         }
 
