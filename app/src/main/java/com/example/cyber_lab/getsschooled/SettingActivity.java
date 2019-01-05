@@ -1,7 +1,10 @@
 package com.example.cyber_lab.getsschooled;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,12 +16,16 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.IOException;
+import java.util.List;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -141,18 +148,34 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                if (user != null && !newLocation.getText().toString().trim().equals("")) {
+                LatLng loc = getLocationFromAddress(getApplicationContext(),newLocation.getText().toString().trim());
+                if (user != null && !newLocation.getText().toString().trim().equals("") && loc != null) {
                     String key = user.getUid();
                     FirebaseDatabase.getInstance().getReference()
                             .child("Teachers")
                             .child(key)
-                            .child("location")
-                            .setValue(new Location("")).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            .child("lat")
+                            .setValue(loc.latitude).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                progressBar.setVisibility(View.GONE);
+                            } else {
+                                Toast.makeText(SettingActivity.this, "Failed to update location", Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Teachers")
+                            .child(key)
+                            .child("lon")
+                            .setValue(loc.latitude).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(SettingActivity.this, "Location is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
-                                signOut();
+                                finish();
                                 progressBar.setVisibility(View.GONE);
                             } else {
                                 Toast.makeText(SettingActivity.this, "Failed to update location", Toast.LENGTH_LONG).show();
@@ -456,6 +479,35 @@ public class SettingActivity extends AppCompatActivity {
 
     }
 
+    /***
+     * convert address to LatLng location.
+     * @param context
+     * @param strAddress
+     * @return
+     */
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            Address location = address.get(0);
+            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+        }
+
+        return p1;
+    }
     //sign out method
     public void signOut() {
         auth.signOut();
