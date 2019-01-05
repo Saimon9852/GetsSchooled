@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Firebase Auth</string>
+    <string name="app_name">getSchooled</string>
     <string name="action_sign_in_short">Register</string>
     <string name="email">Email</string>
     <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
@@ -25,6 +25,7 @@
     <string name="btn_reset_password">Reset Password</string>
     <string name="btn_back"><![CDATA[<< Back]]></string>
     <string name="hint_new_email">New Email</string>
+    <string name="hint_new_phone">New Phone number</string>
     <string name="btn_change">Change</string>
     <string name="btn_send">Send</string>
     <string name="btn_remove">Remove</string>

@@ -1,12 +1,19 @@
 package objects;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
 
-public class Teacher extends Person implements Serializable {
-
+public class Teacher extends Person implements Serializable,Comparable<Teacher> {
+    final static String[] staticCourses={"Computer Science-Infi 1" ,
+                "Computer Science-Introduction To Programming" ,
+                        "Computer Science-Logic And Group Theory" ,
+                        "Computer Science-Algorthmic Number Theory" ,
+                        "Computer Science-Numerical Systems" ,
+                        "Computer Science-Discrete Mathemathics" ,
+                        "Computer Science-Linear Algebra 1" ,
+                        "Computer Science-Infi 2"};
     private ArrayList<Course> courseArrayList;
     private String UID;
     private String price;
@@ -19,7 +26,7 @@ public class Teacher extends Person implements Serializable {
         this.courseArrayList = new ArrayList<>();
         reviewArrayList.add(new Review());
         courseArrayList.add(new Course());
-    }
+        }
     public float getRating() {
         return rating;
     }
@@ -89,17 +96,25 @@ public class Teacher extends Person implements Serializable {
     public void setCourseArrayListFromStringArrayList(ArrayList<String> courseArrayList) {
         ArrayList<Course> courses = new ArrayList<Course>();
         for (String course : courseArrayList) {
-            courses.add(new Course(course));
+            if(!course.isEmpty() && isLegalCourse(course))
+                courses.add(new Course(course));
         }
         this.courseArrayList = courses;
     }
 
     public void updateRating(){
         float rate = 0;
+        int realSize = 0;
         for(Review review : reviewArrayList){
-            rate += review.getStars();
+            if( ! review.isNull()){
+                realSize++;
+                rate += review.getStars();
+            }
         }
-        this.rating = rate/ reviewArrayList.size();
+        if(realSize != 0)
+            this.rating = rate/ realSize;
+        else
+            this.rating = 0;
     }
     public int getCourseArrayListSize(){
         return courseArrayList.size();
@@ -111,5 +126,38 @@ public class Teacher extends Person implements Serializable {
         }
         return false;
     }
+        public boolean isLegalCourse(String course){
+            for(String rCourse : staticCourses){
+                if(rCourse.equals(course))
+                    return  true;
+            }
+            return false;
+        }
+    public boolean hasCourses() {
+        for (Course course : courseArrayList) {
+            if (!course.getName().isEmpty())
+                return true;
+        }
+        return false;
+
+    }
+
+    @Override
+    public int compareTo(Teacher teacher) {
+        if (this.rating > teacher.getRating()) {
+            return -1;
+
+        }
+        else if (this.rating <  teacher.getRating()) {
+            Log.d("saimon","-1");
+            return 1;
+        }
+        else {
+            Log.d("saimon","0");
+            return 0;
+        }
+
+    }
+
 
 }

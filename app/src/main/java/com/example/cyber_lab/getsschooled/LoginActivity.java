@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             boolean unm=sp1.getBoolean("logAsTeacher", false);
 
             if(unm)
-                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                 startActivity(new Intent(LoginActivity.this, TeacherProfileActivity.class));
             else
                 startActivity(new Intent(LoginActivity.this, ViewTutorsActivity.class));
 
@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                                 } else {
                                     Intent intent;
                                     if(isTeacher.isChecked())
-                                         intent = new Intent(LoginActivity.this, MainActivity.class);
+                                         intent = new Intent(LoginActivity.this, TeacherProfileActivity.class);
                                     else
                                         intent = new Intent(LoginActivity.this, ViewTutorsActivity.class);
                                     startActivity(intent);

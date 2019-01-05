@@ -36,21 +36,21 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             super(itemView);
             reviewReview = (EditText) itemView.findViewById(R.id.review_Review);
             reviewName = (EditText) itemView.findViewById(R.id.review_name);
-            reviewRatingBar = (RatingBar) itemView.findViewById(R.id.reviewRatingBar);
-            addComment = (ImageView) itemView.findViewById(R.id.review_list_add_comment);
+            reviewRatingBar = (RatingBar) itemView.findViewById(R.id.review_rating_bar);
+//            addComment = (ImageView) itemView.findViewById(R.id.review_list_add_comment);
 
-            addComment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    Iterator<Review> iterator = reviews.iterator();
-                    if(position == reviews.size()-1 && !(reviews.get(position).isNull()))
-                        try {
-                            reviews.add(position + 1, new Review());
-                            notifyItemInserted(position + 1);
-                        }catch (ArrayIndexOutOfBoundsException e){e.printStackTrace();}
-                }
-            });
+//            addComment.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int position = getAdapterPosition();
+//                    Iterator<Review> iterator = reviews.iterator();
+//                    if(position == reviews.size()-1 && !(reviews.get(position).isNull()))
+//                        try {
+//                            reviews.add(position + 1, new Review());
+//                            notifyItemInserted(position + 1);
+//                        }catch (ArrayIndexOutOfBoundsException e){e.printStackTrace();}
+//                }
+//            });
 
             reviewReview.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -96,6 +96,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         this.reviews = reviews;
         this.context = context;
         this.reviewed = reviewed;
+        this.uid = uid;
     }
 
     @Override
@@ -123,20 +124,23 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             holder.reviewName.setText(reviews.get(x).getName());
             holder.reviewRatingBar.setRating(reviews.get(x).getStars());
 
-            holder.reviewRatingBar.setEnabled(false);
+            holder.reviewRatingBar.setIsIndicator(true);
             holder.reviewReview.setEnabled(false);
             holder.reviewName.setEnabled(false);
-            holder.addComment.setVisibility(View.GONE);
+//            holder.addComment.setVisibility(View.INVISIBLE);
+//            holder.addComment.setEnabled(false);
         }
         else{
 
             holder.reviewName.setHint("Name");
             holder.reviewReview.setHint("Review");
             holder.reviewReview.requestFocus();
-            holder.reviewRatingBar.setEnabled(true);
+            holder.reviewRatingBar.setIsIndicator(false);
             holder.reviewName.setEnabled(true);
             holder.reviewReview.setEnabled(true);
-            holder.addComment.setVisibility(View.VISIBLE);
+//            holder.addComment.setVisibility(View.VISIBLE);
+//            holder.addComment.setEnabled(true);
+
         }
     }
 

@@ -16,16 +16,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class ProfileActivity extends AppCompatActivity {
+public class SettingActivity extends AppCompatActivity {
 
     private Button btnChangeEmail, btnChangePassword, btnSendResetEmail, btnRemoveUser,
-            changeEmail, changePassword, sendEmail, remove, signOut;
+            changeEmail, changePassword, sendEmail, remove, signOut,btnPhone,btnChangePhone,btnChangePrice,btnPrice;
 
-    private EditText oldEmail, newEmail, password, newPassword,txtPhone;
+    private EditText oldEmail, newEmail, password, newPassword,txtPhone,txtPrice;
     private ProgressBar progressBar;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -56,7 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
                 if (user == null) {
                     // user auth state is changed - user is null
                     // launch login activity
-                    startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                    startActivity(new Intent(SettingActivity.this, LoginActivity.class));
                     finish();
                 }
             }
@@ -74,11 +73,24 @@ public class ProfileActivity extends AppCompatActivity {
         sendEmail = (Button) findViewById(R.id.send);
         remove = (Button) findViewById(R.id.remove);
         signOut = (Button) findViewById(R.id.sign_out);
+        ////
+        btnPhone = (Button) findViewById(R.id.OnChangePhone);
+        btnChangePhone = (Button) findViewById(R.id.changePhone);
+        txtPhone = (EditText) findViewById(R.id.old_phone);
 
+        btnPrice = (Button) findViewById(R.id.OnChangePrice);
+        btnChangePrice = (Button) findViewById(R.id.changemmPrice);
+        txtPrice = (EditText) findViewById(R.id.new_price);
+        ////
         oldEmail = (EditText) findViewById(R.id.old_email);
         newEmail = (EditText) findViewById(R.id.new_email);
         password = (EditText) findViewById(R.id.password);
         newPassword = (EditText) findViewById(R.id.newPassword);
+
+        txtPhone.setVisibility(View.GONE);
+        btnChangePhone.setVisibility(View.GONE);
+        txtPrice.setVisibility(View.GONE);
+        btnChangePrice.setVisibility(View.GONE);
 
         oldEmail.setVisibility(View.GONE);
         newEmail.setVisibility(View.GONE);
@@ -96,10 +108,121 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
 
+        btnPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                txtPhone.setVisibility(View.GONE);
+                btnChangePhone.setVisibility(View.GONE);
+                txtPrice.setVisibility(View.GONE);
+                txtPrice.setVisibility(View.VISIBLE);
+                btnChangePrice.setVisibility(View.GONE);
+                oldEmail.setVisibility(View.GONE);
+                newEmail.setVisibility(View.GONE);
+                password.setVisibility(View.GONE);
+                btnChangePrice.setVisibility(View.VISIBLE);
+                newPassword.setVisibility(View.GONE);
+                changeEmail.setVisibility(View.GONE);
+                changePassword.setVisibility(View.GONE);
+                sendEmail.setVisibility(View.GONE);
+                remove.setVisibility(View.GONE);
+
+            }
+        });
+
+
+        btnChangePrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                if (user != null && !txtPrice.getText().toString().trim().equals("")) {
+                    String key = user.getUid();
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Teachers")
+                            .child(key)
+                            .child("price")
+                            .setValue(txtPrice.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(SettingActivity.this, "Price is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
+                                signOut();
+                                progressBar.setVisibility(View.GONE);
+                            } else {
+                                Toast.makeText(SettingActivity.this, "Failed to update price", Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                } else if (txtPrice.getText().toString().trim().equals("")) {
+                    txtPrice.setError("Enter price");
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
+
+
+        ////////////////////////////////////////////////////////////////////////////////
+        btnPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                txtPhone.setVisibility(View.VISIBLE);
+                btnChangePhone.setVisibility(View.VISIBLE);
+                txtPrice.setVisibility(View.GONE);
+                btnChangePrice.setVisibility(View.GONE);
+                oldEmail.setVisibility(View.GONE);
+                newEmail.setVisibility(View.GONE);
+                password.setVisibility(View.GONE);
+                newPassword.setVisibility(View.GONE);
+                changeEmail.setVisibility(View.GONE);
+                changePassword.setVisibility(View.GONE);
+                sendEmail.setVisibility(View.GONE);
+                remove.setVisibility(View.GONE);
+
+            }
+        });
+
+
+        btnChangePhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                if (user != null && !txtPhone.getText().toString().trim().equals("")) {
+                    String key = user.getUid();
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Teachers")
+                            .child(key)
+                            .child("mobilePhoneNumber")
+                            .setValue(txtPhone.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(SettingActivity.this, "Phone number is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
+                                signOut();
+                                progressBar.setVisibility(View.GONE);
+                            } else {
+                                Toast.makeText(SettingActivity.this, "Failed to update phone number", Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                } else if (txtPhone.getText().toString().trim().equals("")) {
+                    txtPhone.setError("Enter phone number");
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
+
+/////////////////////////////////////////////////////////////////
         btnChangeEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                txtPhone.setVisibility(View.GONE);
+                btnChangePhone.setVisibility(View.GONE);
+                txtPrice.setVisibility(View.GONE);
+                btnChangePrice.setVisibility(View.GONE);
                 oldEmail.setVisibility(View.GONE);
                 newEmail.setVisibility(View.VISIBLE);
                 password.setVisibility(View.GONE);
@@ -121,11 +244,11 @@ public class ProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(ProfileActivity.this, "Email address is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(SettingActivity.this, "Email address is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
                                         signOut();
                                         progressBar.setVisibility(View.GONE);
                                     } else {
-                                        Toast.makeText(ProfileActivity.this, "Failed to update email!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(SettingActivity.this, "Failed to update email!", Toast.LENGTH_LONG).show();
                                         progressBar.setVisibility(View.GONE);
                                     }
                                 }
@@ -140,6 +263,11 @@ public class ProfileActivity extends AppCompatActivity {
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                txtPhone.setVisibility(View.GONE);
+                btnChangePhone.setVisibility(View.GONE);
+                txtPrice.setVisibility(View.GONE);
+                btnChangePrice.setVisibility(View.GONE);
                 oldEmail.setVisibility(View.GONE);
                 newEmail.setVisibility(View.GONE);
                 password.setVisibility(View.GONE);
@@ -165,11 +293,11 @@ public class ProfileActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(ProfileActivity.this, "Password is updated, sign in with new password!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(SettingActivity.this, "Password is updated, sign in with new password!", Toast.LENGTH_SHORT).show();
                                             signOut();
                                             progressBar.setVisibility(View.GONE);
                                         } else {
-                                            Toast.makeText(ProfileActivity.this, "Failed to update password!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(SettingActivity.this, "Failed to update password!", Toast.LENGTH_SHORT).show();
                                             progressBar.setVisibility(View.GONE);
                                         }
                                     }
@@ -185,6 +313,11 @@ public class ProfileActivity extends AppCompatActivity {
         btnSendResetEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                txtPhone.setVisibility(View.GONE);
+                btnChangePhone.setVisibility(View.GONE);
+                txtPrice.setVisibility(View.GONE);
+                btnChangePrice.setVisibility(View.GONE);
                 oldEmail.setVisibility(View.VISIBLE);
                 newEmail.setVisibility(View.GONE);
                 password.setVisibility(View.GONE);
@@ -206,10 +339,10 @@ public class ProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(ProfileActivity.this, "Reset password email is sent!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SettingActivity.this, "Reset password email is sent!", Toast.LENGTH_SHORT).show();
                                         progressBar.setVisibility(View.GONE);
                                     } else {
-                                        Toast.makeText(ProfileActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SettingActivity.this, "Failed to send reset email!", Toast.LENGTH_SHORT).show();
                                         progressBar.setVisibility(View.GONE);
                                     }
                                 }
@@ -231,12 +364,12 @@ public class ProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(ProfileActivity.this, "Your profile is deleted:( Create a account now!", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(ProfileActivity.this, SignupActivity.class));
+                                        Toast.makeText(SettingActivity.this, "Your profile is deleted:( Create a account now!", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(SettingActivity.this, SignupActivity.class));
                                         finish();
                                         progressBar.setVisibility(View.GONE);
                                     } else {
-                                        Toast.makeText(ProfileActivity.this, "Failed to delete your account!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SettingActivity.this, "Failed to delete your account!", Toast.LENGTH_SHORT).show();
                                         progressBar.setVisibility(View.GONE);
                                     }
                                 }

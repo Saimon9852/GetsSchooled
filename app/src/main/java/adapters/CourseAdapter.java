@@ -12,18 +12,21 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.MultiAutoCompleteTextView;
 
 import com.example.cyber_lab.getsschooled.ManageCourses;
 import com.example.cyber_lab.getsschooled.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
     Context context;
     ArrayList<String> steps;
-    String hint;
+    Boolean cameFromTutor;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView plus, minus;
@@ -44,11 +47,20 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
             plus = (ImageView) itemView.findViewById(R.id.course_list_add);
             minus = (ImageView) itemView.findViewById(R.id.course_list_remove);
             step = (AutoCompleteTextView) itemView.findViewById(R.id.step);
-            ArrayAdapter adapter = new
-                    ArrayAdapter(itemView.getContext(),android.R.layout.simple_list_item_1,courses);
-            step.setAdapter(adapter);
-            //for auto complete
-            step.setThreshold(1);
+            if(!cameFromTutor){
+                plus.setEnabled(false);
+                plus.setVisibility(View.GONE);
+                minus.setEnabled(false);
+                minus.setVisibility(View.GONE);
+                step.setEnabled(false);
+            }else{
+                ArrayAdapter adapter = new
+                        ArrayAdapter(itemView.getContext(),android.R.layout.simple_list_item_1,courses);
+                step.setAdapter(adapter);
+                //for auto complete
+                step.setThreshold(1);
+            }
+
             /**
              * delete course if minus pressed.
              */
@@ -93,9 +105,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         }
     }
 
-    public CourseAdapter(ArrayList<String> steps, Context context, String hint){
+    public CourseAdapter(ArrayList<String> steps, Context context, boolean cameFromTutor){
         this.steps = steps;
-        this.hint = "Next " + hint;
+        this.cameFromTutor = cameFromTutor;
         this.context = context;
     }
 
@@ -119,7 +131,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         }
         else{
             holder.step.setText(null);
-            holder.step.setHint(hint);
+            holder.step.setHint("");
             holder.step.requestFocus();
         }
     }
@@ -127,5 +139,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public ArrayList<String> getStepList(){
         return steps;
     }
+
 
 }

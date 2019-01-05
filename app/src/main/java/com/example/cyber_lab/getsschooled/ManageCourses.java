@@ -45,6 +45,7 @@ public class ManageCourses extends AppCompatActivity {
     ValueEventListener mDatabaseValueEventListener;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authStateListener;
+    private boolean cameFromTutor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +56,15 @@ public class ManageCourses extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         mDatabaseTeachers = FirebaseDatabase.getInstance().getReference("Teachers").child(auth.getUid());
-        list = getIntent().getStringArrayListExtra("list");
+        list = getIntent().getStringArrayListExtra("courseToStringArray");
+        cameFromTutor = getIntent().getBooleanExtra("cameFromTutor",false);
+        /**
+         * disallow data change from student flow
+         */
+        if(!cameFromTutor) {
+            submitButton.setEnabled(false);
+            submitButton.setVisibility(View.GONE);
+        }
 
         //To show at least one row
         if(list ==null || list.size() == 0)
@@ -65,7 +74,7 @@ public class ManageCourses extends AppCompatActivity {
         }
 
 
-        courseAdapter = new CourseAdapter(list, this,"");
+        courseAdapter = new CourseAdapter(list, this,cameFromTutor);
         llm = new LinearLayoutManager(this);
         //Setting the adapter
         recyclerView.setAdapter(courseAdapter);
@@ -75,8 +84,7 @@ public class ManageCourses extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 teacher = dataSnapshot.getValue(Teacher.class);
                 list = teacher.courseToStringArray();
-                courseAdapter = new CourseAdapter(list, recyclerView.getContext(),"");
-                recyclerView.setAdapter(courseAdapter);
+                courseAdapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -100,7 +108,7 @@ public class ManageCourses extends AppCompatActivity {
                 list = courseAdapter.getStepList();
                 teacher.setCourseArrayListFromStringArrayList(list);
                 mDatabaseTeachers.setValue(teacher);
-                i.putStringArrayListExtra("list", list);
+                i.putStringArrayListExtra("courseToStringArray", list);
                 setResult(LIST_RESULT, i);
                 finish();
             }

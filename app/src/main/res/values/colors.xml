@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00bcd4</color>
+    <color name="colorPrimary">#4d000a</color>
     <color name="colorPrimaryDark">#d7a72400</color>
     <color name="colorAccent">#0d0426</color>
     <color name="bg_login">#26ae90</color>
@@ -27,7 +27,7 @@
     <color name="filters_buttons">#ff4081</color>
     <color name="filters_buttons_selected">#c2185b</color>
     <color name="filters_chips">#ffffff</color>
-
+    <color name="recycle_profile">#bfd2d2d2</color>
     <color name="orange">#ff5722</color>
     <color name="brown">#795548</color>
 

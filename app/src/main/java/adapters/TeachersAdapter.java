@@ -1,6 +1,7 @@
 package adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -34,10 +35,12 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
 
     List<Teacher> mList = new ArrayList<>();
     Activity _activity;
+    Context applicationContext;
 
-    public TeachersAdapter(List<Teacher> list_urls,Activity a) {
+    public TeachersAdapter(List<Teacher> list_urls, Activity a, Context applicationContext) {
         this.mList = list_urls;
         this._activity = a;
+        this.applicationContext = applicationContext;
     }
 
 
@@ -70,7 +73,7 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
                 public void onSuccess(Uri uri) {
                     // Got the download URL for 'users/me/profile.png'
                     // Pass it to Picasso to download, show in ImageView and caching
-                    Glide.with(holder.card_view.getContext()).load(uri.toString()).into(holder.teacherPicture);
+                    Glide.with(applicationContext).load(uri.toString()).into(holder.teacherPicture);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -82,7 +85,7 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
         mList.get(position).updateRating();
         holder.teacherName.setText("Name: " + mList.get(position).getName());
         holder.teacherPrice.setText("Price: " + mList.get(position).getPrice());
-        holder.teacherCourses.setText("Courses: " + mList.get(position).getReviewArrayList().size());
+        holder.teacherCourses.setText("Courses: " + mList.get(position).getCourseArrayList().size());
         holder.teacherRating.setText("Rating: " + Float.toString(mList.get(position).getRating()));
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override

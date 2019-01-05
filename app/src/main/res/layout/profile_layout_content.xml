@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
+    android:layout_centerInParent="true"
+    android:foreground="?android:attr/selectableItemBackground"
     android:layout_height="match_parent"
     tools:context="com.example.cyber_lab.getsschooled.TeacherProfileActivity">
 
@@ -13,6 +15,9 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:foreground="?android:attr/selectableItemBackground"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -22,6 +27,7 @@
             android:orientation="vertical"
             tools:context="com.example.cyber_lab.getsschooled.TeacherProfileActivity"
             tools:showIn="@layout/activity_teacher_profile">
+
 
             <LinearLayout
                 android:id="@+id/layout_teacher_profile"
@@ -37,7 +43,7 @@
                     android:layout_height="@dimen/profile_image"
                     android:layout_gravity="center_horizontal">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profile_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -45,7 +51,9 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="0dp"
                         android:layout_marginTop="0dp"
-                        tools:srcCompat="@tools:sample/avatars"></ImageView>
+                        tools:srcCompat="@tools:sample/avatars" />
+
+
 
                     <ImageView
                         android:id="@+id/image_view_camera"
@@ -55,63 +63,73 @@
                         android:layout_alignParentBottom="true"
                         app:srcCompat="@android:drawable/ic_menu_camera" />
 
+
                 </RelativeLayout>
 
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/txtViewTeacherName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="3dp"
+                    android:text="TextView"
+                    android:textSize="24sp" />
+
+
+                <TextView
+                    android:id="@+id/txtViewTeacherDescp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="sans-serif"
+                    android:letterSpacing="0.1"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/profile_about" />
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/txtViewTeacherName"
-                        android:layout_width="102dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/dimen_8dp"
-                        android:fontFamily="sans-serif"
-                        android:letterSpacing="0.1"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/profile_name"
-                        android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/txtViewTeacherDescp"
+                    <ImageView
+                        android:id="@+id/profile_save_changes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
                         android:layout_gravity="center_horizontal"
-                        android:fontFamily="sans-serif"
-                        android:letterSpacing="0.1"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/profile_about" />
+                        android:layout_marginStart="68dp"
+                        android:layout_marginEnd="92dp"
+                        android:layout_toStartOf="@+id/image_view_whatsapp"
+                        android:paddingHorizontal="22dp"
+                        app:srcCompat="@drawable/outline_rate_review_black_18dp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/image_view_whatsapp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginEnd="50dp"
+                        android:paddingHorizontal="22dp"
+                        app:srcCompat="@drawable/whatsapp" />
 
-                        <ImageView
-                            android:id="@+id/profile_save_changes"
-                            android:layout_width="176dp"
-                            android:layout_height="match_parent"
-                            app:srcCompat="@drawable/baseline_save_black_36dp" />
 
-                        <ImageView
-                            android:id="@+id/image_view_whatsapp"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            app:srcCompat="@drawable/whatsapp" />
-                    </LinearLayout>
-
-                </LinearLayout>
+                </RelativeLayout>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/activity_margin"
                 android:layout_marginTop="@dimen/fab_margin"
+                android:layout_marginBottom="@dimen/activity_margin"
                 android:orientation="horizontal"
                 android:weightSum="3">
 
@@ -190,7 +208,10 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_profile"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="fill_parent"
+                android:layout_marginTop="3dp"
+                android:background="@color/recycle_profile"
+                android:paddingTop="5dp" />
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
