@@ -103,11 +103,10 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="68dp"
-                        android:layout_marginEnd="92dp"
+                        android:layout_marginEnd="50dp"
                         android:layout_toStartOf="@+id/image_view_whatsapp"
                         android:paddingHorizontal="22dp"
-                        app:srcCompat="@drawable/outline_rate_review_black_18dp" />
+                        app:srcCompat="@drawable/baseline_add_comment_black_48dp" />
 
                     <ImageView
                         android:id="@+id/image_view_whatsapp"

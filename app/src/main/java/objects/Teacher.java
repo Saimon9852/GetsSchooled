@@ -144,16 +144,19 @@ public class Teacher extends Person implements Serializable,Comparable<Teacher> 
 
     @Override
     public int compareTo(Teacher teacher) {
-        if (this.rating > teacher.getRating()) {
+        Log.d("EHUD",this.getName() + " " + teacher.getName());
+        if (this.getRating() > teacher.getRating()) {
+            Log.d("EHUD",this.getName() + " is bigger then" + teacher.getName());
             return -1;
-
         }
-        else if (this.rating <  teacher.getRating()) {
-            Log.d("saimon","-1");
+        else if (this.getRating() <  teacher.getRating()) {
+            Log.d("EHUD",this.getName() + " is smaller then" + teacher.getName());
+
             return 1;
         }
         else {
-            Log.d("saimon","0");
+            Log.d("EHUD",this.getName() + " is equal then" + teacher.getName());
+
             return 0;
         }
 

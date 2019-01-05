@@ -37,20 +37,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             reviewReview = (EditText) itemView.findViewById(R.id.review_Review);
             reviewName = (EditText) itemView.findViewById(R.id.review_name);
             reviewRatingBar = (RatingBar) itemView.findViewById(R.id.review_rating_bar);
-//            addComment = (ImageView) itemView.findViewById(R.id.review_list_add_comment);
 
-//            addComment.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int position = getAdapterPosition();
-//                    Iterator<Review> iterator = reviews.iterator();
-//                    if(position == reviews.size()-1 && !(reviews.get(position).isNull()))
-//                        try {
-//                            reviews.add(position + 1, new Review());
-//                            notifyItemInserted(position + 1);
-//                        }catch (ArrayIndexOutOfBoundsException e){e.printStackTrace();}
-//                }
-//            });
 
             reviewReview.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -120,6 +107,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     public void onBindViewHolder(ReviewAdapter.ViewHolder holder, final int i) {
         int x = holder.getLayoutPosition();
         if(reviews.get(x).getMessage().length() > 0 || reviewed) {
+            if(reviews.get(x).getMessage().length() == 0 && reviewed){
+                holder.reviewRatingBar.setVisibility(View.INVISIBLE);
+                holder.reviewReview.setVisibility(View.INVISIBLE);
+                holder.reviewName.setVisibility(View.INVISIBLE);
+                holder.itemView.setVisibility(View.INVISIBLE);
+            }
             holder.reviewReview.setText(reviews.get(x).getMessage());
             holder.reviewName.setText(reviews.get(x).getName());
             holder.reviewRatingBar.setRating(reviews.get(x).getStars());
@@ -138,6 +131,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             holder.reviewRatingBar.setIsIndicator(false);
             holder.reviewName.setEnabled(true);
             holder.reviewReview.setEnabled(true);
+            holder.reviewRatingBar.setVisibility(View.VISIBLE);
+            holder.reviewReview.setVisibility(View.VISIBLE);
+            holder.reviewName.setVisibility(View.VISIBLE);
+            holder.itemView.setVisibility(View.VISIBLE);
+
 //            holder.addComment.setVisibility(View.VISIBLE);
 //            holder.addComment.setEnabled(true);
 
