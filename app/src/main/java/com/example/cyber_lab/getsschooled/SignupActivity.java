@@ -112,7 +112,7 @@ public class SignupActivity extends AppCompatActivity {
                                     teacher.setMobilePhoneNumber(mobilePhone);
                                     teacher.setUID(auth.getCurrentUser().getUid());
                                     mDatabase.child(auth.getCurrentUser().getUid()).setValue(teacher);
-                                    startActivity(new Intent(SignupActivity.this, SettingActivity.class));
+                                    startActivity(new Intent(SignupActivity.this, ViewTutorsActivity.class));
                                     finish();
                                 }
                             }
