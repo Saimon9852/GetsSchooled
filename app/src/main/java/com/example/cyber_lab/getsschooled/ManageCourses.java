@@ -181,7 +181,7 @@ public class ManageCourses extends AppCompatActivity {
     }
     public static String[] getCourses(){
         if(courses == null){
-            courses = new String[0];
+            courses = new String[1];
             courses[0] = "Computer Science-null";
         }
         return  courses;

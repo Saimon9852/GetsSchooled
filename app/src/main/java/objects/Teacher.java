@@ -3,20 +3,13 @@ package objects;
 import android.location.Location;
 import android.util.Log;
 
+import com.example.cyber_lab.getsschooled.ManageCourses;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Teacher extends Person implements Serializable,Comparable<Teacher> {
-    final static String[] staticCourses={"Computer Science-Infi 1" ,
-                "Computer Science-Introduction To Programming" ,
-                        "Computer Science-Logic And Group Theory" ,
-                        "Computer Science-Algorthmic Number Theory" ,
-                        "Computer Science-Numerical Systems" ,
-                        "Computer Science-Discrete Mathemathics" ,
-                        "Computer Science-Linear Algebra 1" ,
-                        "Computer Science-Infi 2"};
     private ArrayList<Course> courseArrayList;
     private String UID;
     private String price;
@@ -31,8 +24,8 @@ public class Teacher extends Person implements Serializable,Comparable<Teacher> 
         this.courseArrayList = new ArrayList<>();
         reviewArrayList.add(new Review());
         courseArrayList.add(new Course());
-        lon = 32.1031880;
-        lat = 35.2099067;
+        lon = 35.2099067;
+        lat = 32.1031880;
         }
     public float getRating() {
         return rating;
@@ -62,7 +55,7 @@ public class Teacher extends Person implements Serializable,Comparable<Teacher> 
     }
     public double getLat(){
         if(lat == 0)
-            lat = 35.2099067;
+            lat = 32.1031880;
         return  lat;
     }
     public void setLat(double lat){
@@ -70,7 +63,7 @@ public class Teacher extends Person implements Serializable,Comparable<Teacher> 
     }
     public double getLon(){
         if(lon == 0)
-            lon = 32.1031880;
+            lon = 35.2099067;
         return  lon;
     }
     public void setLon(double lon){
@@ -149,7 +142,7 @@ public class Teacher extends Person implements Serializable,Comparable<Teacher> 
         return false;
     }
         public boolean isLegalCourse(String course){
-            for(String rCourse : staticCourses){
+            for(String rCourse : ManageCourses.getCourses()){
                 if(rCourse.equals(course))
                     return  true;
             }

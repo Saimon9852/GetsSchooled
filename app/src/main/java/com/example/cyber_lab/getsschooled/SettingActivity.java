@@ -170,7 +170,7 @@ public class SettingActivity extends AppCompatActivity {
                             .child("Teachers")
                             .child(key)
                             .child("lon")
-                            .setValue(loc.latitude).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            .setValue(loc.longitude).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
