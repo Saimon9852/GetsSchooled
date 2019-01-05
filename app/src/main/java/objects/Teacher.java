@@ -24,15 +24,15 @@ public class Teacher extends Person implements Serializable,Comparable<Teacher> 
     private ArrayList<Review> reviewArrayList;
     private String photo;
     private float rating;
-    Location location;
+    double  lat;
+    double lon;
     public Teacher(){
         this.reviewArrayList = new ArrayList<>();
         this.courseArrayList = new ArrayList<>();
         reviewArrayList.add(new Review());
         courseArrayList.add(new Course());
-        location = new Location("");
-        location.setLatitude(32.1031880);
-        location.setLongitude(35.2099067);
+        lon = 32.1031880;
+        lat = 35.2099067;
         }
     public float getRating() {
         return rating;
@@ -60,13 +60,21 @@ public class Teacher extends Person implements Serializable,Comparable<Teacher> 
     public String getPhoto(){
          return  this.photo;
     }
-    public Location getLocation(){
-        if(location == null){
-            location = new Location("");
-            location.setLatitude(32.1031880);
-            location.setLongitude(35.2099067);
-        }
-        return  location;
+    public double getLat(){
+        if(lat == 0)
+            lat = 35.2099067;
+        return  lat;
+    }
+    public void setLat(double lat){
+        this.lat = lat;
+    }
+    public double getLon(){
+        if(lon == 0)
+            lon = 32.1031880;
+        return  lon;
+    }
+    public void setLon(double lon){
+        this.lon = lon;
     }
 
     public void setPrice(String price) {
