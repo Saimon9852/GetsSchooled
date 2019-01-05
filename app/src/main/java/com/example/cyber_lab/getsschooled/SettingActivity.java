@@ -230,7 +230,7 @@ public class SettingActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(SettingActivity.this, "Price is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
-                                signOut();
+                                finish();
                                 progressBar.setVisibility(View.GONE);
                             } else {
                                 Toast.makeText(SettingActivity.this, "Failed to update price", Toast.LENGTH_LONG).show();
@@ -285,7 +285,7 @@ public class SettingActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(SettingActivity.this, "Phone number is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
-                                signOut();
+                                finish();
                                 progressBar.setVisibility(View.GONE);
                             } else {
                                 Toast.makeText(SettingActivity.this, "Failed to update phone number", Toast.LENGTH_LONG).show();
@@ -333,7 +333,7 @@ public class SettingActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(SettingActivity.this, "Email address is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
-                                        signOut();
+                                        finish();
                                         progressBar.setVisibility(View.GONE);
                                     } else {
                                         Toast.makeText(SettingActivity.this, "Failed to update email!", Toast.LENGTH_LONG).show();
@@ -384,7 +384,7 @@ public class SettingActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
                                             Toast.makeText(SettingActivity.this, "Password is updated, sign in with new password!", Toast.LENGTH_SHORT).show();
-                                            signOut();
+                                            finish();
                                             progressBar.setVisibility(View.GONE);
                                         } else {
                                             Toast.makeText(SettingActivity.this, "Failed to update password!", Toast.LENGTH_SHORT).show();
