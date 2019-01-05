@@ -38,7 +38,6 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
     List<Teacher> mList = new ArrayList<>();
     Activity _activity;
     Context applicationContext;
-    Location loc;
     public TeachersAdapter(List<Teacher> list_urls, Activity a, Context applicationContext) {
         this.mList = list_urls;
         this._activity = a;
@@ -67,9 +66,6 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
 
 
         if(mList.get(position).getPhoto()!= null){
-            loc = new Location("");
-            loc.setLatitude(mList.get(position).getLat());
-            loc.setLongitude(mList.get(position).getLon());
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageReference = storage.getReference();
             StorageReference load = storageReference.child("images/" + mList.get(position).getEmail() + "/profile");
@@ -92,6 +88,11 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
         holder.teacherPrice.setText("Price: " + mList.get(position).getPrice());
         holder.teacherCourses.setText("Courses: " + mList.get(position).getCourseArrayList().size());
         holder.teacherRating.setText("Rating: " + Float.toString(mList.get(position).getRating()));
+
+        Location loc = new Location("");
+        loc.setLatitude(mList.get(position).getLat());
+        loc.setLongitude(mList.get(position).getLon());
+
         if(ViewTutorsActivity.studentLocation !=null ){
             holder.teacherDist.setText("Distance:\n" +Float.toString(ViewTutorsActivity.studentLocation.
                     distanceTo(loc)/1000) + "Km");

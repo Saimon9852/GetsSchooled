@@ -54,16 +54,18 @@ public class Teacher extends Person implements Serializable,Comparable<Teacher> 
          return  this.photo;
     }
     public double getLat(){
-        if(lat == 0)
+        if(lat == 0){
             lat = 32.1031880;
+        }
         return  lat;
     }
     public void setLat(double lat){
         this.lat = lat;
     }
     public double getLon(){
-        if(lon == 0)
+        if(lon == 0){
             lon = 35.2099067;
+        }
         return  lon;
     }
     public void setLon(double lon){
