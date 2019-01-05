@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.MultiAutoCompleteTextView;
 
 import com.example.cyber_lab.getsschooled.ManageCourses;
 import com.example.cyber_lab.getsschooled.R;
+import com.example.cyber_lab.getsschooled.ViewTutorsActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +29,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     Context context;
     ArrayList<String> steps;
     Boolean cameFromTutor;
+    ArrayList<String> stringArrayList;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView plus, minus;
@@ -34,14 +37,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         /**
          * courses for auto complete, will add more before production!
          */
-        String[] courses={"Computer Science-Infi 1" ,
-                "Computer Science-Introduction To Programming" ,
-                "Computer Science-Logic And Group Theory" ,
-                "Computer Science-Algorthmic Number Theory" ,
-                "Computer Science-Numerical Systems" ,
-                "Computer Science-Discrete Mathemathics" ,
-                "Computer Science-Linear Algebra 1" ,
-                "Computer Science-Infi 2"};
         public ViewHolder(View itemView) {
             super(itemView);
             plus = (ImageView) itemView.findViewById(R.id.course_list_add);
@@ -55,7 +50,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 step.setEnabled(false);
             }else{
                 ArrayAdapter adapter = new
-                        ArrayAdapter(itemView.getContext(),android.R.layout.simple_list_item_1,courses);
+                        ArrayAdapter(itemView.getContext(),android.R.layout.simple_list_item_1,
+                        ManageCourses.getCourses());
                 step.setAdapter(adapter);
                 //for auto complete
                 step.setThreshold(1);

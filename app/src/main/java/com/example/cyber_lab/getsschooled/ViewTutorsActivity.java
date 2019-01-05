@@ -45,6 +45,7 @@ import objects.Teacher;
 public class ViewTutorsActivity extends AppCompatActivity implements AAH_FabulousFragment.Callbacks, AAH_FabulousFragment.AnimationListener {
     private List<Teacher> teachers;
     private List<Course> courses;
+    public static List<String> staticCourses;
     private ImageView btnLogOut;
     private ValueEventListener mDatabaseTeachersListener;
     private ValueEventListener mDatabaseCoursesListener;
@@ -137,12 +138,13 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        courses= new ArrayList<>();
+                        courses = new ArrayList<>();
+                        staticCourses = new ArrayList<>();
                         boolean correctData = true;
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Course course = snapshot.getValue(Course.class);
                                 courses.add(course);
-
+                                staticCourses.add(course.toString());
                         }
                             mData.setCourses(courses);
                             cList.addAll(mData.getAllCourses());

@@ -23,6 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 import adapters.CourseAdapter;
@@ -36,13 +38,16 @@ public class ManageCourses extends AppCompatActivity {
     final int LIST_RESULT = 100;
 
     ArrayList<String> list;
+    static String[] courses;
     Teacher teacher;
     RecyclerView recyclerView;
     CourseAdapter courseAdapter;
     LinearLayoutManager llm;
     Button submitButton;
     DatabaseReference mDatabaseTeachers;
+    DatabaseReference mDatabaseCourses;
     ValueEventListener mDatabaseValueEventListener;
+    ValueEventListener mDatabaseCoursesListener;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener authStateListener;
     private boolean cameFromTutor;
@@ -50,12 +55,12 @@ public class ManageCourses extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_courses);
-
-        submitButton = (Button) findViewById(R.id.submit_button);
+         submitButton = (Button) findViewById(R.id.submit_button);
         recyclerView = (RecyclerView) findViewById(R.id.rv);
 
         auth = FirebaseAuth.getInstance();
         mDatabaseTeachers = FirebaseDatabase.getInstance().getReference("Teachers").child(auth.getUid());
+        mDatabaseCourses = FirebaseDatabase.getInstance().getReference("Courses");
         list = getIntent().getStringArrayListExtra("courseToStringArray");
         cameFromTutor = getIntent().getBooleanExtra("cameFromTutor",false);
         /**
@@ -101,6 +106,25 @@ public class ManageCourses extends AppCompatActivity {
                 }
             }
         };
+        mDatabaseCoursesListener = mDatabaseCourses
+                .addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int index = 0;
+                        courses = new String[(int)dataSnapshot.getChildrenCount()];
+                        boolean correctData = true;
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Course course = snapshot.getValue(Course.class);
+                            courses[index++] = course.getName();
+                        }
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,13 +158,16 @@ public class ManageCourses extends AppCompatActivity {
             mDatabaseTeachers.removeEventListener(mDatabaseValueEventListener);
         if(auth != null)
             auth.removeAuthStateListener(authStateListener);
+        if(mDatabaseCourses != null)
+            mDatabaseCourses.removeEventListener(mDatabaseCoursesListener);
     }
     @Override
     protected void onStart()
     {
         super.onStart();
         mDatabaseTeachers.addValueEventListener(mDatabaseValueEventListener);
-
+        auth.addAuthStateListener(authStateListener);
+        mDatabaseCourses.addValueEventListener(mDatabaseCoursesListener);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -151,5 +178,12 @@ public class ManageCourses extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    public static String[] getCourses(){
+        if(courses == null){
+            courses = new String[0];
+            courses[0] = "Computer Science-null";
+        }
+        return  courses;
     }
 }
