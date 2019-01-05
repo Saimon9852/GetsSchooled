@@ -30,7 +30,7 @@ import java.util.List;
 public class SettingActivity extends AppCompatActivity {
 
     private Button btnChangeEmail, btnChangePassword, btnSendResetEmail, btnRemoveUser,
-            changeEmail, changePassword, sendEmail, remove, signOut,btnPhone,btnChangePhone,btnChangePrice,btnPrice,btnLocation,btnChangeLocation;
+            changeEmail, changePassword, sendEmail, remove,btnPhone,btnChangePhone,btnChangePrice,btnPrice,btnLocation,btnChangeLocation;
 
     private EditText oldEmail, newEmail, password, newPassword,txtPhone,txtPrice,newLocation;
     private ProgressBar progressBar;
@@ -80,7 +80,6 @@ public class SettingActivity extends AppCompatActivity {
         changePassword = (Button) findViewById(R.id.changePass);
         sendEmail = (Button) findViewById(R.id.send);
         remove = (Button) findViewById(R.id.remove);
-        signOut = (Button) findViewById(R.id.sign_out);
         btnLocation = (Button)findViewById(R.id.OnChangeLocation);
         btnChangeLocation = (Button)findViewById(R.id.change_location);
         newLocation = (EditText) findViewById(R.id.new_location) ;
@@ -470,12 +469,7 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
+
 
     }
 

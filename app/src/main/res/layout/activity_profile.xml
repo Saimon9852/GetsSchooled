@@ -226,16 +226,7 @@
             android:background="@color/input_login_hint"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/sign_out"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textColor="@android:color/black"
-            android:background="@color/input_login_hint"
-            android:text="@string/btn_sign_out"
-            android:textStyle="bold" />
+
 
         <Button
             android:id="@+id/OnChangePhone"
