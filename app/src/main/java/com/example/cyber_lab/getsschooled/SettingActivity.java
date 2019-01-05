@@ -2,6 +2,7 @@ package com.example.cyber_lab.getsschooled;
 
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -22,9 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 public class SettingActivity extends AppCompatActivity {
 
     private Button btnChangeEmail, btnChangePassword, btnSendResetEmail, btnRemoveUser,
-            changeEmail, changePassword, sendEmail, remove, signOut,btnPhone,btnChangePhone,btnChangePrice,btnPrice;
+            changeEmail, changePassword, sendEmail, remove, signOut,btnPhone,btnChangePhone,btnChangePrice,btnPrice,btnLocation,btnChangeLocation;
 
-    private EditText oldEmail, newEmail, password, newPassword,txtPhone,txtPrice;
+    private EditText oldEmail, newEmail, password, newPassword,txtPhone,txtPrice,newLocation;
     private ProgressBar progressBar;
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -73,6 +74,9 @@ public class SettingActivity extends AppCompatActivity {
         sendEmail = (Button) findViewById(R.id.send);
         remove = (Button) findViewById(R.id.remove);
         signOut = (Button) findViewById(R.id.sign_out);
+        btnLocation = (Button)findViewById(R.id.OnChangeLocation);
+        btnChangeLocation = (Button)findViewById(R.id.change_location);
+        newLocation = (EditText) findViewById(R.id.new_location) ;
         ////
         btnPhone = (Button) findViewById(R.id.OnChangePhone);
         btnChangePhone = (Button) findViewById(R.id.changePhone);
@@ -88,6 +92,8 @@ public class SettingActivity extends AppCompatActivity {
         newPassword = (EditText) findViewById(R.id.newPassword);
 
         txtPhone.setVisibility(View.GONE);
+        newLocation.setVisibility(View.GONE);
+        btnChangeLocation.setVisibility(View.GONE);
         btnChangePhone.setVisibility(View.GONE);
         txtPrice.setVisibility(View.GONE);
         btnChangePrice.setVisibility(View.GONE);
@@ -107,12 +113,68 @@ public class SettingActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         }
 
+        btnLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                txtPhone.setVisibility(View.GONE);
+                btnChangePhone.setVisibility(View.GONE);
+                txtPrice.setVisibility(View.GONE);
+                txtPrice.setVisibility(View.GONE);
+                btnChangePrice.setVisibility(View.GONE);
+                oldEmail.setVisibility(View.GONE);
+                newEmail.setVisibility(View.GONE);
+                newLocation.setVisibility(View.VISIBLE);
+                btnChangeLocation.setVisibility(View.VISIBLE);
+                password.setVisibility(View.GONE);
+                btnChangePrice.setVisibility(View.GONE);
+                newPassword.setVisibility(View.GONE);
+                changeEmail.setVisibility(View.GONE);
+                changePassword.setVisibility(View.GONE);
+                sendEmail.setVisibility(View.GONE);
+                remove.setVisibility(View.GONE);
+
+            }
+        });
+
+        btnChangeLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                if (user != null && !newLocation.getText().toString().trim().equals("")) {
+                    String key = user.getUid();
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Teachers")
+                            .child(key)
+                            .child("location")
+                            .setValue(new Location("")).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(SettingActivity.this, "Location is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
+                                signOut();
+                                progressBar.setVisibility(View.GONE);
+                            } else {
+                                Toast.makeText(SettingActivity.this, "Failed to update location", Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                } else if (newLocation.getText().toString().trim().equals("")) {
+                    txtPrice.setError("Enter location");
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
+
 
         btnPrice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 txtPhone.setVisibility(View.GONE);
+                newLocation.setVisibility(View.GONE);
+                btnChangeLocation.setVisibility(View.GONE);
                 btnChangePhone.setVisibility(View.GONE);
                 txtPrice.setVisibility(View.GONE);
                 txtPrice.setVisibility(View.VISIBLE);
@@ -129,7 +191,6 @@ public class SettingActivity extends AppCompatActivity {
 
             }
         });
-
 
         btnChangePrice.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,6 +231,8 @@ public class SettingActivity extends AppCompatActivity {
                 txtPhone.setVisibility(View.VISIBLE);
                 btnChangePhone.setVisibility(View.VISIBLE);
                 txtPrice.setVisibility(View.GONE);
+                newLocation.setVisibility(View.GONE);
+                btnChangeLocation.setVisibility(View.GONE);
                 btnChangePrice.setVisibility(View.GONE);
                 oldEmail.setVisibility(View.GONE);
                 newEmail.setVisibility(View.GONE);
@@ -222,6 +285,8 @@ public class SettingActivity extends AppCompatActivity {
                 txtPhone.setVisibility(View.GONE);
                 btnChangePhone.setVisibility(View.GONE);
                 txtPrice.setVisibility(View.GONE);
+                newLocation.setVisibility(View.GONE);
+                btnChangeLocation.setVisibility(View.GONE);
                 btnChangePrice.setVisibility(View.GONE);
                 oldEmail.setVisibility(View.GONE);
                 newEmail.setVisibility(View.VISIBLE);
@@ -267,6 +332,8 @@ public class SettingActivity extends AppCompatActivity {
                 txtPhone.setVisibility(View.GONE);
                 btnChangePhone.setVisibility(View.GONE);
                 txtPrice.setVisibility(View.GONE);
+                newLocation.setVisibility(View.GONE);
+                btnChangeLocation.setVisibility(View.GONE);
                 btnChangePrice.setVisibility(View.GONE);
                 oldEmail.setVisibility(View.GONE);
                 newEmail.setVisibility(View.GONE);
@@ -319,6 +386,8 @@ public class SettingActivity extends AppCompatActivity {
                 txtPrice.setVisibility(View.GONE);
                 btnChangePrice.setVisibility(View.GONE);
                 oldEmail.setVisibility(View.VISIBLE);
+                newLocation.setVisibility(View.GONE);
+                btnChangeLocation.setVisibility(View.GONE);
                 newEmail.setVisibility(View.GONE);
                 password.setVisibility(View.GONE);
                 newPassword.setVisibility(View.GONE);

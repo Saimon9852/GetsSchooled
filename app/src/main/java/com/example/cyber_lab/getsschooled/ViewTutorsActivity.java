@@ -1,10 +1,14 @@
 package com.example.cyber_lab.getsschooled;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
 
@@ -16,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
 import java.util.ArrayList;
@@ -23,6 +28,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +51,8 @@ import objects.Teacher;
 
 
 public class ViewTutorsActivity extends AppCompatActivity implements AAH_FabulousFragment.Callbacks, AAH_FabulousFragment.AnimationListener {
+    final int PERMISSION_ACCESS_FINE_LOCATION = 1;
+    private FusedLocationProviderClient mFusedLocationClient;
     private List<Teacher> teachers;
     private List<Course> courses;
     public static List<String> staticCourses;
@@ -62,6 +72,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     MyFabFragment dialogFrag;
     DatabaseReference mDatabaseTeachers = FirebaseDatabase.getInstance().getReference("Teachers");
     DatabaseReference mDatabaseCourses = FirebaseDatabase.getInstance().getReference("Courses");
+    public static Location studentLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +91,11 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         mData.setmList(teachers);
         mAdapter = new TeachersAdapter(mList,  ViewTutorsActivity.this,getApplicationContext());
         recyclerView.setAdapter(mAdapter);
+
+
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        getLocation();
 
         auth = FirebaseAuth.getInstance();
         authListener =  new FirebaseAuth.AuthStateListener() {
@@ -265,7 +281,20 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_ACCESS_FINE_LOCATION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // All good!
 
+                } else {
+                    Toast.makeText(this, "Need your location!", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+        }
+    }
     //Get List of courses and take all existing departments without repeat
     private List<String> getAllDepartments(List<Course> cList) {
         List<String> depars = new ArrayList<>();
@@ -283,6 +312,27 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         for (Teacher teacher: filterList){
             if(!mainList.contains(teacher))
                 mainList.add(teacher);
+        }
+    }
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]
+                            {Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSION_ACCESS_FINE_LOCATION);
+        } else {
+            mFusedLocationClient.getLastLocation().addOnSuccessListener(
+                    new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if (location != null) {
+                                studentLocation = location;
+                            } else {
+                                Log.d("EHUD", "failed");
+                            }
+                        }
+                    });
         }
     }
 

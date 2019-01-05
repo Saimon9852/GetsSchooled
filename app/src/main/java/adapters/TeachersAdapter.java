@@ -3,6 +3,7 @@ package adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.cyber_lab.getsschooled.TeacherProfileActivity;
+import com.example.cyber_lab.getsschooled.ViewTutorsActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -87,6 +89,12 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
         holder.teacherPrice.setText("Price: " + mList.get(position).getPrice());
         holder.teacherCourses.setText("Courses: " + mList.get(position).getCourseArrayList().size());
         holder.teacherRating.setText("Rating: " + Float.toString(mList.get(position).getRating()));
+        if(ViewTutorsActivity.studentLocation !=null ){
+            holder.teacherDist.setText("Distance:\n" +Float.toString(ViewTutorsActivity.studentLocation.
+                    distanceTo(mList.get(position).getLocation())/1000) + "Km");
+        }else{
+            holder.teacherDist.setText("cant get location");
+        }
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,10 +119,12 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
         private TextView teacherRating;
         private TextView teacherCourses;
         private TextView teacherPrice;
+        private TextView teacherDist;
         private CardView card_view;
 
         public TeacherViewHolder(View x) {
             super(x);
+            teacherDist = (TextView) x.findViewById(R.id.teacher_dist);
             teacherPicture = (ImageView) x.findViewById(R.id.teacher_picture);
             teacherName = (TextView) x.findViewById(R.id.teacher_name);
             teacherRating = (TextView) x.findViewById(R.id.teacher_rating);
