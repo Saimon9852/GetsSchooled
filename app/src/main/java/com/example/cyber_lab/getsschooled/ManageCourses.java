@@ -115,7 +115,9 @@ public class ManageCourses extends AppCompatActivity {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-
+        /**
+         * updates database on submission
+         */
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

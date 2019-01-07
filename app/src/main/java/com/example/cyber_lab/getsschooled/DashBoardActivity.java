@@ -321,7 +321,6 @@ public class DashBoardActivity extends AppCompatActivity implements AAH_Fabulous
                             if (location != null) {
                                 studentLocation = location;
                             } else {
-                                Log.d("EHUD", "failed");
                             }
                         }
                     });
