@@ -372,46 +372,12 @@ public class TeacherProfileActivity extends AppCompatActivity {
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
-//        textViewEmail.setText(teacher.getEmail());
         textViewName.setText(teacher.getName());
         textViewPrice.setText(teacher.getPrice());
         textViewCourses.setText(Integer.toString(teacher.getCourseArrayList().size()));
         textViewRating.setText(df.format(teacher.getRating()));
-//        textDescription.setText(getBeutifulCoursesString());
     }
 
-    /**
-     * turn an ArrayList of Review to a nice String to present.
-     * @return string representation of ArrayList<Course>
-     */
-    public String getBeutifulCoursesString(){
-        String beautiful = "";
-        String currCourseDepartment = "";
-        ArrayList<Course> courseArrayList = teacher.getCourseArrayList();
-        if( courseArrayList.size() >0){
-            HashMap<String, ArrayList> dictMap = new HashMap<String, ArrayList>();
-            for(Course course : courseArrayList){
-                if( course.getName().length() > 0 ){
-                    currCourseDepartment = course.getName().split("-")[0];
-                    if(dictMap.get(currCourseDepartment) == null){
-                        ArrayList<String> courses = new ArrayList<>();
-                        courses.add(course.getName().split("-")[1]);
-                        dictMap.put(currCourseDepartment,courses);
-                    }else{
-                        ArrayList<String> tempArrayList = dictMap.get(currCourseDepartment);
-                        tempArrayList.add(course.getName().split("-")[1]);
-                        dictMap.put(currCourseDepartment,tempArrayList);
-                    }
-                }
-            }
-            Set<String> keyset = dictMap.keySet();
-            for(String key :keyset){
-                beautiful += key +":\n" + dictMap.get(key).toString().replace(",","\n");
-            }
-        }
-
-        return  beautiful;
-    }
     public void HideCameraOnNotSameUser(){
         if(! (teacher.getUID().equals(UID)) ){
             imgCamera.setVisibility(View.INVISIBLE);
