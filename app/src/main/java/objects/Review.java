@@ -52,6 +52,11 @@ public class Review implements Serializable {
     public void setStars(int stars) {
         this.stars = stars;
     }
+
+    /**
+     * checks if a message is null
+     * @return
+     */
     public Boolean isNull(){
         return this.name.isEmpty() && this.message.isEmpty();
     }

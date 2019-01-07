@@ -7,7 +7,7 @@ import com.example.cyber_lab.getsschooled.ManageCourses;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Tutor extends Person implements Serializable,Comparable<Tutor> {
+public class Tutor extends User implements Serializable,Comparable<Tutor> {
     private ArrayList<Course> courseArrayList;
     private String UID;
     private String price;
@@ -22,6 +22,7 @@ public class Tutor extends Person implements Serializable,Comparable<Tutor> {
         this.courseArrayList = new ArrayList<>();
         reviewArrayList.add(new Review());
         courseArrayList.add(new Course());
+        // by default we have Ariel as tutor location.
         lon = 35.2099067;
         lat = 32.1031880;
         }
@@ -82,7 +83,6 @@ public class Tutor extends Person implements Serializable,Comparable<Tutor> {
         this.reviewArrayList = reviewArrayList;
     }
 
-
     public String getPrice() {
         return price;
     }
@@ -101,6 +101,11 @@ public class Tutor extends Person implements Serializable,Comparable<Tutor> {
     public void setCourseArrayList(ArrayList<Course> courseArrayList) {
         this.courseArrayList = courseArrayList;
     }
+
+    /**
+     * Course arraylist to String arraylist
+     * @return A String arraylist representing Course arraylist
+     */
     public ArrayList<String> courseToStringArray(){
         ArrayList<String> courses = new ArrayList<>();
         for (Course course : courseArrayList){
@@ -108,6 +113,11 @@ public class Tutor extends Person implements Serializable,Comparable<Tutor> {
         }
         return  courses;
     }
+
+    /**
+     * sets our course arraylist from string arraylist
+     * @param courseArrayList
+     */
     public void setCourseArrayListFromStringArrayList(ArrayList<String> courseArrayList) {
         ArrayList<Course> courses = new ArrayList<Course>();
         for (String course : courseArrayList) {
@@ -117,6 +127,9 @@ public class Tutor extends Person implements Serializable,Comparable<Tutor> {
         this.courseArrayList = courses;
     }
 
+    /**
+     * updates rating , uses simple average. null messages dont count.
+     */
     public void updateRating(){
         float rate = 0;
         int realSize = 0;
@@ -158,20 +171,18 @@ public class Tutor extends Person implements Serializable,Comparable<Tutor> {
     }
 
     @Override
+    /**
+     * comparator for sorting tutors by rating
+     */
     public int compareTo(Tutor teacher) {
-        Log.d("EHUD",this.getName() + " " + teacher.getName());
         if (this.getRating() > teacher.getRating()) {
-            Log.d("EHUD",this.getName() + " is bigger then" + teacher.getName());
             return -1;
         }
         else if (this.getRating() <  teacher.getRating()) {
-            Log.d("EHUD",this.getName() + " is smaller then" + teacher.getName());
 
             return 1;
         }
         else {
-            Log.d("EHUD",this.getName() + " is equal then" + teacher.getName());
-
             return 0;
         }
 

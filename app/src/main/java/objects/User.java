@@ -3,12 +3,12 @@ package objects;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Person implements Serializable {
+public class User implements Serializable {
 
     private String email;
     private String name;
     private String mobilePhoneNumber;
-    public Person(){
+    public User(){
 
     }
     public String getEmail() {
