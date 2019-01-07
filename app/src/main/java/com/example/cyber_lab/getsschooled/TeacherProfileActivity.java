@@ -2,29 +2,18 @@ package com.example.cyber_lab.getsschooled;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.transition.Visibility;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,18 +24,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
-
-
-import adapters.ProfileAdapter;
 import adapters.ReviewAdapter;
 import objects.Course;
 import objects.Review;
 import objects.Teacher;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class TeacherProfileActivity extends AppCompatActivity {
     private boolean changedProfileImage = false;
@@ -69,6 +56,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private ValueEventListener mDatabaseTeachersListener;
     final int LIST_REQUEST = 1;
     final int LIST_RESULT = 100;
+    private DecimalFormat df = new DecimalFormat("#.##");
     public void signOut() {
         auth.signOut();
     }
@@ -76,7 +64,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_profile);
-
+        df.setRoundingMode(RoundingMode.HALF_EVEN);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_profile);
         textDescription = (TextView)findViewById(R.id.txtViewTeacherDescp);
         textViewName = (TextView)findViewById(R.id.txtViewTeacherName);
@@ -388,7 +376,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
         textViewName.setText(teacher.getName());
         textViewPrice.setText(teacher.getPrice());
         textViewCourses.setText(Integer.toString(teacher.getCourseArrayList().size()));
-        textViewRating.setText(Float.toString(teacher.getRating()));
+        textViewRating.setText(df.format(teacher.getRating()));
 //        textDescription.setText(getBeutifulCoursesString());
     }
 

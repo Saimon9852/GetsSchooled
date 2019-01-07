@@ -27,8 +27,6 @@
         </activity>
         <activity android:name=".SignupActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".MainActivity"
-            android:launchMode="singleTop" />
         <activity android:name=".ResetPasswordActivity"
             android:launchMode="singleTop" />
         <activity android:name=".ViewTutorsActivity"

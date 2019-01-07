@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 import com.bumptech.glide.Glide;
 import com.example.cyber_lab.getsschooled.TeacherProfileActivity;
 import com.example.cyber_lab.getsschooled.ViewTutorsActivity;
@@ -38,10 +41,12 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
     List<Teacher> mList = new ArrayList<>();
     Activity _activity;
     Context applicationContext;
+    private DecimalFormat df = new DecimalFormat("#.##");
     public TeachersAdapter(List<Teacher> list_urls, Activity a, Context applicationContext) {
         this.mList = list_urls;
         this._activity = a;
         this.applicationContext = applicationContext;
+        df.setRoundingMode(RoundingMode.HALF_EVEN);
     }
 
 
@@ -87,17 +92,17 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
         holder.teacherName.setText("Name: " + mList.get(position).getName());
         holder.teacherPrice.setText("Price: " + mList.get(position).getPrice());
         holder.teacherCourses.setText("Courses: " + mList.get(position).getCourseArrayList().size());
-        holder.teacherRating.setText("Rating: " + Float.toString(mList.get(position).getRating()));
+        holder.teacherRating.setText("Rating: " + df.format(mList.get(position).getRating()));
 
         Location loc = new Location("");
         loc.setLatitude(mList.get(position).getLat());
         loc.setLongitude(mList.get(position).getLon());
 
         if(ViewTutorsActivity.studentLocation !=null ){
-            holder.teacherDist.setText("Distance:\n" +Float.toString(ViewTutorsActivity.studentLocation.
+            holder.teacherDist.setText("Distance:\n" + df.format(ViewTutorsActivity.studentLocation.
                     distanceTo(loc)/1000) + "Km");
         }else{
-            holder.teacherDist.setText("cant get location");
+            holder.teacherDist.setText("Can't get location");
         }
         holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override

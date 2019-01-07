@@ -196,10 +196,8 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                     List<Teacher> filteredList = mData.getAllTeachers();
                     //iterate over arraymap
                     for (Map.Entry<String, List<String>> entry : applied_filters.entrySet()) {
-                        Log.d("k9res", "entry.key: " + entry.getKey());
                         mergeFilter(teacherList,mData.getFilteredTeachers(entry.getKey(),entry.getValue(), filteredList));
                     }
-                    Log.d("k9res", "new size: " + filteredList.size());
                     mList.clear();
                     Collections.sort(teacherList);
                     mList.addAll(teacherList);
