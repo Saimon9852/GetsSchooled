@@ -26,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.IOException;
 import java.util.List;
 
+import objects.Util;
+
 public class SettingActivity extends AppCompatActivity {
 
     private Button btnChangeEmail, btnChangePassword, btnSendResetEmail, btnRemoveUser,
@@ -145,9 +147,10 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 //get lat long from Adress String.
-                LatLng loc = getLocationFromAddress(getApplicationContext(),newLocation.getText().toString().trim());
+                LatLng loc = Util.getLocationFromAddress(getApplicationContext(),newLocation.getText().toString().trim());
                 if (user != null && !newLocation.getText().toString().trim().equals("") && loc != null) {
                     String key = user.getUid();
+                    //set lat.
                     FirebaseDatabase.getInstance().getReference()
                             .child("Teachers")
                             .child(key)
@@ -163,6 +166,7 @@ public class SettingActivity extends AppCompatActivity {
                             }
                         }
                     });
+                    //set lon
                     FirebaseDatabase.getInstance().getReference()
                             .child("Teachers")
                             .child(key)
@@ -471,35 +475,7 @@ public class SettingActivity extends AppCompatActivity {
 
     }
 
-    /***
-     * convert address to LatLng location.
-     * @param context
-     * @param strAddress
-     * @return
-     */
-    public LatLng getLocationFromAddress(Context context, String strAddress) {
 
-        Geocoder coder = new Geocoder(context);
-        List<Address> address;
-        LatLng p1 = null;
-
-        try {
-            // May throw an IOException
-            address = coder.getFromLocationName(strAddress, 5);
-            if (address == null) {
-                return null;
-            }
-
-            Address location = address.get(0);
-            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
-
-        } catch (IOException ex) {
-
-            ex.printStackTrace();
-        }
-
-        return p1;
-    }
     //sign out method
     public void signOut() {
         auth.signOut();
