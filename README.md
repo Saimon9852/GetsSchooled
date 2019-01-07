@@ -10,6 +10,8 @@ We Also show for each tutor the distance from the student location to the teache
 ## Getting Started
 
 - Clone the repository using git and run the app on your fun using android studio.
+### App tutorial
+[See tutorial here](https://imgur.com/a/2yqMBBZ)
 
 ### Prerequisites
 - Android studio
