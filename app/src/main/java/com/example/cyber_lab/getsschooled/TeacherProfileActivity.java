@@ -31,7 +31,7 @@ import java.util.Set;
 import adapters.ReviewAdapter;
 import objects.Course;
 import objects.Review;
-import objects.Teacher;
+import objects.Tutor;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
@@ -50,7 +50,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private boolean reviewed;
     private DatabaseReference mDatabaseTeachers;
-    private Teacher teacher;
+    private Tutor teacher;
     private String UID;
     private FirebaseAuth.AuthStateListener authListener;
     private ValueEventListener mDatabaseTeachersListener;
@@ -79,7 +79,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
         imgSetting = (ImageView)findViewById(R.id.profile_image_setting);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        teacher = (Teacher)getIntent().getSerializableExtra("Teacher");
+        teacher = (Tutor)getIntent().getSerializableExtra("Tutor");
         auth = FirebaseAuth.getInstance();
         /**
          * if we came from viewTutors teacher aint null, so we will use it.
@@ -110,7 +110,7 @@ public class TeacherProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 UID = auth.getUid();
-                teacher = dataSnapshot.getValue(Teacher.class);
+                teacher = dataSnapshot.getValue(Tutor.class);
                 teacher.updateRating();
                 updatedView();
                 isReviwed();

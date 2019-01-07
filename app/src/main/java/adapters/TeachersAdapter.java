@@ -20,7 +20,7 @@ import java.text.DecimalFormat;
 
 import com.bumptech.glide.Glide;
 import com.example.cyber_lab.getsschooled.TeacherProfileActivity;
-import com.example.cyber_lab.getsschooled.ViewTutorsActivity;
+import com.example.cyber_lab.getsschooled.DashBoardActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -31,18 +31,18 @@ import java.util.List;
 
 import com.example.cyber_lab.getsschooled.R;
 
-import objects.Teacher;
+import objects.Tutor;
 
 
 ////Class adapter to single teacher in recycleView
 
 public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.TeacherViewHolder> {
 
-    List<Teacher> mList = new ArrayList<>();
+    List<Tutor> mList = new ArrayList<>();
     Activity _activity;
     Context applicationContext;
     private DecimalFormat df = new DecimalFormat("#.##");
-    public TeachersAdapter(List<Teacher> list_urls, Activity a, Context applicationContext) {
+    public TeachersAdapter(List<Tutor> list_urls, Activity a, Context applicationContext) {
         this.mList = list_urls;
         this._activity = a;
         this.applicationContext = applicationContext;
@@ -98,8 +98,8 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
         loc.setLatitude(mList.get(position).getLat());
         loc.setLongitude(mList.get(position).getLon());
 
-        if(ViewTutorsActivity.studentLocation !=null ){
-            holder.teacherDist.setText("Distance:\n" + df.format(ViewTutorsActivity.studentLocation.
+        if(DashBoardActivity.studentLocation !=null ){
+            holder.teacherDist.setText("Distance:\n" + df.format(DashBoardActivity.studentLocation.
                     distanceTo(loc)/1000) + "Km");
         }else{
             holder.teacherDist.setText("Can't get location");
@@ -108,7 +108,7 @@ public class TeachersAdapter extends RecyclerView.Adapter<TeachersAdapter.Teache
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),TeacherProfileActivity.class);
-                intent.putExtra("Teacher",mList.get(position));
+                intent.putExtra("Tutor",mList.get(position));
                 v.getContext().startActivity(intent);
             }
         });

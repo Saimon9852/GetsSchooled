@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import objects.Review;
-import objects.Teacher;
+import objects.Tutor;
 import com.example.cyber_lab.getsschooled.R;
 public class ProfileAdapter  extends RecyclerView.Adapter<ProfileHolder> {
 
@@ -17,7 +17,7 @@ public class ProfileAdapter  extends RecyclerView.Adapter<ProfileHolder> {
     public ProfileAdapter(List<Review> reviews) {
         mReviews = reviews;
     }
-    public ProfileAdapter(Teacher teacher) {
+    public ProfileAdapter(Tutor teacher) {
         mReviews = teacher.getReviewArrayList();
     }
 

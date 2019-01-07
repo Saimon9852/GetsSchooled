@@ -1,26 +1,21 @@
 package objects;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import objects.Course;
-import objects.Teacher;
-
 //Data manipulation on courses and teachers
 public class DataManipulation {
-    private List<Teacher> mList = new ArrayList<>();
+    private List<Tutor> mList = new ArrayList<>();
     private List<Course> courseList = new ArrayList<>();
 
 
-    public DataManipulation(List<Teacher> mList, List<Course> cList) {
+    public DataManipulation(List<Tutor> mList, List<Course> cList) {
         this.mList = mList;
         this.courseList = cList;
     }
 
-    public DataManipulation(List<Teacher> mList) {
+    public DataManipulation(List<Tutor> mList) {
         this.mList = mList;
 
     }
@@ -28,7 +23,7 @@ public class DataManipulation {
     public DataManipulation(){
     }
 
-    public List<Teacher> getAllTeachers() {
+    public List<Tutor> getAllTeachers() {
         return mList;
     }
 
@@ -38,16 +33,16 @@ public class DataManipulation {
         this.courseList = courseList;
     }
 
-    public void setmList(List<Teacher> mList) {
+    public void setmList(List<Tutor> mList) {
         this.mList = mList;
     }
 
 
     //Function get string department, list of teacherts and list of selected course filters in department
     //Filtering from mList all teachers which teach some course in courses_in_department, without repeat
-    public List<Teacher> getFilteredTeachers(String department, List<String> courses_in_department, List<Teacher> mList) {
-        List<Teacher> tempList = new ArrayList<>();
-        for (Teacher teacher : mList) {
+    public List<Tutor> getFilteredTeachers(String department, List<String> courses_in_department, List<Tutor> mList) {
+        List<Tutor> tempList = new ArrayList<>();
+        for (Tutor teacher : mList) {
             for (String g : courses_in_department) {
                  for(Course c: teacher.getCourseArrayList()){
                      String[] split = c.getName().split("-");

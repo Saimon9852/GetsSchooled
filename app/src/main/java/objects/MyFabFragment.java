@@ -18,11 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.allattentionhere.fabulousfilter.AAH_FabulousFragment;
-import com.example.cyber_lab.getsschooled.ViewTutorsActivity;
+import com.example.cyber_lab.getsschooled.DashBoardActivity;
 import com.google.android.flexbox.FlexboxLayout;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 import com.example.cyber_lab.getsschooled.R;
 
 
@@ -52,7 +52,7 @@ public class MyFabFragment extends AAH_FabulousFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        applied_filters = ((ViewTutorsActivity) getActivity()).getApplied_filters();
+        applied_filters = ((DashBoardActivity) getActivity()).getApplied_filters();
         metrics = this.getResources().getDisplayMetrics();
 
     }
@@ -154,7 +154,7 @@ public class MyFabFragment extends AAH_FabulousFragment {
     private void inflateLayoutWithFilters(final String filter_category, FlexboxLayout fbl) {
         List<String> keys = new ArrayList<>();
         //getting the courses name in department(filter_category)
-        keys = ((ViewTutorsActivity) getActivity()).getmData().getUniqueKeys(filter_category);
+        keys = ((DashBoardActivity) getActivity()).getmData().getUniqueKeys(filter_category);
 
         //for each string course name setting up in dialog view
         for (int i = 0; i < keys.size(); i++) {

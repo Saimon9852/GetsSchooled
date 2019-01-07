@@ -17,7 +17,7 @@ package com.example.cyber_lab.getsschooled;
         import com.google.firebase.database.DatabaseReference;
         import com.google.firebase.database.FirebaseDatabase;
 
-        import objects.Teacher;
+        import objects.Tutor;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -106,13 +106,13 @@ public class SignupActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                 } else {
                                     DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Teachers");
-                                    Teacher teacher = new Teacher();
+                                    Tutor teacher = new Tutor();
                                     teacher.setEmail(email);
                                     teacher.setName(name);
                                     teacher.setMobilePhoneNumber(mobilePhone);
                                     teacher.setUID(auth.getCurrentUser().getUid());
                                     mDatabase.child(auth.getCurrentUser().getUid()).setValue(teacher);
-                                    startActivity(new Intent(SignupActivity.this, ViewTutorsActivity.class));
+                                    startActivity(new Intent(SignupActivity.this, DashBoardActivity.class));
                                     finish();
                                 }
                             }

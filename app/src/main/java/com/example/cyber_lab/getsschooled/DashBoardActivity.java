@@ -17,7 +17,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -38,22 +37,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import adapters.TeachersAdapter;
 import objects.Course;
 import objects.DataManipulation;
 import objects.MyFabFragment;
-import objects.Teacher;
+import objects.Tutor;
 
 
-
-public class ViewTutorsActivity extends AppCompatActivity implements AAH_FabulousFragment.Callbacks, AAH_FabulousFragment.AnimationListener {
+public class DashBoardActivity extends AppCompatActivity implements AAH_FabulousFragment.Callbacks, AAH_FabulousFragment.AnimationListener {
     final int PERMISSION_ACCESS_FINE_LOCATION = 1;
     private FusedLocationProviderClient mFusedLocationClient;
-    private List<Teacher> teachers;
+    private List<Tutor> teachers;
     private List<Course> courses;
     public static List<String> staticCourses;
     private ImageView btnLogOut;
@@ -66,7 +60,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     DataManipulation mData;
     TeachersAdapter mAdapter;
     LinearLayout ll;
-    List<Teacher> mList = new ArrayList<>();
+    List<Tutor> mList = new ArrayList<>();
     List<Course>  cList = new ArrayList<>();
     private ArrayMap<String, List<String>> applied_filters = new ArrayMap<>();
     MyFabFragment dialogFrag;
@@ -76,7 +70,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_tutors);
+        setContentView(R.layout.activity_dashboard);
         //filter libary stuff
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
         btnLogOut = (ImageView) findViewById(R.id.viewTutorSignOut);
@@ -89,7 +83,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         mData.setmList(teachers);
-        mAdapter = new TeachersAdapter(mList,  ViewTutorsActivity.this,getApplicationContext());
+        mAdapter = new TeachersAdapter(mList,  DashBoardActivity.this,getApplicationContext());
         recyclerView.setAdapter(mAdapter);
 
 
@@ -104,7 +98,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                 if (auth.getCurrentUser()  == null) {
                     // user auth state is changed - user is null
                     // launch login activity
-                    startActivity(new Intent(ViewTutorsActivity.this, LoginActivity.class));
+                    startActivity(new Intent(DashBoardActivity.this, LoginActivity.class));
                     finish();
                 }
             }
@@ -113,7 +107,7 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
             @Override
             public void onClick(View v) {
                 signOut();
-                Intent intent = new Intent(ViewTutorsActivity.this,LoginActivity.class);
+                Intent intent = new Intent(DashBoardActivity.this,LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -124,14 +118,14 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         teachers= new ArrayList<>();
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Teacher teacher = snapshot.getValue(Teacher.class);
+                            Tutor teacher = snapshot.getValue(Tutor.class);
                             if(teacher.getCourseArrayList()!= null && teacher.hasCourses() ){
                                 teachers.add(teacher);
                             }
 
                         }
                         Collections.sort(teachers);
-                        for(Teacher t : teachers){
+                        for(Tutor t : teachers){
                              Log.d("saimon",t.getName());
                         }
                         mData.setmList(teachers);
@@ -186,14 +180,14 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     @Override
     public void onResult(Object result) {
         Log.d("k9res", "onResult: " + result.toString());
-        List<Teacher> teacherList = new ArrayList<>();
+        List<Tutor> teacherList = new ArrayList<>();
         if (result.toString().equalsIgnoreCase("swiped_down")) {
             //do something or nothing
         } else {
             if (result != null) {
                 ArrayMap<String, List<String>> applied_filters = (ArrayMap<String, List<String>>) result;
                 if (applied_filters.size() != 0) {
-                    List<Teacher> filteredList = mData.getAllTeachers();
+                    List<Tutor> filteredList = mData.getAllTeachers();
                     //iterate over arraymap
                     for (Map.Entry<String, List<String>> entry : applied_filters.entrySet()) {
                         mergeFilter(teacherList,mData.getFilteredTeachers(entry.getKey(),entry.getValue(), filteredList));
@@ -306,8 +300,8 @@ public class ViewTutorsActivity extends AppCompatActivity implements AAH_Fabulou
     }
 
     //merge two different list of teachers without repeat
-    private void mergeFilter(List<Teacher> mainList,List<Teacher> filterList){
-        for (Teacher teacher: filterList){
+    private void mergeFilter(List<Tutor> mainList, List<Tutor> filterList){
+        for (Tutor teacher: filterList){
             if(!mainList.contains(teacher))
                 mainList.add(teacher);
         }

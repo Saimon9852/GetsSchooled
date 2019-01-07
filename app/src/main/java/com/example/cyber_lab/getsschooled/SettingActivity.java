@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +43,7 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_setting);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.app_name));
@@ -55,7 +54,6 @@ public class SettingActivity extends AppCompatActivity {
 
         //get current user
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -72,7 +70,6 @@ public class SettingActivity extends AppCompatActivity {
 
 
         btnChangeEmail = (Button) findViewById(R.id.change_email_button);
-
         btnChangePassword = (Button) findViewById(R.id.change_password_button);
         btnSendResetEmail = (Button) findViewById(R.id.sending_pass_reset_button);
         btnRemoveUser = (Button) findViewById(R.id.remove_user_button);
@@ -87,7 +84,7 @@ public class SettingActivity extends AppCompatActivity {
         btnPhone = (Button) findViewById(R.id.OnChangePhone);
         btnChangePhone = (Button) findViewById(R.id.changePhone);
         txtPhone = (EditText) findViewById(R.id.old_phone);
-
+        ////
         btnPrice = (Button) findViewById(R.id.OnChangePrice);
         btnChangePrice = (Button) findViewById(R.id.changemmPrice);
         txtPrice = (EditText) findViewById(R.id.new_price);
@@ -96,14 +93,14 @@ public class SettingActivity extends AppCompatActivity {
         newEmail = (EditText) findViewById(R.id.new_email);
         password = (EditText) findViewById(R.id.password);
         newPassword = (EditText) findViewById(R.id.newPassword);
-
+        ////
         txtPhone.setVisibility(View.GONE);
         newLocation.setVisibility(View.GONE);
         btnChangeLocation.setVisibility(View.GONE);
         btnChangePhone.setVisibility(View.GONE);
         txtPrice.setVisibility(View.GONE);
         btnChangePrice.setVisibility(View.GONE);
-
+        ////
         oldEmail.setVisibility(View.GONE);
         newEmail.setVisibility(View.GONE);
         password.setVisibility(View.GONE);
@@ -147,6 +144,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
+                //get lat long from Adress String.
                 LatLng loc = getLocationFromAddress(getApplicationContext(),newLocation.getText().toString().trim());
                 if (user != null && !newLocation.getText().toString().trim().equals("") && loc != null) {
                     String key = user.getUid();

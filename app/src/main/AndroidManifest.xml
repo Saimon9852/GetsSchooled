@@ -29,7 +29,7 @@
             android:launchMode="singleTop" />
         <activity android:name=".ResetPasswordActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".ViewTutorsActivity"
+        <activity android:name=".DashBoardActivity"
             android:launchMode="singleTop" />
         <activity android:name=".SettingActivity"
             android:launchMode="singleTop" />

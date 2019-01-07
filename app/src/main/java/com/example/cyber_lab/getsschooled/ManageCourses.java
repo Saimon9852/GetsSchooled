@@ -1,7 +1,6 @@
 package com.example.cyber_lab.getsschooled;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,10 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,15 +18,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 import adapters.CourseAdapter;
-import adapters.TeachersAdapter;
 import objects.Course;
-import objects.Review;
-import objects.Teacher;
+import objects.Tutor;
 
 public class ManageCourses extends AppCompatActivity {
 
@@ -39,7 +30,7 @@ public class ManageCourses extends AppCompatActivity {
 
     ArrayList<String> list;
     static String[] courses;
-    Teacher teacher;
+    Tutor teacher;
     RecyclerView recyclerView;
     CourseAdapter courseAdapter;
     LinearLayoutManager llm;
@@ -87,7 +78,7 @@ public class ManageCourses extends AppCompatActivity {
         mDatabaseValueEventListener = mDatabaseTeachers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                teacher = dataSnapshot.getValue(Teacher.class);
+                teacher = dataSnapshot.getValue(Tutor.class);
                 list = teacher.courseToStringArray();
                 courseAdapter.notifyDataSetChanged();
             }

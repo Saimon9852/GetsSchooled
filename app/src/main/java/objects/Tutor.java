@@ -1,15 +1,13 @@
 package objects;
 
-import android.location.Location;
 import android.util.Log;
 
 import com.example.cyber_lab.getsschooled.ManageCourses;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Teacher extends Person implements Serializable,Comparable<Teacher> {
+public class Tutor extends Person implements Serializable,Comparable<Tutor> {
     private ArrayList<Course> courseArrayList;
     private String UID;
     private String price;
@@ -19,7 +17,7 @@ public class Teacher extends Person implements Serializable,Comparable<Teacher> 
     private float rating;
     double  lat;
     double lon;
-    public Teacher(){
+    public Tutor(){
         this.reviewArrayList = new ArrayList<>();
         this.courseArrayList = new ArrayList<>();
         reviewArrayList.add(new Review());
@@ -160,7 +158,7 @@ public class Teacher extends Person implements Serializable,Comparable<Teacher> 
     }
 
     @Override
-    public int compareTo(Teacher teacher) {
+    public int compareTo(Tutor teacher) {
         Log.d("EHUD",this.getName() + " " + teacher.getName());
         if (this.getRating() > teacher.getRating()) {
             Log.d("EHUD",this.getName() + " is bigger then" + teacher.getName());

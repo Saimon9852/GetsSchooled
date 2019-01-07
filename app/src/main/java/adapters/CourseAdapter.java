@@ -4,25 +4,17 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.MultiAutoCompleteTextView;
 
 import com.example.cyber_lab.getsschooled.ManageCourses;
 import com.example.cyber_lab.getsschooled.R;
-import com.example.cyber_lab.getsschooled.ViewTutorsActivity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
