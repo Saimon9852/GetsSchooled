@@ -169,9 +169,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 Intent i = new Intent();
                 reviewArrayList = mAdapter.getStepList();
                 teacher.setReviewArrayList(reviewArrayList);
-                for(Review rev : reviewArrayList){
-                    Log.d("Ehud", rev.getMessage() + "MSG");
-                }
                 addComment(reviewArrayList);
                 mDatabaseTeachers.setValue(teacher);
                 i.putExtra("reviewArrayList", reviewArrayList);
@@ -188,7 +185,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
 //                if(courseArrayList == null) {
 //                    courseToStringArray = new ArrayList<>();
 //                }
-                Log.d("Ehud","WTF" + teacher.courseToStringArray().toString());
                 i.putStringArrayListExtra("courseToStringArray", courseToStringArray);
                 i.putExtra("cameFromTutor", teacher.getUID().equals(auth.getUid()));
                 if(teacher.getUID().equals(auth.getUid()))
@@ -213,10 +209,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 
 
     /////////////////////////////////////////////////////////////////////////////
@@ -303,7 +295,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
                 final Uri Furi = uri;
                 teacher.setPhoto(Furi.toString());
                 reference.child(teacher.getUID()).setValue(teacher);
-                Log.e("WTF", "5");
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
