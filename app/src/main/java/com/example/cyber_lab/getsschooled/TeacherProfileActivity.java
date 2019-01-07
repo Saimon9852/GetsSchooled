@@ -44,7 +44,6 @@ public class TeacherProfileActivity extends AppCompatActivity {
     private TextView textViewName, textDescription,textViewPrice,textViewCourses,textViewRating;
     private ImageView imgCamera,imgWhatsapp,imgProfile, saveChanges,imgSetting,imgLogout;
     private ArrayList<Review> reviewArrayList;
-    private ArrayList<String> courseArrayList;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private FirebaseAuth auth;
